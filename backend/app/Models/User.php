@@ -12,9 +12,12 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
-    public const GENDER_TYPES = ['male'=> 0, 'female'=> 1, 'other'=> 2];
+    public const GENDER_TYPES = ['male' => 0, 'female' => 1, 'other' => 2];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'gender',
-        'phone'
+        'phone',
     ];
 
     /**
@@ -67,7 +70,8 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    protected function password(): Attribute {
+    protected function password(): Attribute
+    {
         return Attribute::make(
             set: fn ($value) => bcrypt($value)
         );

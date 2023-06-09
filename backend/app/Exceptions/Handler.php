@@ -3,8 +3,8 @@
 namespace App\Exceptions;
 
 use App\Services\ValidatorService;
-use Illuminate\Auth\Access\AuthorizationException;
 use App\Utils\StringUtil;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -59,12 +59,14 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
     public function render($request, Throwable $exception): JsonResponse
     {
         if ($exception instanceof HttpException) {
             $httpCode = $exception->getStatusCode();
-            $message = $exception->getMessage() ?: 'http_error_' . $httpCode;
-            return response()->apiError($message, 'http_error_' . $httpCode, $httpCode);
+            $message = $exception->getMessage() ?: 'http_error_'.$httpCode;
+
+            return response()->apiError($message, 'http_error_'.$httpCode, $httpCode);
         }
         if ($exception instanceof AuthenticationException) {
             return response()->apiError('unauthenticated', 'unauthenticated', Response::HTTP_UNAUTHORIZED);
@@ -76,6 +78,7 @@ class Handler extends ExceptionHandler
             /** @var ValidatorService $validator */
             $validator = app(ValidatorService::class, ['validator' => $exception->validator]);
             $validator->setErrors($exception->errors());
+
             return response()->apiError(
                 'validation_error',
                 $validator->messages(),
@@ -84,12 +87,14 @@ class Handler extends ExceptionHandler
         }
         if ($exception instanceof ModelNotFoundException) {
             $attribute = StringUtil::getModelFromModelClassName($exception->getModel());
+
             return response()->apiError(
                 'validation_error',
                 [$attribute => ['message' => 'not_found', 'attribute' => $attribute]],
                 Response::HTTP_NOT_FOUND
             );
         }
+
         return response()->apiError(
             'internal_server_error',
             'internal_server_error',

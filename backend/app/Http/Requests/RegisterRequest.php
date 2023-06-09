@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
 
 class RegisterRequest extends FormRequest
 {
@@ -31,7 +30,7 @@ class RegisterRequest extends FormRequest
             'password' => 'required|string|min:6|max:255',
             'email' => 'required|string|min:6|max:255|email',
             'gender' => Rule::in(User::GENDER_TYPES),
-            'phone' => 'string|min:8|max:11'
+            'phone' => 'string|min:8|max:11',
         ];
     }
 }

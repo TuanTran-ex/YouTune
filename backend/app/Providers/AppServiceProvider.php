@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -45,15 +45,19 @@ class AppServiceProvider extends ServiceProvider
                     $data = $data->items();
                 }
             }
+
             return response()->json([
                 'status' => true,
                 'data' => $data,
-                'meta' => $meta
+                'meta' => $meta,
             ], $statusCode);
         });
 
         Response::macro('apiError', function ($message, $errors = [], $code = HttpResponse::HTTP_BAD_REQUEST) {
-            if (empty($errors)) $errors = $message;
+            if (empty($errors)) {
+                $errors = $message;
+            }
+
             return response()->json([
                 'status' => false,
                 'message' => $message,

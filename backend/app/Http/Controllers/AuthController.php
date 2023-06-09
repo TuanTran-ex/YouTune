@@ -9,6 +9,7 @@ use App\Models\User;
 class AuthController extends ApiController
 {
     protected $users;
+
     /**
      * Create a new AuthController instance.
      *
@@ -28,16 +29,16 @@ class AuthController extends ApiController
     {
         try {
             $credentials = $request->validated();
-            if (!$token = auth()->attempt($credentials)) {
+            if (! $token = auth()->attempt($credentials)) {
                 return $this->resUnauthorized();
             }
             $data = [
-                // 'user' => $this->users->where('email', $credentials['email'])->first(),
                 'user' => auth()->user(),
                 'token' => $token,
                 'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60
+                'expires_in' => auth()->factory()->getTTL() * 60,
             ];
+
             return $this->resSuccess($data);
         } catch (\Throwable $th) {
             logger($th->getMessage());
@@ -49,9 +50,11 @@ class AuthController extends ApiController
     {
         try {
             $user = $this->users->create($request->validated());
+
             return $this->resSuccess($user);
         } catch (\Throwable $th) {
             logger($th->getMessage());
+
             return $this->resInternalError($th->getMessage());
         }
     }

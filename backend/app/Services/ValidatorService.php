@@ -7,10 +7,13 @@ use Illuminate\Support\Str;
 
 class ValidatorService
 {
-    /** @var Validator  */
+    /** @var Validator */
     protected $validator;
+
     protected $failedRules = [];
+
     protected $errors = [];
+
     public function __construct(Validator $validator, $errors = [])
     {
         $this->validator = $validator;
@@ -29,7 +32,7 @@ class ValidatorService
             $rule = $this->getRule($field);
             $item = [
                 'message' => $item[0],
-                'attribute' => $field
+                'attribute' => $field,
             ];
 
             $params = [];
@@ -52,17 +55,17 @@ class ValidatorService
                     break;
                 case 'mimes':
                     $params = [
-                        'types' => $this->getRuleParams($field)
+                        'types' => $this->getRuleParams($field),
                     ];
                     break;
                 case 'in':
                     $params = [
-                        'in' => $this->getRuleParams($field)
+                        'in' => $this->getRuleParams($field),
                     ];
                     break;
             }
 
-            if (!empty($params)) {
+            if (! empty($params)) {
                 $item = array_merge($item, [
                     'args' => $params,
                 ]);
@@ -80,6 +83,7 @@ class ValidatorService
         if (empty($rawName)) {
             return '';
         }
+
         return Str::snake($rawName);
     }
 
@@ -91,6 +95,7 @@ class ValidatorService
         if (empty($rawName)) {
             return [];
         }
+
         return $rule[$rawName];
     }
 
@@ -99,6 +104,7 @@ class ValidatorService
         if (empty($this->failedRules)) {
             $this->failedRules = $this->validator->failed();
         }
+
         return $this->failedRules;
     }
 }
