@@ -1,0 +1,3 @@
+const publicRoutes = [];
+
+export { publicRoutes };
