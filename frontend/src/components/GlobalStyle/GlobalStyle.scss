@@ -1,0 +1,66 @@
+:root {
+    // --main-color: #06121e;
+    // --text-color: #7a7a7a;
+    // ---blue-color: #428bca;
+    // --yelow-color: #cac042;
+    // --gray-rgba-color: #b5b5b5;
+    // --default-header-height: 56px;
+    // --home-max-width: 1360px;
+    // --home-min-height: 1000px;
+    // --home-height-header: 96px;
+    // --home-content-width: 1320px;
+    // --box-radius: 5px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    // background-color: var(--main-color);
+    // overflow-y: overlay; //scroll
+}
+
+//Scrollbar css;
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 10px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #ccc;
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #fff;
+}
+
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    outline: none;
+    border: none;
+}
