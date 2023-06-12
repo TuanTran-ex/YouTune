@@ -3,7 +3,6 @@ const { createSlice } = require('@reduxjs/toolkit');
 const initialState = {
     isLoggedIn: false,
     logging: false,
-    loggedFailed: false,
     currentUser: undefined,
     //Register
     registering: false,
@@ -20,13 +19,11 @@ const authSLice = createSlice({
             state.logging = true;
         },
         loginSuccess(state, action) {
-            state.loggedFailed = false;
             state.logging = false;
             state.currentUser = action.payload;
         },
         loginFailed(state, action) {
             state.logging = false;
-            state.loggedFailed = true;
         },
         logout(state) {
             state.isLoggedIn = false; //out login
@@ -54,7 +51,6 @@ export const authActions = authSLice.actions;
 // Selectors
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectIsLogging = (state) => state.auth.logging;
-export const selectIsLoggedFailed = (state) => state.auth.loggedFailed;
 
 // Reducer
 const authReducer = authSLice.reducer;
