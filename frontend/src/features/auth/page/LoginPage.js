@@ -4,23 +4,16 @@ import { Checkbox } from '@mui/material';
 import config from 'config';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
-import {
-    authActions,
-    selectIsLoggedFailed,
-    selectIsLoggedIn,
-    selectIsLogging,
-} from '../authSlice';
+import { authActions } from '../authSlice';
 import './LoginPage.scss';
-// import { useNavigate } from 'react-router-dom';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-// tạo schema để validate
+// Schema
 const schema = yup
     .object({
         email: yup
@@ -37,16 +30,12 @@ const schema = yup
     })
     .required();
 
-// style={{marginTop: 1}}
-
 function LoginPage() {
     const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const loginFailed = useSelector(selectIsLoggedFailed);
-    const loggedIn = useSelector(selectIsLogging);
     const dispatch = useDispatch();
-    // let navigate = useNavigate('account');
+
     // Handle form
     const {
         register,
@@ -77,12 +66,6 @@ function LoginPage() {
                 password: password,
             }),
         );
-
-        // console.log(loginFailed);
-        // // console.log(loginFailed);
-        // if (loginFailed || email === '' || password === '') {
-
-        // }
     };
 
     return (
@@ -108,7 +91,7 @@ function LoginPage() {
                                 {...register('password')}
                                 value={password}
                                 name="password"
-                                // type="password"
+                                type="password"
                                 className="input-field"
                                 placeholder="Password"
                                 onChange={(e) => setPassword(e.target.value)}
