@@ -1,17 +1,16 @@
 import authApi from 'api/authApi';
 import config from 'config';
 import { push } from 'connected-react-router';
-import { call, delay, fork, put, take, takeLatest } from 'redux-saga/effects';
-import { authActions } from './authSlice';
-import message from '../../utils/message';
 import { messagesToasts } from 'constants/messageToast';
+import { call, fork, put, take, takeLatest } from 'redux-saga/effects';
+import message from '../../utils/message';
+import { authActions } from './authSlice';
 
 function* handleLogin(payload) {
     try {
         // Call API
         const params = yield call(authApi.login, payload);
         localStorage.setItem('access_token', params.data.token);
-        // dispatch action
         yield put(authActions.loginSuccess(params.data.user));
         yield put(push(`${config.routes.home}`));
     } catch (error) {
@@ -21,7 +20,6 @@ function* handleLogin(payload) {
 }
 
 function* handleLogout() {
-    yield delay(500);
     localStorage.removeItem('access_token');
     yield put(push(`${config.routes.login}`));
 }

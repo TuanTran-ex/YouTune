@@ -57,10 +57,8 @@ function LoginPage() {
         }
     };
 
-    //Handle click btn Login
     const handleLoginClick = () => {
         dispatch(
-            //TODO: Get mail and password from login form and dispatch to redux
             authActions.login({
                 email: email,
                 password: password,
