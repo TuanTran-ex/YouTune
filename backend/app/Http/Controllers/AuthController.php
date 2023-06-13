@@ -5,19 +5,20 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use App\Services\UserService;
 
 class AuthController extends ApiController
 {
-    protected $users;
+    protected $userService;
 
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(User $users)
+    public function __construct(UserService $userService)
     {
-        $this->users = $users;
+        $this->userService = $userService;
     }
 
     /**
@@ -49,13 +50,17 @@ class AuthController extends ApiController
     public function register(RegisterRequest $request)
     {
         try {
-            $user = $this->users->create($request->validated());
-
+            $user = $this->userService->createUser($request->validated());
             return $this->resSuccess($user);
         } catch (\Throwable $th) {
             logger($th->getMessage());
 
             return $this->resInternalError($th->getMessage());
         }
+    }
+
+    public function getProfile() {
+        $user = auth()->user();
+        return $this->resSuccess($user);
     }
 }
