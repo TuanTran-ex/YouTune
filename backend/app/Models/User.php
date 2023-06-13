@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -15,6 +17,7 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+    use SoftDeletes;
 
     public const GENDER_TYPES = ['male' => 0, 'female' => 1, 'other' => 2];
 
@@ -56,7 +59,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): mixed
     {
         return $this->getKey();
     }
@@ -66,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return array
      */
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
@@ -76,5 +79,15 @@ class User extends Authenticatable implements JWTSubject
         return Attribute::make(
             set: fn ($value) => bcrypt($value)
         );
+    }
+
+    public function upload(): MorphOne
+    {
+        return $this->morphOne(Upload::class, 'uploadable');
+    }
+
+    public function address(): MorphOne
+    {
+        return $this->morphOne(Address::class, 'addressable');
     }
 }
