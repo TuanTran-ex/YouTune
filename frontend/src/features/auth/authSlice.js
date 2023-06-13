@@ -1,13 +1,14 @@
 const { createSlice } = require('@reduxjs/toolkit');
 
 const initialState = {
+    //Login
     isLoggedIn: false,
     logging: false,
     currentUser: undefined,
+
     //Register
+    register: false,
     registering: false,
-    registeredFailed: false,
-    profileUser: undefined,
 };
 
 const authSLice = createSlice({
@@ -26,21 +27,16 @@ const authSLice = createSlice({
             state.logging = false;
         },
         logout(state) {
-            state.isLoggedIn = false; //out login
+            state.isLoggedIn = false;
             state.currentUser = undefined;
         },
 
         //Register
         register(state, action) {
-            state.registering = true;
+            state.register = true;
         },
         registerSuccess(state, action) {
             state.registering = false;
-            state.profileUser = action.payload; //set profile user
-        },
-        registerFailed(state, action) {
-            state.logging = false;
-            state.loggedFailed = true;
         },
     },
 });

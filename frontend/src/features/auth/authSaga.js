@@ -3,7 +3,7 @@ import config from 'config';
 import { push } from 'connected-react-router';
 import { messagesToasts } from 'constants/messageToast';
 import { call, fork, put, take, takeLatest } from 'redux-saga/effects';
-import message from '../../utils/message';
+import { messageError, messageSuccess, messageWarning } from 'utils/message';
 import { authActions } from './authSlice';
 
 function* handleLogin(payload) {
@@ -13,9 +13,10 @@ function* handleLogin(payload) {
         localStorage.setItem('access_token', params.data.token);
         yield put(authActions.loginSuccess(params.data.user));
         yield put(push(`${config.routes.home}`));
+        yield messageSuccess(messagesToasts.loginSuccess);
     } catch (error) {
+        yield messageError(messagesToasts.loginFail);
         yield put(authActions.loginFailed(console.error.message));
-        yield message(messagesToasts.loginFail);
     }
 }
 
@@ -36,8 +37,12 @@ function* handleRegister(payload) {
     try {
         yield call(authApi.register, payload);
         yield put(push(`${config.routes.login}`));
+        yield messageSuccess(messagesToasts.registerSuccess);
     } catch (error) {
-        yield put(authActions.registerFailed(console.error.message));
+        const errorMessage = error.response.data.errors.email.message;
+        if (errorMessage.includes('already'))
+            yield messageWarning(messagesToasts.registerWarning);
+        else yield messageError(messagesToasts.registerFail);
     }
 }
 

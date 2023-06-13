@@ -4,12 +4,14 @@ import { Checkbox } from '@mui/material';
 import config from 'config';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
-import { authActions } from '../authSlice';
+import { authActions, selectIsRegisterSuccess } from '../authSlice';
 import './LoginPage.scss';
+import { toast } from 'react-toastify';
+import { messagesToasts } from 'constants/messageToast';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -31,7 +33,6 @@ const schema = yup
     .required();
 
 function LoginPage() {
-    const [error, setError] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -49,13 +50,7 @@ function LoginPage() {
         resolver: yupResolver(schema),
     });
 
-    const handleFormSubmit = async () => {
-        try {
-            setError(' ');
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+    const handleFormLoginSubmit = () => {};
 
     const handleLoginClick = () => {
         dispatch(
@@ -74,7 +69,7 @@ function LoginPage() {
                         <span>YouTune</span>
                     </div>
                     <div className="form-field-login">
-                        <form onSubmit={handleSubmit(handleFormSubmit)}>
+                        <form onSubmit={handleSubmit(handleFormLoginSubmit)}>
                             <input
                                 {...register('email')}
                                 value={email}
@@ -148,7 +143,7 @@ function LoginPage() {
                 </div>
             </div>
             <footer className="footer">
-                @2023 YouTune from University of Science
+                @2023 YouTune of University of Science student
             </footer>
         </div>
     );
