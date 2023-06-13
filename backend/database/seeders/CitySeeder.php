@@ -19,7 +19,8 @@ class CitySeeder extends Seeder
         $data = json_decode($json, true);
         try {
             foreach ($data as $value) {
-                City::create([
+                City::create(
+                    [
                         'id' => $value['id'],
                         'name' => $value['name']
                     ]

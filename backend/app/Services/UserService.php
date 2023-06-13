@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\User;
 use Illuminate\Support\Collection;
 
-class UserService {
+class UserService
+{
     protected $users;
 
     public function __construct(User $users)
