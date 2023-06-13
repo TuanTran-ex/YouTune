@@ -1,9 +1,13 @@
 import { toast } from 'react-toastify';
 
-const message = (mess) => {
-    toast.error(mess, {
-        className: 'toast-message',
-    });
+export const messageError = (mess) => {
+    toast.error(mess);
 };
 
-export default message;
+export const messageSuccess = (mess) => {
+    toast.success(mess);
+};
+
+export const messageWarning = (mess) => {
+    toast.warning(mess);
+};
