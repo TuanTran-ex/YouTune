@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,4 +31,11 @@ Route::controller(UploadController::class)
     ->prefix('uploads')
     ->group(function () {
         Route::post('/', 'store');
+    });
+
+Route::controller(CityController::class)
+    ->prefix('cities')
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{id}', 'show');
     });

@@ -18,9 +18,10 @@ class WardSeeder extends Seeder
         $json = File::get('database/data/ward.json');
         $data = json_decode($json, true);
         try {
-            foreach ($data as $value) {
+            foreach ($data as $key => $value) {
                 Ward::create(
                     [
+                    'id' => $key + 1,
                     'name' => $value['name'],
                     'm_city_id' => $value['m_city_id']
                     ]
