@@ -32,7 +32,6 @@ class UpdateProfileRequest extends FormRequest
             'phone' => 'string|min:8|max:11|nullable',
             'address' => 'string|min:8|max:11|nullable',
             'm_ward_id' => 'integer|exists:m_wards,id',
-            'image' => 'image|mimes:jpg,png|max:2000|nullable',
         ];
     }
 }

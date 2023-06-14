@@ -22,7 +22,7 @@ Route::controller(AuthController::class)
         Route::post('login', 'login');
         Route::middleware('auth:api')->group(function () {
             Route::get('profile', 'getProfile');
-            Route::post('profile', 'updateProfile');
+            Route::patch('profile', 'updateProfile');
         });
     });
 

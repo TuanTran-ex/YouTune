@@ -6,7 +6,7 @@ if (! function_exists('generate_file_url')) {
     function generate_file_url($file)
     {
         if (config('filesystems.default') == config('constants.s3_driver')) {
-            return Storage::disk(config('constant.s3_driver'))->temporaryUrl(
+            return Storage::disk(config('constants.s3_driver'))->temporaryUrl(
                 $file->url,
                 now()->addMinutes(env('S3_TOKEN_EXPIRED_AT', 1000))
             );
