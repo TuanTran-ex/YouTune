@@ -1,15 +1,13 @@
-import { Checkbox } from '@mui/material';
-import { Link } from 'react-router-dom';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import './Register.scss';
-import config from 'config';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useHistory } from 'react-router-dom';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import config from 'config';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import { authActions } from '../authSlice';
+import './RegisterPage.scss';
 
 const schema = yup
     .object({
@@ -37,12 +35,12 @@ const schema = yup
         password: yup
             .string()
             .required('Please enter password!')
-            .min(6, 'Min is 6!')
-            .max(55, 'Max is 55!'),
+            .min(6, 'Min is 6')
+            .max(55, 'Max is 55'),
     })
     .required();
 
-function Register() {
+function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
@@ -193,4 +191,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default RegisterPage;

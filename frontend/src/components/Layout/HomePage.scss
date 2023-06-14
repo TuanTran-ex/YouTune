@@ -1,0 +1,15 @@
+.root {
+    display: flex;
+
+    height: 2000px;
+}
+
+.root .sidebar {
+    width: 245px;
+    border-right: 1px solid #dbdbdb;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
