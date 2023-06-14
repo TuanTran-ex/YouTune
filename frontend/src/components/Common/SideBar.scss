@@ -1,0 +1,79 @@
+.sidebar-wrapper {
+    color: #000;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+}
+.main-ffc .logo {
+    font-size: 3rem;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.sidebar__row,
+.logout {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 4px 16px;
+    margin-bottom: 10px;
+    color: #424242;
+
+    .icon {
+        padding-right: 14px;
+        font-size: 3.8rem;
+    }
+
+    p {
+        font-size: 1.6rem;
+    }
+}
+
+.sidebar__row:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.sidebar-wrapper .profile {
+    display: flex;
+    color: #424242;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1.6rem;
+    .wrap-avatar {
+        padding-right: 10px;
+        .avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            object-fit: contain;
+        }
+    }
+}
+.profile:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.sidebar-wrapper .logout {
+    margin-bottom: 20px;
+
+    .logout-icon {
+        padding-right: 14px;
+        font-size: 3.8rem;
+    }
+    .btn-logout {
+        color: #424242;
+        width: 100%;
+        font-size: 1.6rem;
+        background-color: transparent;
+        text-align: start;
+    }
+}
+
+.sidebar-wrapper .logout:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}

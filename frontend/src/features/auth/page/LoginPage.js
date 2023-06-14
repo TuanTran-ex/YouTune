@@ -4,14 +4,12 @@ import { Checkbox } from '@mui/material';
 import config from 'config';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
-import { authActions, selectIsRegisterSuccess } from '../authSlice';
+import { authActions } from '../authSlice';
 import './LoginPage.scss';
-import { toast } from 'react-toastify';
-import { messagesToasts } from 'constants/messageToast';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
@@ -27,8 +25,8 @@ const schema = yup
         password: yup
             .string()
             .required('Please enter password!')
-            .min(6, 'Min is 6.')
-            .max(55, 'Max is 55.'),
+            .min(6, 'Min is 6')
+            .max(55, 'Max is 5'),
     })
     .required();
 
