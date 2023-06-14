@@ -26,7 +26,7 @@ const schema = yup
             .string()
             .required('Please enter password!')
             .min(6, 'Min is 6')
-            .max(55, 'Max is 5'),
+            .max(55, 'Max is 55'),
     })
     .required();
 
