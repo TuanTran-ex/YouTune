@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\UpdateProfileRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 
@@ -62,5 +63,16 @@ class AuthController extends ApiController
     {
         $user = $this->userService->getProfile();
         return $this->resSuccess($user);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        try {
+            $user = $this->userService->updateProfile($request->validated());
+            return $this->resSuccess($user);
+        } catch (\Throwable $th) {
+            logger($th->getMessage());
+            return $this->resInternalError($th->getMessage());
+        }
     }
 }

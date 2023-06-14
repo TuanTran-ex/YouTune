@@ -18,6 +18,8 @@ class Upload extends Model
         'uploadable_id',
         'uploadable_type',
     ];
+
+    public const TYPES = ['image' => 0, 'music' => 1, 'video' => 2];
     public function uploadable(): MorphTo
     {
         return $this->morphTo();
