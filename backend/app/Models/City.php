@@ -14,8 +14,9 @@ class City extends Model
         'name',
     ];
     public $timestamps = false;
+
     public function wards(): HasMany
     {
-        return $this->hasMany(Ward::class);
+        return $this->hasMany(Ward::class, 'm_city_id');
     }
 }
