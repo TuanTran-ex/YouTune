@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -21,14 +21,14 @@ class UserService
         return $newUser;
     }
 
-    public function getProfile(): Collection
+    public function getProfile(): Model
     {
         $user = auth()->user();
-        $user = $user->with(['upload', 'address.ward.city'])->get();
+        $user = $user->with(['upload', 'address.ward.city'])->findOrFail($user->id);
         return $user;
     }
 
-    public function updateProfile($data): User
+    public function updateProfile($data): Model
     {
         try {
             DB::beginTransaction();
