@@ -30,7 +30,7 @@ class UpdateProfileRequest extends FormRequest
             'full_name' => 'required|string|min:3|max:255',
             'gender' => Rule::in(User::GENDER_TYPES),
             'phone' => 'string|min:8|max:11|nullable',
-            'address' => 'string|min:8|max:11|nullable',
+            'address' => 'string|max:100|nullable',
             'm_ward_id' => 'integer|exists:m_wards,id',
         ];
     }
