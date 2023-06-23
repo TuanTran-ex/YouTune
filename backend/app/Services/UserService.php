@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 class UserService
@@ -29,7 +28,7 @@ class UserService
         return new UserResource($user);
     }
 
-    public function updateProfile($data): Model
+    public function updateProfile($data): UserResource
     {
         try {
             DB::beginTransaction();
@@ -48,7 +47,7 @@ class UserService
                 );
             }
             DB::commit();
-            return $user->with(['upload', 'address.ward.city'])->findOrFail($user->id);
+            return new UserResource($user->with(['upload', 'address.ward.city'])->findOrFail($user->id));
         } catch (\Throwable $th) {
             DB::rollBack();
             logger($th);

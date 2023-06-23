@@ -21,7 +21,7 @@ class UploadService
         $this->upload = $upload;
     }
 
-    public function uploadFile($data, $file)
+    public function uploadFile($data, $file): FileUploadResource
     {
         try {
             ['model' => $modelName, 'id' => $id, 'type' => $type] = $data;
@@ -37,6 +37,9 @@ class UploadService
             switch ($type) {
                 case Upload::TYPES['image']:
                     $path = Storage::disk()->put(self::IMAGE_PATH, $file);
+                    if($model instanceof User) {
+                        $this->deleteDumpFile($model);
+                    }
                     $fileUploaded = $model->upload()->create(['url' => $path]);
                     break;
                 case Upload::TYPES['music']:
@@ -54,6 +57,17 @@ class UploadService
         } catch (\Throwable $th) {
             logger($th);
             throw $th;
+        }
+    }
+
+    private function deleteDumpFile($model): void
+    {
+        $listFiles = $model->upload()->get();
+        foreach ($listFiles as $file) {
+            if(Storage::disk()->exists($file->url)) {
+                Storage::disk()->delete($file->url);
+            }
+            $file->delete();
         }
     }
 }
