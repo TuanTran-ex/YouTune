@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -21,11 +22,11 @@ class UserService
         return $newUser;
     }
 
-    public function getProfile(): Model
+    public function getProfile(): UserResource
     {
         $user = auth()->user();
         $user = $user->with(['upload', 'address.ward.city'])->findOrFail($user->id);
-        return $user;
+        return new UserResource($user);
     }
 
     public function updateProfile($data): Model
