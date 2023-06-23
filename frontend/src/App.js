@@ -1,10 +1,13 @@
 import { NotFound, PrivateRoute } from 'components/Common';
-import { HomePage } from 'components/Layout/HomePage';
-import config from 'config';
+
 import LoginPage from 'features/auth/page/LoginPage';
 import RegisterPage from 'features/auth/page/RegisterPage';
 import { Route, Switch } from 'react-router-dom';
-import { publicRoutes } from 'routes';
+import { privateRoutes, publicRoutes } from 'routes';
+import config from './config';
+
+import HomePage from 'features/home/HomePage';
+import DefaultLayout from 'components/Layout/DefaultLayout';
 
 function App() {
     return (
@@ -19,14 +22,34 @@ function App() {
                         <RegisterPage />
                     </Route>
 
-                    <PrivateRoute path={config.routes.home}>
+                    <PrivateRoute exact path={config.routes.home}>
                         <HomePage />
                     </PrivateRoute>
 
+                    {privateRoutes.map((route, index) => {
+                        const Page = route.component;
+                        let Layout = DefaultLayout;
+                        return (
+                            <PrivateRoute
+                                exact
+                                key={index}
+                                path={route.path}
+                                render={() => (
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                )}
+                            ></PrivateRoute>
+                        );
+                    })}
+
                     {publicRoutes.map((route, index) => (
-                        <Route key={index} path={route.path}>
-                            {route.component}
-                        </Route>
+                        <Route
+                            exact
+                            key={index}
+                            path={route.path}
+                            component={route.component}
+                        ></Route>
                     ))}
 
                     <Route>

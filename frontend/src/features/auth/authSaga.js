@@ -2,7 +2,7 @@ import authApi from 'api/authApi';
 import config from 'config';
 import { push } from 'connected-react-router';
 import { messagesToasts } from 'constants/messageToast';
-import { call, fork, put, take, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { messageError, messageSuccess, messageWarning } from 'utils/message';
 import { authActions } from './authSlice';
 
@@ -25,14 +25,6 @@ function* handleLogout() {
     yield put(push(`${config.routes.login}`));
 }
 
-function* watchingLoginFlow() {
-    const isLoggedIn = localStorage.getItem('access_token');
-    while (!isLoggedIn) {
-        const action = yield take(authActions.login.type);
-        yield fork(handleLogin, action.payload);
-    }
-}
-
 function* handleRegister(payload) {
     try {
         yield call(authApi.register, payload);
@@ -47,7 +39,7 @@ function* handleRegister(payload) {
 }
 
 export function* authSaga() {
-    yield fork(watchingLoginFlow);
+    yield takeLatest(authActions.login, handleLogin);
     yield takeLatest(authActions.logout, handleLogout);
     yield takeLatest(authActions.register, handleRegister);
 }

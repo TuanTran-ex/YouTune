@@ -1,0 +1,196 @@
+.prof-wrapper {
+    width: 100%;
+}
+.prof__main-block {
+    display: flex;
+    flex: 1;
+    width: calc(100% - var(--sidebar-width));
+    padding: 30px 120px;
+}
+
+.header-prof {
+    display: flex;
+    width: 100%;
+    .avatar-wrap {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+        .avatar {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 999px;
+        }
+    }
+}
+
+.info {
+    width: 100%;
+    margin: 20px 0;
+    .row-1 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+
+        .user-name {
+            font-size: 2rem;
+            color: #424242;
+            margin-right: 6px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            -webkit-line-clamp: 2;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        .btn-edit {
+            padding: 10px 16px;
+            font-size: 1.4rem;
+            text-align: center;
+            background-color: #f2f3f5;
+            border-radius: 6px;
+            font-weight: 500;
+            margin: 0 12px;
+        }
+
+        .btn-edit:hover {
+            cursor: pointer;
+            background-color: #dbdbdb;
+        }
+
+        .options {
+            .icon {
+                font-size: 2.8rem;
+            }
+            &:hover {
+                position: relative;
+                cursor: pointer;
+                p {
+                    display: block;
+                }
+            }
+            p {
+                display: none;
+                position: absolute;
+                left: 10px;
+                padding: 4px 8px;
+                border-radius: 6px;
+                border: 1px solid #f2f2f2;
+            }
+        }
+    }
+    .row-2 {
+        display: flex;
+        font-size: 1.6rem;
+        .post,
+        .followers,
+        .following {
+            display: flex;
+            margin-right: 30px;
+            .quantity {
+                font-weight: 500;
+                margin-right: 8px;
+            }
+        }
+        .followers,
+        .following {
+            a {
+                cursor: pointer;
+                color: #424242;
+            }
+        }
+    }
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+    .prof__main-block {
+        width: 100%;
+        padding: 30px 14px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .prof__main-block {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .prof__main-block {
+        flex-direction: column;
+    }
+
+    .user-name {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    .header-prof {
+        .avatar-wrap {
+            text-align: center;
+            margin-right: 20px;
+            .avatar {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
+
+    .info {
+        .row-1 {
+            margin-bottom: 12px;
+            .user-name {
+                font-size: 1.8rem;
+            }
+
+            .btn-edit {
+                padding: 8px 12px;
+                p {
+                    font-size: 1.2rem;
+                }
+            }
+
+            .options {
+                .icon {
+                    font-size: 2.3rem;
+                }
+            }
+        }
+        .row-2 {
+            .post,
+            .followers,
+            .following {
+                display: block;
+                margin-right: 10px;
+                margin-top: 0;
+                text-align: center;
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+    .btn-wrap {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-evenly;
+
+        .btn-edit {
+            margin-right: 10px;
+        }
+
+        .btn-edit,
+        .btn-setting {
+            padding: 8px 10px;
+            border-radius: 6px;
+            width: 50%;
+            background-color: #f2f3f5;
+
+            &:hover {
+                cursor: pointer;
+                background-color: #dbdbdb;
+            }
+        }
+    }
+}

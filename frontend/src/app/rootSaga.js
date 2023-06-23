@@ -1,6 +1,8 @@
 import { all } from 'redux-saga/effects';
 import { authSaga } from '../features/auth/authSaga';
+import profileSaga from 'features/profile/profileSaga';
+import citySaga from 'features/city/citySaga';
 
 export default function* rootSaga() {
-    yield all([authSaga()]);
+    yield all([authSaga(), profileSaga(), citySaga()]);
 }

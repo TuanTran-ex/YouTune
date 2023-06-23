@@ -5,4 +5,6 @@ export const messagesToasts = {
     registerFail: 'Fail to register!',
     registerSuccess: 'Success to register!',
     registerWarning: 'Email already exists!',
+    uploadSucess: 'Sucess to update!',
+    uploadFail: 'Fail to update!',
 };

@@ -42,8 +42,8 @@ function LoginPage() {
         formState: { errors },
     } = useForm({
         defaultValues: {
-            email: '',
-            password: '',
+            email: email ?? '',
+            password: password ?? '',
         },
         resolver: yupResolver(schema),
     });

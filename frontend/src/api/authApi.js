@@ -4,7 +4,7 @@ import axiosClient from './axiosClient';
 class AuthApi {
     login = (params) => {
         const url = `${config.apiRoutes.login}`;
-        return axiosClient.post(url, params);
+        return axiosClient.post(url, params.payload);
     };
 
     logout = (params) => {
