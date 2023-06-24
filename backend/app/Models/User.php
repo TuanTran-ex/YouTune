@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
 
     public const GENDER_TYPES = ['male' => 0, 'female' => 1, 'other' => 2];
 
-    public const USER_POST_TYPES = ['owner' => 0, 'liked' => 1, 'commentator'=> 2];
+    public const USER_POST_TYPES = ['owner' => '0', 'liked' => '1', 'commentator'=> '2'];
 
     /**
      * The attributes that are mass assignable.

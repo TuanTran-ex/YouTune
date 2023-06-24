@@ -17,7 +17,7 @@ class UserService
         $this->users = $users;
     }
 
-    public function createUser($data): User
+    public function create($data): User
     {
         $newUser = $this->users->create($data);
         return $newUser;

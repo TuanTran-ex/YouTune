@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,14 @@ Route::controller(AuthController::class)
 
 Route::controller(UploadController::class)
     ->prefix('uploads')
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::post('/', 'store');
+    });
+
+Route::controller(PostController::class)
+    ->prefix('posts')
+    ->middleware('auth:api')
     ->group(function () {
         Route::post('/', 'store');
     });

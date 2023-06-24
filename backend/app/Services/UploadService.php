@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Resources\FileUploadResource;
+use App\Models\Post;
 use App\Models\Upload;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -26,7 +27,7 @@ class UploadService
         try {
             ['model' => $modelName, 'id' => $id, 'type' => $type] = $data;
             $path = '';
-            if ((!in_array($modelName, [User::class]))) {
+            if ((!in_array($modelName, [User::class, Post::class]))) {
                 throw new NotFoundHttpException('model');
             }
             $model = app($modelName);
@@ -48,7 +49,7 @@ class UploadService
                     break;
                 case Upload::TYPES['video']:
                     $path = Storage::disk()->put(self::VIDEO_PATH, $file);
-                    $fileUploaded = $model->upload()->create(['url' => $path, 'name' => $data['name']]);
+                    $fileUploaded = $model->upload()->create(['url' => $path]);
                     break;
                 default:
                     throw new NotFoundHttpException('file type not found');
