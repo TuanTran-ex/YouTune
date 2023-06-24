@@ -1,14 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import { Checkbox } from '@mui/material';
 import config from 'config';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import * as yup from 'yup';
-import { authActions } from '../authSlice';
+import { authActions, selectIsLogging } from '../authSlice';
 import './LoginPage.scss';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -31,19 +30,22 @@ const schema = yup
     .required();
 
 function LoginPage() {
+    const dispatch = useDispatch();
+    const loading = useSelector(selectIsLogging);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
 
     // Handle form
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm({
         defaultValues: {
-            email: email ?? '',
-            password: password ?? '',
+            email: '',
+            password: '',
         },
         resolver: yupResolver(schema),
     });
@@ -58,6 +60,13 @@ function LoginPage() {
             }),
         );
     };
+
+    useEffect(() => {
+        reset({
+            email: email,
+            password: password,
+        });
+    }, [loading, reset]);
 
     return (
         <div className="wrapper">
@@ -91,23 +100,25 @@ function LoginPage() {
                                 {errors.password?.message}
                             </p>
 
-                            <div className="allow-save">
-                                <Checkbox
-                                    className="check-to-save"
-                                    {...label}
-                                    size="large"
-                                />
-                                <p>Save login info</p>
-                            </div>
-
                             <div className="btn-login">
-                                <button
-                                    type="submit"
-                                    variant="contained"
-                                    onClick={handleLoginClick}
-                                >
-                                    Log in
-                                </button>
+                                {email === '' || password === '' ? (
+                                    <button
+                                        type="submit"
+                                        variant="contained"
+                                        className="disabled"
+                                        disabled
+                                    >
+                                        Log in
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                        variant="contained"
+                                        onClick={handleLoginClick}
+                                    >
+                                        Log in
+                                    </button>
+                                )}
                             </div>
                         </form>
 

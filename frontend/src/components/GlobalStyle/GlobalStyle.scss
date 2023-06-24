@@ -69,3 +69,16 @@ button {
     outline: none;
     border: none;
 }
+
+@media (max-width: 576px) {
+    .toast_message {
+        width: 200px;
+        max-height: 54px;
+        min-height: 54px;
+        font-size: 1.2rem;
+        position: fixed;
+        right: 0;
+        top: 10px;
+        border-radius: 4px;
+    }
+}

@@ -23,9 +23,6 @@ const authSLice = createSlice({
             state.logging = false;
             state.currentUser = action.payload;
         },
-        loginFailed(state, action) {
-            state.logging = false;
-        },
         logout(state) {
             state.isLoggedIn = false;
             state.currentUser = undefined;
@@ -33,7 +30,7 @@ const authSLice = createSlice({
 
         //Register
         register(state, action) {
-            state.register = true;
+            state.registering = true;
         },
         registerSuccess(state, action) {
             state.registering = false;
@@ -47,6 +44,7 @@ export const authActions = authSLice.actions;
 // Selectors
 export const selectIsLoggedIn = (state) => state.auth.isLoggedIn;
 export const selectIsLogging = (state) => state.auth.logging;
+export const selectIsRegister = (state) => state.auth.registering;
 
 // Reducer
 const authReducer = authSLice.reducer;

@@ -126,6 +126,15 @@
                 background-color: #2d9d78;
             }
         }
+
+        .disabled {
+            background-color: #1ebb87;
+            opacity: 0.7;
+            &:hover {
+                cursor: text;
+                background-color: #1ebb87;
+            }
+        }
     }
 }
 

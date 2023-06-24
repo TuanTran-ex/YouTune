@@ -55,10 +55,10 @@
     .wrap-avatar {
         padding-right: 10px;
         .avatar {
-            width: 26px;
-            height: 26px;
+            width: 28px;
+            height: 28px;
             border-radius: 999px;
-            object-fit: contain;
+            object-fit: cover;
         }
     }
 }
@@ -80,6 +80,9 @@
         font-size: 1.6rem;
         background-color: transparent;
         text-align: start;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 
