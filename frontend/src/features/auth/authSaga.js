@@ -16,7 +16,6 @@ function* handleLogin(payload) {
         yield messageSuccess(messagesToasts.loginSuccess);
     } catch (error) {
         yield messageError(messagesToasts.loginFail);
-        yield put(authActions.loginFailed(console.error.message));
     }
 }
 

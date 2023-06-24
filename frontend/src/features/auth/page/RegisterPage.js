@@ -1,12 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import config from 'config';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import * as yup from 'yup';
-import { authActions } from '../authSlice';
+import { authActions, selectIsRegister } from '../authSlice';
 import './RegisterPage.scss';
 
 const schema = yup
@@ -41,20 +41,25 @@ const schema = yup
     .required();
 
 function RegisterPage() {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const loading = useSelector(selectIsRegister);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userName, setUserName] = useState('');
     const [fullName, setFullName] = useState('');
-    const history = useHistory();
-    const dispatch = useDispatch();
 
     const {
         register,
+        reset,
         handleSubmit,
         formState: { errors },
     } = useForm({
         defaultValues: {
             email: '',
+            full_name: '',
+            username: '',
             password: '',
         },
         resolver: yupResolver(schema),
@@ -76,6 +81,15 @@ function RegisterPage() {
             }),
         );
     };
+
+    useEffect(() => {
+        reset({
+            email: email,
+            full_name: fullName,
+            username: userName,
+            password: password,
+        });
+    }, [loading, reset]);
 
     return (
         <div className="wrapper">
@@ -141,7 +155,7 @@ function RegisterPage() {
                                 {...register('password')}
                                 value={password}
                                 name="password"
-                                // type="password"
+                                type="password"
                                 className="input-field"
                                 placeholder="Password"
                                 onChange={(e) => setPassword(e.target.value)}
@@ -163,13 +177,26 @@ function RegisterPage() {
                             </div>
 
                             <div className="btn-Sign-up">
-                                <button
-                                    type="submit"
-                                    variant="contained"
-                                    onClick={handleRegisterClick}
-                                >
-                                    Sign up
-                                </button>
+                                {email === '' ||
+                                password === '' ||
+                                userName === '' ||
+                                fullName === '' ? (
+                                    <button
+                                        type="submit"
+                                        className="disabled"
+                                        disabled
+                                    >
+                                        Sign up
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="submit"
+                                        variant="contained"
+                                        onClick={handleRegisterClick}
+                                    >
+                                        Sign up
+                                    </button>
+                                )}
                             </div>
                         </form>
                     </div>

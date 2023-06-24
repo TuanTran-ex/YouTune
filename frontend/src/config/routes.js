@@ -6,6 +6,8 @@ export const routes = {
     profile: '/profile',
     uploadProfile: '/profile/upload',
     changePassword: '/profile/changepassword',
+    message: '/message',
+    listMusic: '/listmusic',
 };
 
 export const apiRoutes = {
@@ -16,5 +18,6 @@ export const apiRoutes = {
     city: '/cities',
     upload: '/uploads',
     changePassword: '/changepassword',
+    message: 'auth/message',
 };
 export default routes;
