@@ -16,7 +16,7 @@ class UserResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'upload' => new FileUploadResource($this->upload)
+            'upload' => new FileUploadResource($this->upload),
         ];
     }
 }
