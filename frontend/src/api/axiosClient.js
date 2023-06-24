@@ -9,9 +9,8 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(async (config) => {
     // Handle token here ...
-    const account = localStorage.getItem('access_token');
-    if (account) {
-        const accessToken = JSON.parse(account).accessToken;
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
         config.headers = { Authorization: 'Bearer ' + accessToken };
     }
     return config;
