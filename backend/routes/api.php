@@ -24,6 +24,7 @@ Route::controller(AuthController::class)
         Route::middleware('auth:api')->group(function () {
             Route::get('profile', 'getProfile');
             Route::patch('profile', 'updateProfile');
+            Route::put('profile/password', 'changePassword');
         });
     });
 

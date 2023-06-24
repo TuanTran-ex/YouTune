@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -47,9 +49,27 @@ class UserService
                 );
             }
             DB::commit();
-            return new UserResource($user->with(['upload', 'address.ward.city'])->findOrFail($user->id));
+            return new UserResource(
+                $user->with(['upload', 'address.ward.city'])->findOrFail($user->id)
+            );
         } catch (\Throwable $th) {
             DB::rollBack();
+            logger($th);
+            throw $th;
+        }
+    }
+    public function changePassword($data)
+    {
+        ['old_password' => $oldPassword, 'new_password' => $newPassword] = $data;
+        try {
+            $user = auth()->user();
+            if (!Hash::check($oldPassword, $user->getAuthPassword())) {
+                throw new AuthenticationException();
+            }
+            $user->password = $newPassword;
+            $user->save();
+            return new UserResource($user);
+        } catch (\Throwable $th) {
             logger($th);
             throw $th;
         }

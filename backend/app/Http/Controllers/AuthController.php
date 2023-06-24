@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateProfileRequest;
@@ -73,6 +74,17 @@ class AuthController extends ApiController
         } catch (\Throwable $th) {
             logger($th->getMessage());
             return $this->resInternalError($th->getMessage());
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request): JsonResponse
+    {
+        try {
+            $user = $this->userService->changePassword($request->validated());
+            return $this->resSuccess($user);
+        } catch (\Throwable $th) {
+            logger($th);
+            throw $th;
         }
     }
 }
