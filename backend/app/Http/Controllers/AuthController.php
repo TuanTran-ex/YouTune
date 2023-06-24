@@ -52,7 +52,7 @@ class AuthController extends ApiController
     public function register(RegisterRequest $request): JsonResponse
     {
         try {
-            $user = $this->userService->createUser($request->validated());
+            $user = $this->userService->create($request->validated());
             return $this->resSuccess($user);
         } catch (\Throwable $th) {
             logger($th->getMessage());
