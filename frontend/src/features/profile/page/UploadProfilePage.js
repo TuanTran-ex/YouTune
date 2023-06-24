@@ -286,7 +286,7 @@ function UploadProfilePage() {
                                 {userProfile?.username ?? ''}
                             </p>
                             <Button className="btn-upload" component="label">
-                                <p>C</p>Change your photo
+                                <p>C</p>hange your photo
                                 <input
                                     type="file"
                                     hidden
