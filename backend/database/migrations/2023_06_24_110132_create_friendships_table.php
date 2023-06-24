@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\User;
+use App\Models\Friendship;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,7 +22,7 @@ return new class () extends Migration {
             $table->unsignedBigInteger('friend_id');
             $table->foreign('friend_id')->references('id')->on('users')
                 ->constrained()->cascadeOnDelete();
-            $table->enum('status', User::FRIENDSHIP_TYPES);
+            $table->enum('status', Friendship::TYPES);
             $table->dateTime('confirm_date')->nullable();
             $table->softDeletes();
         });

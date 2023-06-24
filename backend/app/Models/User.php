@@ -25,8 +25,6 @@ class User extends Authenticatable implements JWTSubject
 
     public const USER_POST_TYPES = ['owner' => 0, 'liked' => 1, 'commentator'=> 2];
 
-    public const FRIENDSHIP_TYPES = ['invite' => 0, 'friend' => 1, 'follower'=> 2];
-
     /**
      * The attributes that are mass assignable.
      *

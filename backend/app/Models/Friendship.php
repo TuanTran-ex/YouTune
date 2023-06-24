@@ -10,6 +10,8 @@ class Friendship extends Model
 {
     use HasFactory;
 
+    public const TYPES = ['invite' => 0, 'friend' => 1, 'follower'=> 2];
+
     protected $fillable = [
         'user_id',
         'friend_id',
