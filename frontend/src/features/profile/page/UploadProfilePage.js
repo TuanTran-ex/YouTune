@@ -186,6 +186,7 @@ function UploadProfilePage() {
     useEffect(() => {
         setAvtImage(avatar);
     }, [avatar]);
+
     const handleGenderChange = (e) => {
         const gender = handleGenderValue(e.value);
         setGender(gender);
@@ -210,7 +211,9 @@ function UploadProfilePage() {
             ward?.value === undefined ||
             address === ''
         ) {
-            toast.error(messagesToasts.uploadFail);
+            toast.error(messagesToasts.uploadFail, {
+                className: 'toast_message',
+            });
             return;
         }
         dispatch(

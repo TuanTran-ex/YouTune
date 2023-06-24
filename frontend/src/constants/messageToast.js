@@ -3,6 +3,7 @@ export const messagesToasts = {
     loginSuccess: 'Success to login!',
     passwordIncorrect: 'The password is incorrect!',
     registerFail: 'Fail to register!',
+    registerHaveNotEnoughInfo: 'Please enter enough infomation!',
     registerSuccess: 'Success to register!',
     registerWarning: 'Email already exists!',
     uploadSucess: 'Sucess to update!',

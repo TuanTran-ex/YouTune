@@ -1,6 +1,11 @@
+import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
 import { authActions } from 'features/auth/authSlice';
-import { useState } from 'react';
+import {
+    profileActions,
+    selectProfileData,
+} from 'features/profile/profileSlice';
+import { useEffect, useState } from 'react';
 import { BiMessageRounded } from 'react-icons/bi';
 import { BsSearchHeart } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci';
@@ -9,12 +14,23 @@ import { IoCreateOutline, IoHomeOutline } from 'react-icons/io5';
 import { MdOutlineLibraryMusic } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
 import './SideBar.scss';
 
 export function SideBar() {
-    const [firstState, setfirstState] = useState(false);
+    const userProfile = useAppSelector(selectProfileData);
+    const [avtImage, setAvtImage] = useState();
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(profileActions.fetchProfileData());
+    }, []);
+
+    useEffect(() => {
+        setAvtImage(userProfile?.upload?.url);
+    }, [userProfile]);
+
     const handleLogout = () => {
         dispatch(authActions.logout());
     };
@@ -25,58 +41,50 @@ export function SideBar() {
                 <div className="main-ffc">
                     <div className="logo">YouTune</div>
                     <Link to="/" className="sidebar__row home">
-                        <IoHomeOutline
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                        <IoHomeOutline className="icon" />
                         <p>Trang chủ</p>
                     </Link>
                     <Link to="/" className="sidebar__row search ">
-                        <BsSearchHeart
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                        <BsSearchHeart className="icon" />
                         <p>Tìm kiếm</p>
                     </Link>
-                    <Link to="/" className="sidebar__row messages">
-                        <BiMessageRounded
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                    <Link
+                        to={config.routes.message}
+                        className="sidebar__row messages"
+                    >
+                        <BiMessageRounded className="icon" />
                         <p>Trò chuyện</p>
                     </Link>
                     <Link to="/" className="sidebar__row notifications">
-                        <IoIosNotificationsOutline
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                        <IoIosNotificationsOutline className="icon" />
                         <p>Thông báo</p>
                     </Link>
-                    <Link to="/" className="sidebar__row notifications">
-                        <MdOutlineLibraryMusic
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                    <Link
+                        to={config.routes.listMusic}
+                        className="sidebar__row notifications"
+                    >
+                        <MdOutlineLibraryMusic className="icon" />
                         <p>Nhạc của tôi</p>
                     </Link>
                     <Link to="/" className="sidebar__row create">
-                        <IoCreateOutline
-                            className={firstState ? 'icon-active' : 'icon'}
-                        />
+                        <IoCreateOutline className="icon" />
                         <p>Bài viết mới</p>
                     </Link>
                     <Link to={config.routes.profile} className="profile">
                         <div className="wrap-avatar">
                             <Image
-                                src="https://instagram.fdad3-5.fna.fbcdn.net/v/t51.2885-19/340492349_1890714877960041_3203733855701028637_n.jpg?stp=dst-jpg_s320x320&_nc_ht=instagram.fdad3-5.fna.fbcdn.net&_nc_cat=109&_nc_ohc=reckWtNh754AX-bkOfj&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_AfBUj2tlDH5gOpQz5TRLpuINSg2jpCV_xYr5YEpB8atfWQ&oe=648E23F3&_nc_sid=f70a57"
+                                src={avtImage ?? thumbnail}
                                 alt="avatar"
                                 className="avatar"
                             />
                         </div>
-                        <p>Username</p>
+                        <p> {userProfile?.username}</p>
                     </Link>
                 </div>
 
-                <div className="logout">
+                <div className="logout" onClick={handleLogout}>
                     <CiLogout className="logout-icon" />
-                    <button className="btn-logout" onClick={handleLogout}>
-                        Logout
-                    </button>
+                    <button className="btn-logout">Logout</button>
                 </div>
             </div>
         </div>
