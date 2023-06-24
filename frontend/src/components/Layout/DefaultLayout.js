@@ -24,14 +24,14 @@ function DefaultLayout({ children }) {
         <div className="wrapper-layout">
             {viewPort.width <= 1300 ? (
                 isXM ? (
-                    <div className="nav-vtc">
-                        <div className="vertical">
+                    <div className="nav-hzt">
+                        <div className="horizontal">
                             <Navigation />
                         </div>
                     </div>
                 ) : (
-                    <div className="nav-hzt">
-                        <div className="horizontal">
+                    <div className="nav-vtc">
+                        <div className="vertical">
                             <Navigation />
                         </div>
                     </div>
