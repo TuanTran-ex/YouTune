@@ -16,6 +16,11 @@ class ProfileApi {
         const url = `${config.apiRoutes.upload}`;
         return axiosClient.post(url, params);
     };
+
+    changePassword = (params) => {
+        const url = `${config.apiRoutes.changePassword}`;
+        return axiosClient.put(url, params);
+    };
 }
 
 const profileApi = new ProfileApi();

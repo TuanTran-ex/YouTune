@@ -16,9 +16,9 @@ function* handleGetUserProfile() {
 function* handleUpdateProfile(action) {
     try {
         yield call(profileApi.updateProfile, action.payload);
-        yield messageSuccess(messagesToasts.uploadSucess);
+        yield messageSuccess(messagesToasts.updateSucess);
     } catch (error) {
-        yield messageError(messagesToasts.uploadFail);
+        yield messageError(messagesToasts.updateFail);
     }
 }
 
@@ -27,9 +27,21 @@ function* handleUpdateImage({ payload }) {
         const response = yield call(profileApi.uploadAvatar, payload);
         yield put(profileActions.updateProfileImageSuccess(response.data.url));
         yield delay(400);
-        yield messageSuccess(messagesToasts.uploadSucess);
+        yield messageSuccess(messagesToasts.updateSucess);
     } catch (error) {
-        yield messageError(messagesToasts.uploadFail);
+        yield messageError(messagesToasts.updateFail);
+    }
+}
+
+function* handleChangePassword(action) {
+    try {
+        console.log(action.payload);
+        yield call(profileApi.changePassword, action.payload);
+        yield messageSuccess(messagesToasts.updatePasswordSuccess);
+    } catch (error) {
+        if (error.response.status === 401)
+            yield messageError(messagesToasts.updatePasswordFailToIncorrect);
+        else yield messageError(messagesToasts.updatePasswordFail);
     }
 }
 
@@ -37,4 +49,5 @@ export default function* profileSaga() {
     yield takeLatest(profileActions.fetchProfileData, handleGetUserProfile);
     yield takeLatest(profileActions.updateProfile, handleUpdateProfile);
     yield takeLatest(profileActions.fetchProfileImage, handleUpdateImage);
+    yield takeLatest(profileActions.updatePassword, handleChangePassword);
 }
