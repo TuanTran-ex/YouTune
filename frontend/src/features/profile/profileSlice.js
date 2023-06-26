@@ -25,6 +25,9 @@ const profileSlice = createSlice({
         updateProfileImageSuccess(state, action) {
             state.avatar = action.payload;
         },
+
+        //Password
+        updatePassword(state, action) {},
     },
 });
 

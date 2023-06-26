@@ -6,6 +6,9 @@ export const messagesToasts = {
     registerHaveNotEnoughInfo: 'Please enter enough infomation!',
     registerSuccess: 'Success to register!',
     registerWarning: 'Email already exists!',
-    uploadSucess: 'Sucess to update!',
-    uploadFail: 'Fail to update!',
+    updateSucess: 'Sucess to update!',
+    updateFail: 'Fail to update!',
+    updatePasswordSuccess: 'Sucess to update password!',
+    updatePasswordFail: 'Fail to update password!',
+    updatePasswordFailToIncorrect: 'Old password is incorrect!',
 };

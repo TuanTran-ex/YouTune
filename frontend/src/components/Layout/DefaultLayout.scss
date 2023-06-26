@@ -7,6 +7,7 @@
 
 .children-wrapper {
     width: 100%;
+    margin-bottom: 40px;
 }
 
 .nav-hzt {
@@ -16,7 +17,7 @@
     right: 0;
     z-index: 10;
     .horizontal {
-        height: 60px;
+        height: var(--nav-height);
         width: 100%;
     }
 }
@@ -25,7 +26,7 @@
     height: 100%;
     z-index: 10;
     .vertical {
-        width: 60px;
+        width: var(--nav-width);
         height: 100%;
     }
 }
