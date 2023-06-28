@@ -72,7 +72,6 @@ function ChangePassword() {
     const handleFormSubmit = () => {};
 
     const handleClickBtnChangePassword = () => {
-        console.log(oldPassword, newPassword);
         if (
             oldPassword === '' ||
             newPassword === '' ||
