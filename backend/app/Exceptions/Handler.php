@@ -27,8 +27,9 @@ class Handler extends ExceptionHandler
         'token_invalid' => 2,
         'token_not_found' => 3,
         'not_authenticated' => 4,
-        'not_validated' => 5,
-        'model_not_found' => 6,
+        'not_authorized' => 5,
+        'not_validated' => 6,
+        'model_not_found' => 7,
     ];
 
     /**
@@ -108,7 +109,8 @@ class Handler extends ExceptionHandler
             return response()->apiError(
                 'unauthenticated',
                 $exception->getMessage(),
-                Response::HTTP_UNAUTHORIZED
+                Response::HTTP_UNAUTHORIZED,
+                self::CODES['not_authenticated']
             );
         }
         if ($exception instanceof AuthorizationException) {
@@ -116,7 +118,7 @@ class Handler extends ExceptionHandler
                 'unauthorized',
                 'unauthorized',
                 Response::HTTP_UNAUTHORIZED,
-                self::CODES['not_authenticated']
+                self::CODES['not_authorized']
             );
         }
         if ($exception instanceof ValidationException) {
@@ -146,7 +148,7 @@ class Handler extends ExceptionHandler
             'internal_server_error',
             'internal_server_error',
             Response::HTTP_INTERNAL_SERVER_ERROR,
-            self::CODES['internal_server_error']
+            self::CODES['server_error']
         );
     }
 }

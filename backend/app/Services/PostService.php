@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\DB;
 
 class PostService
@@ -45,6 +46,10 @@ class PostService
     {
         try {
             $post = $this->post->findOrFail($id);
+            $owner = $post->getOwner();
+            if (auth()->user()->id !== $owner->id) {
+                throw new AuthorizationException;
+            }
             $this->uploadService->deleteDumpFile($post);
             $post->delete();
         } catch (\Throwable $th) {
