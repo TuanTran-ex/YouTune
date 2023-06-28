@@ -41,4 +41,15 @@ class PostService
             throw $th;
         }
     }
+    public function delete($id): void
+    {
+        try {
+            $post = $this->post->findOrFail($id);
+            $this->uploadService->deleteDumpFile($post);
+            $post->delete();
+        } catch (\Throwable $th) {
+            logger($th);
+            throw $th;
+        }
+    }
 }

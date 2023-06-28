@@ -43,6 +43,7 @@ Route::controller(PostController::class)
     ->middleware('auth:api')
     ->group(function () {
         Route::post('/', 'store');
+        Route::delete('/{id}', 'destroy');
     });
 
 Route::controller(CityController::class)
