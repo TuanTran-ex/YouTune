@@ -23,6 +23,15 @@ class AuthController extends ApiController
         $this->userService = $userService;
     }
 
+    private function getUserWithToken($token)
+    {
+        return [
+            'user' => auth()->user(),
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60,
+        ];
+    }
     /**
      * Get a JWT via given credentials.
      *
@@ -35,14 +44,8 @@ class AuthController extends ApiController
             if (! $token = auth()->attempt($credentials)) {
                 return $this->resUnauthorized();
             }
-            $data = [
-                'user' => auth()->user(),
-                'token' => $token,
-                'token_type' => 'bearer',
-                'expires_in' => auth()->factory()->getTTL() * 60,
-            ];
 
-            return $this->resSuccess($data);
+            return $this->resSuccess($this->getUserWithToken($token));
         } catch (\Throwable $th) {
             logger($th->getMessage());
             throw $th;
@@ -60,6 +63,21 @@ class AuthController extends ApiController
         }
     }
 
+    public function refresh(): JsonResponse
+    {
+        try {
+            $token = auth()->refresh();
+            return $this->resSuccess($this->getUserWithToken($token));
+        } catch (\Throwable $th) {
+            logger($th);
+            throw $th;
+        }
+    }
+    public function logout()
+    {
+        auth()->logout();
+        return $this->resSuccess(null);
+    }
     public function getProfile(): JsonResponse
     {
         $user = $this->userService->getProfile();

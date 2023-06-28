@@ -56,7 +56,7 @@ class AppServiceProvider extends ServiceProvider
             ], $statusCode);
         });
 
-        Response::macro('apiError', function ($message, $errors = [], $code = HttpResponse::HTTP_BAD_REQUEST) {
+        Response::macro('apiError', function ($message, $errors = [], $httpCode = HttpResponse::HTTP_BAD_REQUEST, $code = null) {
             if (empty($errors)) {
                 $errors = $message;
             }
@@ -65,7 +65,8 @@ class AppServiceProvider extends ServiceProvider
                 'status' => false,
                 'message' => $message,
                 'errors' => $errors,
-            ])->setStatusCode($code);
+                'code' => $code,
+            ])->setStatusCode($httpCode);
         });
     }
 }

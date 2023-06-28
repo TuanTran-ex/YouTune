@@ -13,12 +13,24 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
 
 /**
  * Summary of Handler
  */
 class Handler extends ExceptionHandler
 {
+    private const CODES = [
+        'server_error' => 0,
+        'token_expired' => 1,
+        'token_invalid' => 2,
+        'token_not_found' => 3,
+        'not_authenticated' => 4,
+        'not_validated' => 5,
+        'model_not_found' => 6,
+    ];
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -68,11 +80,44 @@ class Handler extends ExceptionHandler
 
             return response()->apiError($message, 'http_error_'.$httpCode, $httpCode);
         }
+        if ($exception instanceof TokenExpiredException) {
+            return response()->apiError(
+                'unauthenticated',
+                $exception->getMessage(),
+                Response::HTTP_UNAUTHORIZED,
+                self::CODES['token_expired']
+            );
+        }
+        if ($exception instanceof TokenInvalidException) {
+            return response()->apiError(
+                'unauthenticated',
+                $exception->getMessage(),
+                Response::HTTP_UNAUTHORIZED,
+                self::CODES['token_invalid']
+            );
+        }
+        if ($exception instanceof JWTException) {
+            return response()->apiError(
+                'unauthenticated',
+                $exception->getMessage(),
+                Response::HTTP_UNAUTHORIZED,
+                self::CODES['token_not_found']
+            );
+        }
         if ($exception instanceof AuthenticationException) {
-            return response()->apiError('unauthenticated', 'unauthenticated', Response::HTTP_UNAUTHORIZED);
+            return response()->apiError(
+                'unauthenticated',
+                $exception->getMessage(),
+                Response::HTTP_UNAUTHORIZED
+            );
         }
         if ($exception instanceof AuthorizationException) {
-            return response()->apiError('unauthorized', 'unauthorized', Response::HTTP_UNAUTHORIZED);
+            return response()->apiError(
+                'unauthorized',
+                'unauthorized',
+                Response::HTTP_UNAUTHORIZED,
+                self::CODES['not_authenticated']
+            );
         }
         if ($exception instanceof ValidationException) {
             /** @var ValidatorService $validator */
@@ -82,7 +127,8 @@ class Handler extends ExceptionHandler
             return response()->apiError(
                 'validation_error',
                 $validator->messages(),
-                Response::HTTP_UNPROCESSABLE_ENTITY
+                Response::HTTP_UNPROCESSABLE_ENTITY,
+                self::CODES['not_validated']
             );
         }
         if ($exception instanceof ModelNotFoundException) {
@@ -91,14 +137,16 @@ class Handler extends ExceptionHandler
             return response()->apiError(
                 'validation_error',
                 [$attribute => ['message' => 'not_found', 'attribute' => $attribute]],
-                Response::HTTP_NOT_FOUND
+                Response::HTTP_NOT_FOUND,
+                self::CODES['model_not_found']
             );
         }
 
         return response()->apiError(
             'internal_server_error',
             'internal_server_error',
-            Response::HTTP_INTERNAL_SERVER_ERROR
+            Response::HTTP_INTERNAL_SERVER_ERROR,
+            self::CODES['internal_server_error']
         );
     }
 }
