@@ -48,7 +48,7 @@ class PostService
             $post = $this->post->findOrFail($id);
             $owner = $post->getOwner();
             if (auth()->user()->id !== $owner->id) {
-                throw new AuthorizationException;
+                throw new AuthorizationException();
             }
             $this->uploadService->deleteDumpFile($post);
             $post->delete();
