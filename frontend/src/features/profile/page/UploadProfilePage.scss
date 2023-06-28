@@ -30,7 +30,7 @@
 
 .active {
     color: #424242;
-    font-weight: 500;
+    font-weight: 600;
     &:hover {
         cursor: text;
     }
@@ -107,11 +107,12 @@
             .title {
                 text-align: end;
                 font-size: 1.6rem;
-                font-weight: 500;
+                font-weight: 600;
             }
         }
         .right-column {
             margin-left: 26px;
+            width: 100%;
             .prof-input {
                 width: 300px;
                 padding: 11px 10px;
@@ -126,9 +127,23 @@
     }
 }
 
+.select > div {
+    width: 300px;
+    margin-top: 0;
+    margin-bottom: 0;
+    & > div {
+        padding: 0;
+    }
+
+    .prof-select > div {
+        padding: 12px 14px;
+        font-size: 1.4rem;
+        width: 300px;
+    }
+}
+
 .btn-submit {
-    width: 100px;
-    padding: 10px 14px;
+    padding: 10px 26px;
     font-size: 1.4rem;
     color: #fff;
     background-color: transparent;
@@ -144,6 +159,34 @@
     .edit__main-block {
         padding: 30px 14px;
     }
+
+    .edit__main-block {
+        .options {
+            padding: 20px;
+        }
+
+        .edit-prof {
+            width: calc(100% - 180px);
+            padding: 20px;
+            .edit-prof__row {
+                .left-column {
+                    min-width: 140px;
+                    max-width: 140px;
+                }
+
+                .right-column {
+                    width: calc(100% - 140px);
+                    .prof-input,
+                    .prof-select {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    .select > div {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 768px) {
@@ -153,7 +196,6 @@
     }
     .edit__main-block {
         display: block;
-        width: 100% !important;
         margin: 0;
 
         padding: 20px;
@@ -221,17 +263,56 @@
             }
         }
     }
+
+    .select > div {
+        width: 100%;
+        position: relative;
+        .prof-select > div {
+            width: 100%;
+        }
+    }
 }
 
 @media (max-width: 576px) {
-    .edit__main-block .options {
-        display: flex;
-        padding: 20px 30px;
-        .list-options {
-            font-size: 1.3rem;
+    .edit__main-block {
+        .options {
+            display: flex;
+            padding: 16px 8px;
+            .list-options {
+                font-size: 1.3rem;
+            }
+            .back-icon {
+                bottom: 11px;
+                .icon {
+                    font-size: 2rem;
+                }
+            }
         }
-        .back-icon .icon {
-            font-size: 2rem;
+        .edit-prof {
+            padding: 16px 8px;
+            .edit-prof__row {
+                .left-column .title {
+                    font-size: 1.4rem;
+                }
+
+                .right-column {
+                    .prof-input {
+                        font-size: 1.2rem;
+                        padding: 10px;
+                    }
+                }
+
+                .select > div {
+                    .prof-select > div {
+                        padding: 10px;
+                    }
+                }
+            }
         }
+    }
+
+    .btn-submit {
+        padding: 8px 20px;
+        font-size: 1.3rem;
     }
 }

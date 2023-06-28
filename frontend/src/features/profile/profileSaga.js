@@ -35,7 +35,6 @@ function* handleUpdateImage({ payload }) {
 
 function* handleChangePassword(action) {
     try {
-        console.log(action.payload);
         yield call(profileApi.changePassword, action.payload);
         yield messageSuccess(messagesToasts.updatePasswordSuccess);
     } catch (error) {

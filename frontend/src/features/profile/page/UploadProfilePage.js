@@ -3,7 +3,6 @@ import { Button, LinearProgress } from '@mui/material';
 import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
 import config from 'config';
-import { messagesToasts } from 'constants/messageToast';
 import {
     cityActions,
     selectCityList,
@@ -43,9 +42,17 @@ const schema = yup
             .required('Please enter your address!')
             .min(3)
             .max(255),
-        gender: yup.string().required('Please choose your gender!'),
-        city: yup.number().required('Please choose your city!'),
-        ward: yup.number().required('Please choose your ward!'),
+        gender: yup.string().required('Please choose your gender!').nullable(),
+        city: yup
+            .number()
+            .required('Please choose your city!')
+            .transform((value) => (isNaN(value) ? undefined : value))
+            .nullable(),
+        ward: yup
+            .number()
+            .required('Please choose your ward!')
+            .transform((value) => (isNaN(value) ? undefined : value))
+            .nullable(),
     })
     .required();
 
@@ -58,7 +65,7 @@ function UploadProfilePage() {
     const dispatch = useDispatch();
 
     const [editMode, setEditMode] = useState(true);
-    const [gender, setGender] = useState(null);
+    const [gender, setGender] = useState();
     const [userName, setUserName] = useState();
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
@@ -96,6 +103,7 @@ function UploadProfilePage() {
 
     const {
         register,
+        control,
         handleSubmit,
         reset,
         formState: { errors },
@@ -206,16 +214,19 @@ function UploadProfilePage() {
     const handleClickBtnEditProf = () => {
         if (
             userName === '' ||
+            fullName === '' ||
             gender?.value === undefined ||
             city?.value === undefined ||
             ward?.value === undefined ||
+            address === undefined ||
             address === ''
         ) {
-            toast.error(messagesToasts.uploadFail, {
+            toast.warning('Please enter all fields', {
                 className: 'toast_message',
             });
             return;
         }
+
         dispatch(
             profileActions.updateProfile({
                 username: userName,
@@ -332,9 +343,6 @@ function UploadProfilePage() {
                                         setFullName(e.target.value)
                                     }
                                 />
-                                <p className="error-active">
-                                    {errors.full_name?.message}
-                                </p>
                             </div>
                         </div>
 
@@ -342,7 +350,7 @@ function UploadProfilePage() {
                             <div className="left-column">
                                 <p className="title">Gender</p>
                             </div>
-                            <div className="right-column">
+                            <div className="right-column select">
                                 <Select
                                     {...register('gender')}
                                     name="gender"
@@ -352,9 +360,14 @@ function UploadProfilePage() {
                                     className="prof-select"
                                     placeholder="Gender"
                                 />
-                                <p className="error-active">
-                                    {errors.gender?.message}
-                                </p>
+
+                                {gender ? (
+                                    ''
+                                ) : (
+                                    <p className="error-active">
+                                        {errors.gender?.message}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
@@ -407,19 +420,24 @@ function UploadProfilePage() {
                             <div className="left-column">
                                 <p className="title">City</p>
                             </div>
-                            <div className="right-column">
+                            <div className="right-column select">
                                 <Select
-                                    {...register('city')}
                                     name="city"
                                     value={city}
+                                    {...register('city')}
                                     options={cityOptions}
                                     onChange={(e) => handleCityChange(e)}
                                     className="prof-select"
                                     placeholder="City"
                                 />
-                                <p className="error-active">
-                                    {errors.city?.message}
-                                </p>
+
+                                {city ? (
+                                    ''
+                                ) : (
+                                    <p className="error-active">
+                                        {errors.city?.message}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
@@ -427,19 +445,24 @@ function UploadProfilePage() {
                             <div className="left-column">
                                 <p className="title">Ward</p>
                             </div>
-                            <div className="right-column">
+                            <div className="right-column select">
                                 <Select
                                     {...register('ward')}
                                     name="ward"
                                     value={ward}
                                     options={wardOptions}
+                                    onChange={(e) => handleWardChange(e)}
                                     className="prof-select"
                                     placeholder="Ward"
-                                    onChange={(e) => handleWardChange(e)}
                                 />
-                                <p className="error-active">
-                                    {errors.ward?.message}
-                                </p>
+
+                                {ward ? (
+                                    ''
+                                ) : (
+                                    <p className="error-active">
+                                        {errors.ward?.message}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
