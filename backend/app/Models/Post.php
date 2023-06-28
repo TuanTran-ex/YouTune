@@ -29,4 +29,11 @@ class Post extends Model
     {
         return $this->users()->withPivot('type', 'content', 'created_at', 'updated_at');
     }
+
+    public function getOwner()
+    {
+        return $this->users()->withPivot('type', 'content', 'created_at', 'updated_at')
+                    ->where('post_users.type', User::USER_POST_TYPES['owner'])
+                    ->first();
+    }
 }

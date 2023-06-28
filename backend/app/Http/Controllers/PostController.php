@@ -27,7 +27,10 @@ class PostController extends ApiController
 
     public function store(CreatePostRequest $request): JsonResponse
     {
-        $newPost = $this->postService->create($request->validated(), $request->file('file'));
+        $newPost = $this->postService->create(
+            $request->validated(),
+            $request->file('file')
+        );
         return $this->resSuccess($newPost);
     }
 
@@ -54,14 +57,9 @@ class PostController extends ApiController
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
-        //
+        $this->postService->delete($id);
+        return $this->resNoContent();
     }
 }

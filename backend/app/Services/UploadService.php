@@ -61,7 +61,7 @@ class UploadService
         }
     }
 
-    private function deleteDumpFile($model): void
+    public function deleteDumpFile($model): void
     {
         $listFiles = $model->upload()->get();
         foreach ($listFiles as $file) {
