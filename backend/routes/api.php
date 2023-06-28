@@ -22,7 +22,9 @@ Route::controller(AuthController::class)
     ->group(function () {
         Route::post('register', 'register');
         Route::post('login', 'login');
+        Route::post('refresh', 'refresh');
         Route::middleware('auth:api')->group(function () {
+            Route::post('logout', 'logout');
             Route::get('profile', 'getProfile');
             Route::patch('profile', 'updateProfile');
             Route::put('profile/password', 'changePassword');
