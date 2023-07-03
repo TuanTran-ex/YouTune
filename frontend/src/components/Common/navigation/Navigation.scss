@@ -30,14 +30,19 @@
             }
         }
     }
-
-    .profile {
-        background-color: none;
+    .nav-item .profile {
+        background-color: transparent;
         .avatar {
             width: 28px;
             height: 28px;
             border-radius: 999px;
             object-fit: cover;
+            &:hover {
+                background-color: transparent;
+            }
+        }
+        &:hover {
+            background-color: transparent;
         }
     }
 }

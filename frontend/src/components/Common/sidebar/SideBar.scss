@@ -1,3 +1,29 @@
+.container {
+    width: 100%;
+    background-color: antiquewhite;
+}
+
+.nav-hzt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    .horizontal {
+        height: var(--nav-height);
+        width: 100%;
+    }
+}
+
+.nav-vtc {
+    height: 100%;
+    z-index: 10;
+    .vertical {
+        width: var(--nav-width);
+        height: 100%;
+    }
+}
+
 .sidebar {
     width: var(--sidebar-width);
     .sidebar-wrapper {
@@ -30,7 +56,8 @@
     padding: 4px 16px;
     margin-bottom: 10px;
     color: #424242;
-
+    background-color: transparent;
+    width: 100%;
     .icon {
         padding-right: 14px;
         font-size: 3.8rem;
@@ -52,6 +79,7 @@
     padding: 8px 16px;
     border-radius: 8px;
     font-size: 1.6rem;
+
     .wrap-avatar {
         padding-right: 10px;
         .avatar {

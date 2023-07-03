@@ -18,10 +18,15 @@ import './Navigation.scss';
 import config from '../../../config';
 import { CiLogout } from 'react-icons/ci';
 import { authActions } from 'features/auth/authSlice';
+import { Modal } from '@mui/material';
+import Create from 'features/create/page/Create';
 
 export function Navigation() {
     const userProfile = useAppSelector(selectProfileData);
     const [avtImage, setAvtImage] = useState();
+    const [createMode, setCreateMode] = useState(
+        localStorage.getItem('create_mode') ?? false,
+    );
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -60,7 +65,16 @@ export function Navigation() {
     const handClickBtnMusic = () => {
         history.push(`${config.routes.music}`);
     };
-    const handClickBtnCreate = () => {};
+
+    const handClickBtnCreate = () => {
+        setCreateMode(true);
+        localStorage.setItem('create_mode', true);
+    };
+
+    const handleClose = () => {
+        setCreateMode(false);
+        localStorage.removeItem('create_mode', false);
+    };
 
     const handleLogout = () => {
         dispatch(authActions.logout());
@@ -118,6 +132,23 @@ export function Navigation() {
                     </div>
                 </Link>
             </li>
+
+            {createMode ? (
+                <div>
+                    <Modal
+                        open={createMode}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <div>
+                            <Create />
+                        </div>
+                    </Modal>
+                </div>
+            ) : (
+                ''
+            )}
 
             {viewPort.width <= 768 ? (
                 ''

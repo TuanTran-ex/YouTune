@@ -11,4 +11,8 @@ export const messagesToasts = {
     updatePasswordSuccess: 'Sucess to update password!',
     updatePasswordFail: 'Fail to update password!',
     updatePasswordFailToIncorrect: 'Old password is incorrect!',
+    createPostSuccess: 'Create post is success!',
+    createPostFail: 'Create post is fail!',
+    deleteSuccess: 'Delete is success!',
+    deleteFail: 'Fail to delete!',
 };

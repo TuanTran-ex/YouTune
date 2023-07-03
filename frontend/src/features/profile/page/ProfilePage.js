@@ -1,24 +1,31 @@
-import { SideBar } from 'components/Common';
+import { LinearProgress } from '@mui/material';
+import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
-import { IoSettingsOutline } from 'react-icons/io5';
+import { authActions } from 'features/auth/authSlice';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
-import './ProfilePage.scss';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import {
     profileActions,
     selectLoading,
     selectProfileData,
 } from '../profileSlice';
-import { useAppSelector } from 'app/hooks';
-import { LinearProgress } from '@mui/material';
+import './ProfilePage.scss';
+import BlockPost from '../components/BlockPost';
+import { BsPlusLg } from 'react-icons/bs';
+import { selectPost } from 'features/create/createPostSlice';
 
 function ProfilePage() {
     const history = useHistory();
     const dispatch = useDispatch();
     const userProfile = useAppSelector(selectProfileData);
     const loading = useAppSelector(selectLoading);
+    const [overlay, setOverlay] = useState(false);
+    const data = useSelector(selectPost);
+
+    const [avtImage, setAvtImage] = useState();
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -36,17 +43,25 @@ function ProfilePage() {
     // Media responsive
     const viewPort = useViewport();
 
+    useEffect(() => {
+        dispatch(profileActions.fetchProfileData());
+    }, []);
+
+    useEffect(() => {
+        setAvtImage(userProfile?.upload?.url);
+    }, [userProfile]);
+
+    const handleClickBtnLogout = () => {
+        dispatch(authActions.logout());
+    };
+
     const handleClickBtnEdit = () => {
         history.push(`${config.routes.uploadProfile}`);
     };
 
-    const handleClickBtnSetting = () => {
-        history.push(`${config.routes.setting}`);
+    const handleCreateNewPost = () => {
+        setOverlay(true);
     };
-
-    useEffect(() => {
-        dispatch(profileActions.fetchProfileData());
-    }, []);
 
     return (
         <div className="prof-wrapper">
@@ -60,7 +75,7 @@ function ProfilePage() {
                 <div className="header-prof">
                     <div className="avatar-wrap">
                         <Image
-                            src="https://i.pinimg.com/originals/c2/a5/e2/c2a5e2156eeb68abbbfe01e68ef41d54.jpg"
+                            src={avtImage ?? thumbnail}
                             alt="avatar"
                             className="avatar"
                         />
@@ -73,16 +88,19 @@ function ProfilePage() {
                                     {userProfile?.username}
                                 </p>
                                 <button
-                                    to="/profile/upload"
                                     className="btn-edit"
                                     onClick={handleClickBtnEdit}
                                 >
-                                    <p>Edit profile</p>
+                                    Edit profile
                                 </button>
-                                <div className="options">
-                                    <IoSettingsOutline className="icon" />
-                                    <p>options</p>
-                                </div>
+
+                                <button
+                                    to="/logout"
+                                    className="btn-logout"
+                                    onClick={handleClickBtnLogout}
+                                >
+                                    Logout
+                                </button>
                             </div>
                         ) : (
                             ''
@@ -116,16 +134,27 @@ function ProfilePage() {
                         </button>
                         <button
                             className="btn-setting"
-                            onClick={handleClickBtnSetting}
+                            onClick={handleClickBtnLogout}
                         >
-                            <p>Setting profile</p>
+                            <p>Logout</p>
                         </button>
                     </div>
                 ) : (
                     ''
                 )}
-
-                <div className="posts"></div>
+            </div>
+            <div className="create-post">
+                <p className="icon-wrap" onClick={handleCreateNewPost}>
+                    <BsPlusLg className="plus-icon" />
+                </p>
+                <p className="text">New post</p>
+            </div>
+            <div className="posts">
+                <BlockPost
+                    data={data}
+                    avatar={avtImage}
+                    username={userProfile?.username}
+                />
             </div>
         </div>
     );

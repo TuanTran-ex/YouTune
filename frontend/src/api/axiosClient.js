@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authApi from './authApi';
 
 const axiosClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -22,8 +23,11 @@ axiosClient.interceptors.response.use(
         }
         return response;
     },
-    (error) => {
-        throw error;
+    async (error) => {
+        if (error.response.data.code === 1) {
+            const refresh = await authApi.refreshToken();
+            localStorage.setItem('access_token', refresh.data.token);
+        }
     },
 );
 

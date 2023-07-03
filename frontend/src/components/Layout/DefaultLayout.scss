@@ -1,32 +1,8 @@
 .wrapper-layout {
     display: flex;
 }
-.sidebar-wapper {
-    width: 245px;
-}
 
 .children-wrapper {
     width: 100%;
     margin-bottom: 40px;
-}
-
-.nav-hzt {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 10;
-    .horizontal {
-        height: var(--nav-height);
-        width: 100%;
-    }
-}
-
-.nav-vtc {
-    height: 100%;
-    z-index: 10;
-    .vertical {
-        width: var(--nav-width);
-        height: 100%;
-    }
 }
