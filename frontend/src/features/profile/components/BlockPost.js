@@ -22,7 +22,6 @@ function BlockPost({ avatar, username, data }) {
     };
 
     const userInfo = data;
-    console.log(userInfo);
 
     return (
         <div className="post-container">

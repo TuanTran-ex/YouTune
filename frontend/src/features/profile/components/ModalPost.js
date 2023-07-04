@@ -47,7 +47,6 @@ function ModalPost({ avatar, username }) {
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
-        console.log(e);
     };
 
     const handleShowMoreText = () => {
@@ -59,7 +58,6 @@ function ModalPost({ avatar, username }) {
     useLayoutEffect(() => {
         if (divref.current.offsetHeight > 40) {
             setElementHeight(true);
-            console.log(ref.current.offsetHeight);
         } else {
             setElementHeight(false);
         }
