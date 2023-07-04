@@ -53,7 +53,6 @@ class PostService
             logger($th);
             throw $th;
         }
-
     }
     public function delete($id): void
     {

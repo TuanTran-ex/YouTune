@@ -50,7 +50,6 @@ class PostController extends ApiController
         $data = $request->validated();
         $updatedPost = $this->postService->update($id, $data);
         return $this->resSuccess($updatedPost);
-
     }
 
     public function destroy($id): JsonResponse
