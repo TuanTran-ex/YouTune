@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Services\PostService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class PostController extends ApiController
 {
@@ -45,16 +45,12 @@ class PostController extends ApiController
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, $id): JsonResponse
     {
-        //
+        $data = $request->validated();
+        $updatedPost = $this->postService->update($id, $data);
+        return $this->resSuccess($updatedPost);
+
     }
 
     public function destroy($id): JsonResponse

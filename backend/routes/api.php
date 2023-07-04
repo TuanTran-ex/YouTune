@@ -43,6 +43,7 @@ Route::controller(PostController::class)
     ->middleware('auth:api')
     ->group(function () {
         Route::post('/', 'store');
+        Route::patch('/{id}', 'update');
         Route::delete('/{id}', 'destroy');
     });
 
