@@ -8,6 +8,7 @@ use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class AuthController extends ApiController
 {
@@ -41,7 +42,7 @@ class AuthController extends ApiController
     {
         try {
             $credentials = $request->validated();
-            if (! $token = auth()->attempt($credentials)) {
+            if (!$token = auth()->attempt($credentials)) {
                 return $this->resUnauthorized();
             }
 
@@ -78,9 +79,11 @@ class AuthController extends ApiController
         auth()->logout();
         return $this->resSuccess(null);
     }
-    public function getProfile(): JsonResponse
+    public function getProfile(Request $request): JsonResponse
     {
-        $user = $this->userService->getProfile();
+        $user = !empty($request->query('full-data')) ?
+            $this->userService->getProfileWithPosts() :
+            $this->userService->getProfile();
         return $this->resSuccess($user);
     }
 
