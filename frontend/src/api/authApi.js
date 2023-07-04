@@ -18,7 +18,7 @@ class AuthApi {
     };
 
     refreshToken = () => {
-        const url = '/auth/refresh';
+        const url = `${config.apiRoutes.refreshToken}`;
         return axiosClient.post(url);
     };
 }

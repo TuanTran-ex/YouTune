@@ -21,5 +21,6 @@ export const apiRoutes = {
     message: 'auth/message',
     posts: '/posts',
     deletePost: '/posts/:id',
+    refreshToken: '/auth/refresh',
 };
 export default routes;

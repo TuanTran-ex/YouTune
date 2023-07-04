@@ -53,6 +53,7 @@ export function SideBar() {
     // Media responsive
     const viewPort = useViewport();
     const isXM = viewPort.width < 769;
+    const isM = 1300;
 
     useEffect(() => {
         dispatch(profileActions.fetchProfileData());
@@ -105,11 +106,11 @@ export function SideBar() {
 
     return (
         <div className="container">
-            {viewPort.width <= 1300 ? (
+            {viewPort.width <= isM ? (
                 <div className={isXM ? 'nav-hzt' : 'nav-vtc'}>
                     <div className={isXM ? 'horizontal' : 'vertical'}>
                         <ul className="nav-list">
-                            {viewPort.width <= 768 ? (
+                            {viewPort.width < isXM ? (
                                 ''
                             ) : (
                                 <div className="logo">

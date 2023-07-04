@@ -1,5 +1,6 @@
 import axios from 'axios';
 import authApi from './authApi';
+import { codeError } from 'utils/codeError';
 
 const axiosClient = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
@@ -24,7 +25,7 @@ axiosClient.interceptors.response.use(
         return response;
     },
     async (error) => {
-        if (error.response.data.code === 1) {
+        if (error.response.data.code === codeError) {
             const refresh = await authApi.refreshToken();
             localStorage.setItem('access_token', refresh.data.token);
         }
