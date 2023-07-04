@@ -53,8 +53,6 @@ export function SideBar() {
 
     // Media responsive
     const viewPort = useViewport();
-    // const isXM = viewPort.width < 769;
-    // const isM = 1300;
 
     useEffect(() => {
         dispatch(profileActions.fetchProfileData());
