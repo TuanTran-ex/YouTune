@@ -23,6 +23,7 @@ import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
 import '../navigation/Navigation.scss';
 import './SideBar.scss';
+import { isM, isXM } from 'utils/mediaResponse';
 
 export function SideBar() {
     const dispatch = useDispatch();
@@ -52,8 +53,8 @@ export function SideBar() {
 
     // Media responsive
     const viewPort = useViewport();
-    const isXM = viewPort.width < 769;
-    const isM = 1300;
+    // const isXM = viewPort.width < 769;
+    // const isM = 1300;
 
     useEffect(() => {
         dispatch(profileActions.fetchProfileData());
@@ -107,10 +108,14 @@ export function SideBar() {
     return (
         <div className="container">
             {viewPort.width <= isM ? (
-                <div className={isXM ? 'nav-hzt' : 'nav-vtc'}>
-                    <div className={isXM ? 'horizontal' : 'vertical'}>
+                <div className={viewPort.width <= isXM ? 'nav-hzt' : 'nav-vtc'}>
+                    <div
+                        className={
+                            viewPort.width <= isXM ? 'horizontal' : 'vertical'
+                        }
+                    >
                         <ul className="nav-list">
-                            {viewPort.width < isXM ? (
+                            {viewPort.width <= isXM ? (
                                 ''
                             ) : (
                                 <div className="logo">
