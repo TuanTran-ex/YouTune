@@ -29,6 +29,13 @@ class UserService
         $user = $user->with(['upload', 'address.ward.city'])->findOrFail($user->id);
         return new UserResource($user);
     }
+    public function getProfileWithPosts()
+    {
+        $user = auth()->user();
+        $user = $user->with(['upload', 'address.ward.city', 'posts.upload', 'friends'])
+                    ->findOrFail($user->id);
+        return new UserResource($user);
+    }
 
     public function updateProfile($data): UserResource
     {

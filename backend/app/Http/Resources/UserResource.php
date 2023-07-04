@@ -17,6 +17,10 @@ class UserResource extends JsonResource
         return [
             ...parent::toArray($request),
             'upload' => new FileUploadResource($this->upload),
+            'posts' => array_key_exists(
+                'posts',
+                parent::toArray($request)
+            ) ? new PostCollection($this->posts) : [],
         ];
     }
 }
