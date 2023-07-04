@@ -19,7 +19,7 @@ class PostService
         $this->uploadService = $uploadService;
     }
 
-    public function create($data, $file)
+    public function create($data, $file): PostResource
     {
         try {
             DB::beginTransaction();
@@ -42,19 +42,36 @@ class PostService
             throw $th;
         }
     }
+    public function update($id, $data): PostResource
+    {
+        try {
+            $post = $this->getIfOwner($id);
+            $post->content = $data['content'];
+            $post->save();
+            return new PostResource($post);
+        } catch (\Throwable $th) {
+            logger($th);
+            throw $th;
+        }
+    }
     public function delete($id): void
     {
         try {
-            $post = $this->post->findOrFail($id);
-            $owner = $post->getOwner();
-            if (auth()->user()->id !== $owner->id) {
-                throw new AuthorizationException();
-            }
+            $post = $this->getIfOwner($id);
             $this->uploadService->deleteDumpFile($post);
             $post->delete();
         } catch (\Throwable $th) {
             logger($th);
             throw $th;
         }
+    }
+    public function getIfOwner($id)
+    {
+        $post = $this->post->findOrFail($id);
+        $owner = $post->getOwner();
+        if (auth()->user()->id !== $owner->id) {
+            throw new AuthorizationException();
+        }
+        return $post;
     }
 }
