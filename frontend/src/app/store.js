@@ -6,12 +6,14 @@ import { history } from 'utils';
 import authReducer from '../features/auth/authSlice';
 import rootSaga from './rootSaga';
 import cityReducer from 'features/city/citySlice';
+import createPostReducer from 'features/create/createPostSlice';
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
     auth: authReducer,
     profile: profileReducer,
     city: cityReducer,
+    createPost: createPostReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

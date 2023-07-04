@@ -16,6 +16,11 @@ class AuthApi {
         const url = `${config.apiRoutes.register}`;
         return axiosClient.post(url, params.payload);
     };
+
+    refreshToken = () => {
+        const url = `${config.apiRoutes.refreshToken}`;
+        return axiosClient.post(url);
+    };
 }
 
 const authApi = new AuthApi();

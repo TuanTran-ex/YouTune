@@ -1,11 +1,13 @@
 .prof-wrapper {
     width: 100%;
 }
+
 .prof__main-block {
     display: flex;
     flex: 1;
     width: calc(100% - var(--sidebar-width));
-    padding: 30px 120px;
+    margin: 0 auto;
+    padding: 30px 88px;
 }
 
 .header-prof {
@@ -15,7 +17,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-right: 20px;
+        margin-right: 60px;
         .avatar {
             width: 120px;
             height: 120px;
@@ -36,7 +38,7 @@
         .user-name {
             font-size: 2rem;
             color: #424242;
-            margin-right: 6px;
+            margin-right: 10px;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
@@ -45,40 +47,22 @@
                 cursor: pointer;
             }
         }
-        .btn-edit {
+        .btn-edit,
+        .btn-logout {
             padding: 10px 16px;
             font-size: 1.4rem;
+            font-weight: 500;
             text-align: center;
             background-color: #f2f3f5;
             border-radius: 6px;
-            font-weight: 500;
-            margin: 0 12px;
+            margin-right: 10px;
+            color: #4d4d4d;
         }
 
-        .btn-edit:hover {
+        .btn-edit:hover,
+        .btn-logout:hover {
             cursor: pointer;
             background-color: #dbdbdb;
-        }
-
-        .options {
-            .icon {
-                font-size: 2.8rem;
-            }
-            &:hover {
-                position: relative;
-                cursor: pointer;
-                p {
-                    display: block;
-                }
-            }
-            p {
-                display: none;
-                position: absolute;
-                left: 10px;
-                padding: 4px 8px;
-                border-radius: 6px;
-                border: 1px solid #f2f2f2;
-            }
         }
     }
     .row-2 {
@@ -90,7 +74,7 @@
             display: flex;
             margin-right: 30px;
             .quantity {
-                font-weight: 500;
+                font-weight: 600;
                 margin-right: 8px;
             }
         }
@@ -103,23 +87,104 @@
         }
     }
 }
+
+.create-post {
+    margin-top: 26px;
+    width: calc(100% - var(--sidebar-width));
+    margin: 0 auto;
+    padding: 30px 88px;
+    .icon-wrap {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1px solid #000;
+        .plus-icon {
+            font-size: 4rem;
+            fill: #000;
+        }
+
+        &:hover {
+            background-color: transparent;
+            border-color: #abc7f8;
+            cursor: pointer;
+            .plus-icon {
+                fill: #abc7f8;
+            }
+        }
+    }
+    .text {
+        width: 80px;
+        text-align: center;
+        margin-top: 8px;
+        font-size: 1.3rem;
+        color: #4d4d4d;
+    }
+}
+
+.posts {
+    width: calc(100% - var(--sidebar-width));
+    margin: 0 auto;
+}
+
 @media (min-width: 769px) and (max-width: 1200px) {
     .prof__main-block {
         width: 100%;
-        padding: 30px 14px;
+        padding: 30px 60px;
+    }
+
+    .create-post {
+        margin: 0 !important;
+        padding: 20px 60px;
+        .icon-wrap {
+            width: 70px;
+            height: 70px;
+            .plus-icon {
+                font-size: 3.2rem;
+            }
+        }
+        .text {
+            width: 74px;
+        }
+    }
+
+    .posts {
+        width: 100%;
     }
 }
 
 @media only screen and (max-width: 768px) {
     .prof__main-block {
         width: 100%;
-        padding: 20px;
+        padding: 20px 60px;
+    }
+
+    .create-post {
+        margin: 0 !important;
+        padding: 20px 60px;
+        .icon-wrap {
+            width: 64px;
+            height: 64px;
+            .plus-icon {
+                font-size: 2.8rem;
+            }
+        }
+        .text {
+            width: 64px;
+            font-size: 1.2rem;
+        }
+    }
+    .posts {
+        width: 100%;
     }
 }
 
 @media (max-width: 576px) {
     .prof__main-block {
         flex-direction: column;
+        padding: 20px;
     }
 
     .user-name {
@@ -150,19 +215,13 @@
                     font-size: 1.2rem;
                 }
             }
-
-            .options {
-                .icon {
-                    font-size: 2.3rem;
-                }
-            }
         }
         .row-2 {
             .post,
             .followers,
             .following {
                 display: block;
-                margin-right: 10px;
+                margin-right: 16px;
                 margin-top: 0;
                 text-align: center;
                 font-size: 1.4rem;
@@ -192,5 +251,24 @@
                 background-color: #dbdbdb;
             }
         }
+    }
+
+    .create-post {
+        margin: 0 !important;
+        padding: 20px;
+        .icon-wrap {
+            width: 50px;
+            height: 50px;
+            .plus-icon {
+                font-size: 1.8rem;
+            }
+        }
+        .text {
+            width: 60px;
+            text-align: start;
+        }
+    }
+    .posts {
+        width: 100%;
     }
 }

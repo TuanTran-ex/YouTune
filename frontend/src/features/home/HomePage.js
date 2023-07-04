@@ -1,6 +1,7 @@
 import { Navigation, SideBar } from 'components/Common';
 import './HomePage.scss';
 import React from 'react';
+import { isM, isXM } from 'utils/mediaResponse';
 
 function HomePage() {
     const useViewport = () => {
@@ -16,12 +17,11 @@ function HomePage() {
         return { width };
     };
     const viewPort = useViewport();
-    const isXM = viewPort.width <= 768;
 
     return (
         <div className="root">
-            {viewPort.width <= 1300 ? (
-                isXM ? (
+            {viewPort.width <= isM ? (
+                viewPort.width <= isXM ? (
                     <div className="nav-hzt">
                         <div className="horizontal">
                             <Navigation />

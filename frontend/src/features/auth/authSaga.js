@@ -21,6 +21,7 @@ function* handleLogin(payload) {
 
 function* handleLogout() {
     localStorage.removeItem('access_token');
+    yield call(authApi.logout);
     yield put(push(`${config.routes.login}`));
 }
 
