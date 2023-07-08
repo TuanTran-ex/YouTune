@@ -19,11 +19,11 @@ import { MdOutlineLibraryMusic } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { isM, isXM } from 'utils/mediaResponse';
 import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
 import '../navigation/Navigation.scss';
 import './SideBar.scss';
-import { isM, isXM } from 'utils/mediaResponse';
 
 export function SideBar() {
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ export function SideBar() {
     const [open, setOpen] = useState(
         localStorage.getItem('create_mode') ? true : false,
     );
-    const data = useAppSelector(selectPost);
+    const getData = useAppSelector(selectPost);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -67,15 +67,18 @@ export function SideBar() {
     };
 
     const handleClickBtnSearch = () => {
+        localStorage.removeItem('id_image');
         setSearchMode(true);
     };
 
     const handleClickBtnNotifi = () => {
+        localStorage.removeItem('id_image');
         setNotifiMode(true);
     };
 
     const handClickBtnCreate = () => {
         setOpen(true);
+        localStorage.removeItem('id_image');
         localStorage.setItem('create_mode', true);
     };
 
@@ -86,22 +89,25 @@ export function SideBar() {
 
     //For nav
     const handClickBtnMusic = () => {
+        localStorage.removeItem('id_image');
         history.push(`${config.routes.listMusic}`);
     };
 
     const handClickBtnMessage = () => {
+        localStorage.removeItem('id_image');
         history.push(`${config.routes.message}`);
     };
 
     const handleClickBtnHome = () => {
+        localStorage.removeItem('id_image');
         history.push('/');
     };
 
     useEffect(() => {
-        if (data !== undefined) {
+        if (getData === true) {
             handleClose();
         }
-    }, [data]);
+    }, [getData]);
 
     return (
         <div className="container">
@@ -162,6 +168,9 @@ export function SideBar() {
                                 <Link
                                     to={config.routes.profile}
                                     className="profile"
+                                    onClick={() => {
+                                        localStorage.removeItem('id_image');
+                                    }}
                                 >
                                     <Image
                                         src={avtImage ?? thumbnail}
@@ -178,7 +187,13 @@ export function SideBar() {
                     <div className="sidebar-wrapper">
                         <div className="main-ffc">
                             <div className="logo">YouTune</div>
-                            <Link to="/" className="sidebar__row home">
+                            <Link
+                                to="/"
+                                className="sidebar__row home"
+                                onClick={() => {
+                                    localStorage.removeItem('id_image');
+                                }}
+                            >
                                 <IoHomeOutline className="icon" />
                                 <p>Trang chủ</p>
                             </Link>
@@ -192,6 +207,9 @@ export function SideBar() {
                             <Link
                                 to={config.routes.message}
                                 className="sidebar__row messages"
+                                onClick={() => {
+                                    localStorage.removeItem('id_image');
+                                }}
                             >
                                 <BiMessageRounded className="icon" />
                                 <p>Trò chuyện</p>
@@ -206,6 +224,9 @@ export function SideBar() {
                             <Link
                                 to={config.routes.listMusic}
                                 className="sidebar__row notifications"
+                                onClick={() => {
+                                    localStorage.removeItem('id_image');
+                                }}
                             >
                                 <MdOutlineLibraryMusic className="icon" />
                                 <p>Nhạc của tôi</p>
@@ -220,6 +241,9 @@ export function SideBar() {
                             <Link
                                 to={config.routes.profile}
                                 className="profile"
+                                onClick={() => {
+                                    localStorage.removeItem('id_image');
+                                }}
                             >
                                 <div className="wrap-avatar">
                                     <Image
@@ -249,10 +273,7 @@ export function SideBar() {
                         aria-describedby="modal-modal-description"
                     >
                         <div>
-                            <Create
-                                avatar={avtImage}
-                                username={userProfile?.username}
-                            />
+                            <Create />
                         </div>
                     </Modal>
                 </div>

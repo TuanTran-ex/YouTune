@@ -3,28 +3,26 @@ import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
 import { authActions } from 'features/auth/authSlice';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { BsPlusLg } from 'react-icons/bs';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { isS } from 'utils/mediaResponse';
 import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
+import BlockPost from '../components/BlockPost';
 import {
     profileActions,
     selectLoading,
     selectProfileData,
 } from '../profileSlice';
 import './ProfilePage.scss';
-import BlockPost from '../components/BlockPost';
-import { BsPlusLg } from 'react-icons/bs';
-import { selectPost } from 'features/create/createPostSlice';
 
 function ProfilePage() {
     const history = useHistory();
     const dispatch = useDispatch();
+
     const userProfile = useAppSelector(selectProfileData);
     const loading = useAppSelector(selectLoading);
-    const [overlay, setOverlay] = useState(false);
-    const data = useSelector(selectPost);
-
     const [avtImage, setAvtImage] = useState();
 
     const useViewport = () => {
@@ -59,15 +57,11 @@ function ProfilePage() {
         history.push(`${config.routes.uploadProfile}`);
     };
 
-    const handleCreateNewPost = () => {
-        setOverlay(true);
-    };
-
     return (
         <div className="prof-wrapper">
             {loading && <LinearProgress className="loading" />}
             <div className="prof__main-block">
-                {viewPort.width <= 576 ? (
+                {viewPort.width <= isS ? (
                     <p className="user-name">{userProfile?.username}</p>
                 ) : (
                     ''
@@ -82,7 +76,7 @@ function ProfilePage() {
                     </div>
 
                     <div className="info">
-                        {viewPort.width > 576 ? (
+                        {viewPort.width > isS ? (
                             <div className="row-1">
                                 <p className="user-name">
                                     {userProfile?.username}
@@ -124,7 +118,7 @@ function ProfilePage() {
                     </div>
                 </div>
 
-                {viewPort.width <= 576 ? (
+                {viewPort.width <= isS ? (
                     <div className="btn-wrap">
                         <button
                             className="btn-edit"
@@ -144,14 +138,14 @@ function ProfilePage() {
                 )}
             </div>
             <div className="create-post">
-                <p className="icon-wrap" onClick={handleCreateNewPost}>
+                <p className="icon-wrap">
                     <BsPlusLg className="plus-icon" />
                 </p>
                 <p className="text">New post</p>
             </div>
             <div className="posts">
                 <BlockPost
-                    data={data}
+                    infoUpload={userProfile}
                     avatar={avtImage}
                     username={userProfile?.username}
                 />

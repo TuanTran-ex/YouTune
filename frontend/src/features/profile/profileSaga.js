@@ -6,7 +6,10 @@ import { messagesToasts } from 'constants/messageToast';
 
 function* handleGetUserProfile() {
     try {
-        const response = yield call(profileApi.getProfile);
+        const params = {
+            'full-data': 'true',
+        };
+        const response = yield call(profileApi.getProfile, params);
         yield put(profileActions.fetchProfileDataSuccess(response.data));
     } catch (error) {
         console.log(error);

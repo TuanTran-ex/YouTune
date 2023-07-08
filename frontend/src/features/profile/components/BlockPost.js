@@ -1,27 +1,48 @@
 import Image from 'components/Image/Images';
 import { BsPostcard } from 'react-icons/bs';
 import './BlockPost.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal } from '@mui/material';
 import ModalPost from './ModalPost';
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
-function BlockPost({ avatar, username, data }) {
+function BlockPost({ infoUpload, avatar, username }) {
     const [onMode, setOnMode] = useState(true);
     const [open, setOpen] = useState(
         localStorage.getItem('show_post') ? true : false,
     );
+    const [idImage, setIdImage] = useState(0);
+    const [listPosts, setListPosts] = useState([]);
 
-    const handleOpen = () => {
+    const handleOpen = (item) => {
         setOpen(true);
         localStorage.setItem('show_post', true);
+        localStorage.setItem('id_image', listPosts.indexOf(item));
+        setIdImage(listPosts.indexOf(item));
     };
 
     const handleClose = () => {
         setOpen(false);
         localStorage.removeItem('show_post');
+        localStorage.removeItem('id_image');
     };
 
-    const userInfo = data;
+    useEffect(() => {
+        if (infoUpload?.posts) {
+            setListPosts([...infoUpload?.posts].reverse());
+        }
+    }, [infoUpload]);
+
+    const handleClickPrevPost = () => {
+        localStorage.setItem('id_image', idImage - 1);
+        setIdImage(idImage - 1);
+    };
+
+    const handleClickNextPost = () => {
+        localStorage.setItem('id_image', idImage + 1);
+        setIdImage(idImage + 1);
+    };
 
     return (
         <div className="post-container">
@@ -41,53 +62,22 @@ function BlockPost({ avatar, username, data }) {
             </ul>
             <div className="post__content">
                 <ul className="post-list">
-                    <li className="post" onClick={handleOpen}>
-                        <Image
-                            src="https://i.pinimg.com/originals/92/98/d3/9298d3930ebcf5436611d91d4cda2b0a.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                        <p className="overlay"></p>
-                    </li>
-
-                    <li className="post">
-                        <Image
-                            src="https://e0.pxfuel.com/wallpapers/970/432/desktop-wallpaper-awesome-beautiful-lit-aesthetic-pinterest-nature-thumbnail.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                        <p className="overlay"></p>
-                    </li>
-                    <li className="post">
-                        <Image
-                            src="https://e0.pxfuel.com/wallpapers/970/432/desktop-wallpaper-awesome-beautiful-lit-aesthetic-pinterest-nature-thumbnail.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                    </li>
-
-                    <li className="post">
-                        <Image
-                            src="https://i.pinimg.com/originals/92/98/d3/9298d3930ebcf5436611d91d4cda2b0a.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                        <p className="overlay"></p>
-                    </li>
-                    <li className="post">
-                        <Image
-                            src="https://e0.pxfuel.com/wallpapers/970/432/desktop-wallpaper-awesome-beautiful-lit-aesthetic-pinterest-nature-thumbnail.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                    </li>
-                    <li className="post">
-                        <Image
-                            src="https://e0.pxfuel.com/wallpapers/970/432/desktop-wallpaper-awesome-beautiful-lit-aesthetic-pinterest-nature-thumbnail.jpg"
-                            alt="post picture"
-                            className="image-post"
-                        />
-                    </li>
+                    {listPosts?.length > 0
+                        ? listPosts.map((item) => (
+                              <li
+                                  key={item.id}
+                                  className="post"
+                                  onClick={() => handleOpen(item)}
+                              >
+                                  <Image
+                                      src={item?.upload?.url}
+                                      alt="post picture"
+                                      className="image-post"
+                                  />
+                                  <p className="overlay"></p>
+                              </li>
+                          ))
+                        : ''}
                 </ul>
             </div>
             {open ? (
@@ -99,11 +89,29 @@ function BlockPost({ avatar, username, data }) {
                         aria-describedby="modal-modal-description"
                     >
                         <div>
+                            {idImage > 0 ? (
+                                <KeyboardArrowLeftIcon
+                                    className="item-icon arrow-left"
+                                    onClick={handleClickPrevPost}
+                                />
+                            ) : (
+                                ''
+                            )}
                             <ModalPost
-                                data={data}
                                 avatar={avatar}
                                 username={username}
+                                image={listPosts?.[idImage]?.upload?.url}
+                                content={listPosts?.[idImage]?.content}
+                                time_posted={listPosts?.[idImage]?.created_at}
                             />
+                            {idImage < listPosts?.length - 1 ? (
+                                <KeyboardArrowRightIcon
+                                    className="item-icon arrow-right"
+                                    onClick={handleClickNextPost}
+                                />
+                            ) : (
+                                ''
+                            )}
                         </div>
                     </Modal>
                 </div>

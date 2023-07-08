@@ -2,23 +2,38 @@ import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import { Button, Dialog } from '@mui/material';
+import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
+import {
+    profileActions,
+    selectProfileData,
+} from 'features/profile/profileSlice';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import musicIcon from '../../../components/Image/musicIcon.png';
 import { createPostActions } from '../createPostSlice';
 import './Create.scss';
 
-function Create({ avatar, username }) {
+function Create() {
     const dispatch = useDispatch();
+    const userProfile = useAppSelector(selectProfileData);
 
     const [image, setImage] = useState();
+    const [avtImage, setAvtImage] = useState();
     const [indexImage, setIndexImage] = useState(0);
     const [showDialog, setShowDialog] = useState(false);
     const [listUpload, setListUpload] = useState([]);
     const [showBlockRightHand, setShowBlockRightHand] = useState(false);
     const [hideText, setHideText] = useState(false);
     const [inputValue, setInputValue] = useState('');
+
+    useEffect(() => {
+        dispatch(profileActions.fetchProfileData());
+    }, []);
+
+    useEffect(() => {
+        setAvtImage(userProfile?.upload?.url);
+    }, [userProfile]);
 
     const handleUpload = (e) => {
         const file = e.target.files[0];
@@ -239,11 +254,11 @@ function Create({ avatar, username }) {
                     <div className="right-content">
                         <div className="right__header">
                             <Image
-                                src={avatar}
+                                src={avtImage}
                                 alt="avatar picture"
                                 className="avt-img"
                             />
-                            <p className="username">{username}</p>
+                            <p className="username">{userProfile?.username}</p>
                         </div>
                         <div className="right__caption">
                             {hideText ? (
