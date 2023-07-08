@@ -2,9 +2,11 @@ import config from '../config';
 import axiosClient from './axiosClient';
 
 class ProfileApi {
-    getProfile = () => {
+    getProfile = (params) => {
         const url = `${config.apiRoutes.profile}`;
-        return axiosClient.get(url);
+        return axiosClient.get(url, {
+            params: params,
+        });
     };
 
     updateProfile = (params) => {

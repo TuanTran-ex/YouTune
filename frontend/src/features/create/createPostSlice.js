@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    data: undefined,
+    response: false,
 };
 
 const createPostSlice = createSlice({
@@ -10,7 +10,8 @@ const createPostSlice = createSlice({
     reducers: {
         createNewPost(state, action) {},
         deletePost(state, action) {},
-        fetchPostCreate(state, action) {
+        createNewPostSuccess(state, action) {
+            state.response = true;
             state.data = action.payload;
         },
     },
@@ -20,7 +21,7 @@ const createPostSlice = createSlice({
 export const createPostActions = createPostSlice.actions;
 
 // Selectors
-export const selectPost = (state) => state.createPost.data;
+export const selectPost = (state) => state.createPost.response;
 
 // Reducer
 const createPostReducer = createPostSlice.reducer;

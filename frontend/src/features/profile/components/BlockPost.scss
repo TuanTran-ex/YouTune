@@ -6,6 +6,7 @@
 .post__header-list {
     display: flex;
     border-top: 1px solid #dedfe2;
+    border-bottom: 1px solid #dedfe2;
     align-items: center;
     justify-content: center;
     .item {
@@ -67,6 +68,33 @@
         }
     }
 }
+.item-icon {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem !important;
+    fill: #000 !important;
+    width: 40px;
+    height: 40px;
+    background-color: #f2f3f4;
+    border-radius: 999px;
+    z-index: 1;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.02);
+    }
+}
+.arrow-left {
+    left: 30px;
+}
+
+.arrow-right {
+    right: 30px;
+}
 
 .footer {
     margin-top: 40px;
@@ -122,5 +150,25 @@
                 height: 120px;
             }
         }
+    }
+    .item-icon {
+        font-size: 2.4rem !important;
+    }
+    .arrow-left {
+        left: 4px;
+    }
+
+    .arrow-right {
+        right: 4px;
+    }
+}
+
+@media (max-width: 320px) {
+    .arrow-right {
+        right: 3px;
+    }
+
+    .arrow-left {
+        left: 3px;
     }
 }

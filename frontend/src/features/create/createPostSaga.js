@@ -9,8 +9,8 @@ import config from 'config';
 function* handleCreateNewPost(payload) {
     try {
         const response = yield call(createApi.createPost, payload.payload);
-        yield put(createPostActions.fetchPostCreate(response));
-        if (response !== undefined) {
+        yield put(createPostActions.createNewPostSuccess(response));
+        if (response.data) {
             yield put(push(`${config.routes.profile}`));
             yield messageSuccess(messagesToasts.createPostSuccess);
         }
