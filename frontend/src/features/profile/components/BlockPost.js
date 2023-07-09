@@ -1,13 +1,17 @@
-import Image from 'components/Image/Images';
-import { BsPostcard } from 'react-icons/bs';
-import './BlockPost.scss';
-import { useEffect, useState } from 'react';
-import { Modal } from '@mui/material';
-import ModalPost from './ModalPost';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { Modal } from '@mui/material';
+import Image from 'components/Image/Images';
+import { selectDeleteMode } from 'features/create/createPostSlice';
+import { useEffect, useState } from 'react';
+import { BsPostcard } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
+import './BlockPost.scss';
+import ModalPost from './ModalPost';
 
 function BlockPost({ infoUpload, avatar, username }) {
+    const isDeleteMode = useSelector(selectDeleteMode);
+
     const [onMode, setOnMode] = useState(true);
     const [open, setOpen] = useState(
         localStorage.getItem('show_post') ? true : false,
@@ -43,6 +47,12 @@ function BlockPost({ infoUpload, avatar, username }) {
         localStorage.setItem('id_image', idImage + 1);
         setIdImage(idImage + 1);
     };
+
+    useEffect(() => {
+        if (isDeleteMode) {
+            handleClose();
+        }
+    }, [isDeleteMode]);
 
     return (
         <div className="post-container">
@@ -98,6 +108,7 @@ function BlockPost({ infoUpload, avatar, username }) {
                                 ''
                             )}
                             <ModalPost
+                                id={listPosts?.[idImage]?.id}
                                 avatar={avatar}
                                 username={username}
                                 image={listPosts?.[idImage]?.upload?.url}

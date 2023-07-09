@@ -19,6 +19,19 @@ function* handleCreateNewPost(payload) {
     }
 }
 
+function* handleDeletePost(payload) {
+    try {
+        const response = yield call(createApi.deletePost, payload.payload);
+        if (response) {
+            yield put(createPostActions.deletePostSuccess());
+            yield messageSuccess(messagesToasts.deleteSuccess);
+        }
+    } catch (error) {
+        yield messageError(messagesToasts.deleteFail);
+    }
+}
+
 export default function* createPostSaga() {
     yield takeLatest(createPostActions.createNewPost, handleCreateNewPost);
+    yield takeLatest(createPostActions.deletePost, handleDeletePost);
 }
