@@ -5,22 +5,33 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import { Dialog } from '@mui/material';
+import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
-import React, { useRef, useState } from 'react';
+import {
+    createPostActions,
+    selectDeleteMode,
+} from 'features/create/createPostSlice';
+import React, { useEffect, useRef, useState } from 'react';
 import { FaRegCommentAlt } from 'react-icons/fa';
 import { LuSmile } from 'react-icons/lu';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import ShowMoreText from 'react-show-more-text';
 import { isXM } from 'utils/mediaResponse';
 import './ModalPost.scss';
 
-function ModalPost({ avatar, username, image, content, time_posted }) {
+function ModalPost({ id, avatar, username, image, content, time_posted }) {
+    const ref = useRef(null);
+    const dispatch = useDispatch();
+
+    const isDeleteMode = useAppSelector(selectDeleteMode);
     const [isPickerVisible, setIsPickerVisible] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [likeState, setLikeState] = useState(false);
     const [showBtnPost, setShowBtnPost] = useState(false);
-
-    const ref = useRef(null);
+    const [showDialog, setShowDialog] = useState(false);
+    const [deleteMode, setDeleteMode] = useState(false);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -56,6 +67,15 @@ function ModalPost({ avatar, username, image, content, time_posted }) {
         if (e.code === 'Enter') e.preventDefault();
     };
 
+    const handleDeletePost = () => {
+        setDeleteMode(true);
+        dispatch(createPostActions.deletePost(id));
+    };
+
+    useEffect(() => {
+        if (isDeleteMode === true) window.location.reload();
+    }, [isDeleteMode]);
+
     return (
         <div className="modal-container">
             {viewPort.width <= isXM && (
@@ -71,7 +91,10 @@ function ModalPost({ avatar, username, image, content, time_posted }) {
                         />
                         <p className="username">{username}</p>
                     </div>
-                    <div className="header__right">
+                    <div
+                        className="header__right"
+                        onClick={() => setShowDialog(true)}
+                    >
                         <MoreHorizIcon className="more-horiz-icon" />
                     </div>
                 </div>
@@ -102,7 +125,10 @@ function ModalPost({ avatar, username, image, content, time_posted }) {
                             />
                             <p className="username">{username}</p>
                         </div>
-                        <div className="header__right">
+                        <div
+                            className="header__right"
+                            onClick={() => setShowDialog(true)}
+                        >
                             <MoreHorizIcon className="more-horiz-icon" />
                         </div>
                     </div>
@@ -221,6 +247,72 @@ function ModalPost({ avatar, username, image, content, time_posted }) {
                     </div>
                 </div>
             </div>
+
+            {showDialog ? (
+                <div className="dialog">
+                    <Dialog
+                        open={showDialog}
+                        onClose={() => setShowDialog(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <div className="dialog__btn">
+                            <button
+                                onClick={() => {
+                                    setShowDialog(false);
+                                    setDeleteMode(true);
+                                }}
+                                className="btn-dialog"
+                            >
+                                Delete
+                            </button>
+                            <button className="btn-dialog">Edit</button>
+                            <button
+                                onClick={() => setShowDialog(false)}
+                                className="btn-dialog"
+                                autoFocus
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </Dialog>
+                </div>
+            ) : (
+                ''
+            )}
+
+            {deleteMode ? (
+                <div>
+                    <Dialog
+                        open={deleteMode}
+                        onClose={() => setDeleteMode(false)}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <div className="dialog__header">
+                            Delete post?
+                            <p> Are you sure you want to delete this post? </p>
+                        </div>
+                        <div className="dialog__btn delete__btn">
+                            <button
+                                onClick={handleDeletePost}
+                                className="btn-dialog"
+                            >
+                                Delete
+                            </button>
+                            <button
+                                onClick={() => setDeleteMode(false)}
+                                className="btn-dialog"
+                                autoFocus
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </Dialog>
+                </div>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

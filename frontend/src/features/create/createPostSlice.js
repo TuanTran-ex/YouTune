@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    response: false,
+    createMode: false,
+    deleteMode: false,
 };
 
 const createPostSlice = createSlice({
@@ -11,8 +12,11 @@ const createPostSlice = createSlice({
         createNewPost(state, action) {},
         deletePost(state, action) {},
         createNewPostSuccess(state, action) {
-            state.response = true;
+            state.createMode = true;
             state.data = action.payload;
+        },
+        deletePostSuccess(state, action) {
+            state.deleteMode = true;
         },
     },
 });
@@ -21,7 +25,8 @@ const createPostSlice = createSlice({
 export const createPostActions = createPostSlice.actions;
 
 // Selectors
-export const selectPost = (state) => state.createPost.response;
+export const selectCreateMode = (state) => state.createPost.createMode;
+export const selectDeleteMode = (state) => state.createPost.deleteMode;
 
 // Reducer
 const createPostReducer = createPostSlice.reducer;

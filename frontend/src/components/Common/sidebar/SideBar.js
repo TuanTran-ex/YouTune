@@ -2,7 +2,7 @@ import { Modal } from '@mui/material';
 import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
 import { authActions } from 'features/auth/authSlice';
-import { selectPost } from 'features/create/createPostSlice';
+import { selectCreateMode } from 'features/create/createPostSlice';
 import Create from 'features/create/page/Create';
 import {
     profileActions,
@@ -30,13 +30,13 @@ export function SideBar() {
     const history = useHistory();
 
     const userProfile = useAppSelector(selectProfileData);
+    const createMode = useAppSelector(selectCreateMode);
     const [avtImage, setAvtImage] = useState();
     const [searchMode, setSearchMode] = useState(false);
     const [notifiMode, setNotifiMode] = useState(false);
     const [open, setOpen] = useState(
         localStorage.getItem('create_mode') ? true : false,
     );
-    const getData = useAppSelector(selectPost);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -104,10 +104,8 @@ export function SideBar() {
     };
 
     useEffect(() => {
-        if (getData === true) {
-            handleClose();
-        }
-    }, [getData]);
+        if (createMode === true) handleClose();
+    }, [createMode]);
 
     return (
         <div className="container">

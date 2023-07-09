@@ -20,7 +20,6 @@ export const apiRoutes = {
     changePassword: 'auth/profile/password',
     message: 'auth/message',
     posts: '/posts',
-    deletePost: '/posts/:id',
     refreshToken: '/auth/refresh',
 };
 export default routes;

@@ -7,9 +7,9 @@ class CreateApi {
         return axiosClient.post(url, params);
     };
 
-    deletePost = (params) => {
-        const url = `${config.apiRoutes.deletePost}`;
-        return axiosClient.delete(url, params);
+    deletePost = (id) => {
+        const url = `${config.apiRoutes.posts}/${id}`;
+        return axiosClient.delete(url);
     };
 }
 
