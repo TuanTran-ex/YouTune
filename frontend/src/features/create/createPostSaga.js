@@ -1,10 +1,10 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import createApi from 'api/createApi';
+import config from 'config';
+import { push } from 'connected-react-router';
+import { messagesToasts } from 'constants/messageToast';
+import { call, delay, put, takeLatest } from 'redux-saga/effects';
 import { messageError, messageSuccess } from 'utils/message';
 import { createPostActions } from './createPostSlice';
-import createApi from 'api/createApi';
-import { messagesToasts } from 'constants/messageToast';
-import { push } from 'connected-react-router';
-import config from 'config';
 
 function* handleCreateNewPost(payload) {
     try {
@@ -23,15 +23,30 @@ function* handleDeletePost(payload) {
     try {
         const response = yield call(createApi.deletePost, payload.payload);
         if (response) {
-            yield put(createPostActions.deletePostSuccess());
             yield messageSuccess(messagesToasts.deleteSuccess);
+            yield delay(400);
+            yield put(createPostActions.deletePostSuccess());
         }
     } catch (error) {
         yield messageError(messagesToasts.deleteFail);
     }
 }
 
+function* handleUpdatePost(payload) {
+    try {
+        const response = yield call(createApi.updatePost, payload.payload);
+        if (response) {
+            yield messageSuccess(messagesToasts.updateSucess);
+            yield delay(500);
+            yield put(createPostActions.updatePostSuccess());
+        }
+    } catch (error) {
+        yield messageError(messagesToasts.updateFail);
+    }
+}
+
 export default function* createPostSaga() {
     yield takeLatest(createPostActions.createNewPost, handleCreateNewPost);
     yield takeLatest(createPostActions.deletePost, handleDeletePost);
+    yield takeLatest(createPostActions.updatePost, handleUpdatePost);
 }

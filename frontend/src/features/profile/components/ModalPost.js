@@ -5,12 +5,13 @@ import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { Dialog } from '@mui/material';
+import { Dialog, Modal } from '@mui/material';
 import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
 import {
     createPostActions,
     selectDeleteMode,
+    selectUpdateMode,
 } from 'features/create/createPostSlice';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaRegCommentAlt } from 'react-icons/fa';
@@ -26,12 +27,17 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
     const dispatch = useDispatch();
 
     const isDeleteMode = useAppSelector(selectDeleteMode);
+    const isUpdateMode = useAppSelector(selectUpdateMode);
     const [isPickerVisible, setIsPickerVisible] = useState(false);
+    const [isPickerEdit, setIsPickerEdit] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const [inputValueEdit, setInputValueEdit] = useState('');
     const [likeState, setLikeState] = useState(false);
     const [showBtnPost, setShowBtnPost] = useState(false);
     const [showDialog, setShowDialog] = useState(false);
     const [deleteMode, setDeleteMode] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [done, setDone] = useState(false);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -67,14 +73,35 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
         if (e.code === 'Enter') e.preventDefault();
     };
 
+    //DELETE POST
     const handleDeletePost = () => {
         setDeleteMode(true);
         dispatch(createPostActions.deletePost(id));
     };
 
     useEffect(() => {
-        if (isDeleteMode === true) window.location.reload();
-    }, [isDeleteMode]);
+        if (isDeleteMode === true || isUpdateMode) window.location.reload();
+    }, [isDeleteMode, isUpdateMode]);
+
+    useEffect(() => {
+        if (content !== undefined) setInputValueEdit(content);
+    }, [content]);
+
+    //EDIT POST
+    const handInputEditChange = (e) => {
+        setInputValueEdit(e.target.value);
+        if (e.target.value.trim().length === 0) setDone(false);
+        else setDone(true);
+    };
+
+    const handleEditPost = () => {
+        dispatch(
+            createPostActions.updatePost({
+                id: id,
+                content: inputValueEdit,
+            }),
+        );
+    };
 
     return (
         <div className="modal-container">
@@ -183,20 +210,31 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                                 onClick={handClickBtnCmt}
                             />
                         </div>
-                        <div className="quantity">
+                        <div className="quantity" style={{ fontWeight: '600' }}>
                             <Image
                                 src="https://ichef.bbci.co.uk/images/ic/1280xn/p079cw5m.jpg"
                                 className="avt"
                                 alt="picture"
                             />
-                            <p className="like-by">Liked by</p>
+                            <p
+                                className="like-by"
+                                style={{ fontWeight: '400' }}
+                            >
+                                Liked by
+                            </p>
                             <Link to="#" className="name-user-like">
                                 Nguyen Nhat Linh
                             </Link>
-                            <span>and</span>
+                            <span
+                                className="like-by"
+                                style={{ fontWeight: '400', marginLeft: '6px' }}
+                            >
+                                and
+                            </span>
                             <Link to="#" className="other-cmt">
-                                <p>123333</p> other peoples
+                                <p>123333</p>
                             </Link>
+                            other peoples
                         </div>
                         <div className="date">
                             <p className="day">{time_posted?.slice(0, 10)}</p>
@@ -266,7 +304,14 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                             >
                                 Delete
                             </button>
-                            <button className="btn-dialog">Edit</button>
+                            <button
+                                className="btn-dialog"
+                                onClick={() => {
+                                    setEditMode(true);
+                                }}
+                            >
+                                Edit
+                            </button>
                             <button
                                 onClick={() => setShowDialog(false)}
                                 className="btn-dialog"
@@ -309,6 +354,113 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                             </button>
                         </div>
                     </Dialog>
+                </div>
+            ) : (
+                ''
+            )}
+
+            {editMode ? (
+                <div>
+                    <Modal
+                        open={editMode}
+                        onClose={() => setEditMode(false)}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <div className="edit-block">
+                            <div
+                                className="edit__header"
+                                onClick={() => setIsPickerEdit(false)}
+                            >
+                                <p
+                                    className="canle"
+                                    onClick={() => {
+                                        setEditMode(false);
+                                    }}
+                                >
+                                    Cancel
+                                </p>
+                                <p className="mode">Edit Mode</p>
+                                <p
+                                    className={done ? 'done' : 'done disabled'}
+                                    onClick={handleEditPost}
+                                >
+                                    Done
+                                </p>
+                            </div>
+                            <div className="edit__content">
+                                <div
+                                    className="left-content"
+                                    onClick={() => setIsPickerEdit(false)}
+                                >
+                                    <Image
+                                        src={image}
+                                        className="image"
+                                        alt="picture"
+                                    />
+                                </div>
+                                <div className="right-content">
+                                    <div
+                                        className="header-content"
+                                        onClick={() => setIsPickerEdit(false)}
+                                    >
+                                        <Image
+                                            src={avatar}
+                                            alt="avatar picture"
+                                            className="avt-img"
+                                        />
+                                        <p>{username}</p>
+                                    </div>
+                                    <div className="body-content">
+                                        <textarea
+                                            value={inputValueEdit}
+                                            className="edit__text-content"
+                                            type="text"
+                                            placeholder="Your caption"
+                                            autoFocus
+                                            onClick={() =>
+                                                setIsPickerEdit(false)
+                                            }
+                                            onChange={(e) =>
+                                                handInputEditChange(e)
+                                            }
+                                        />
+                                        <div className="emoji-wrap-ed">
+                                            <LuSmile
+                                                className="smile-icon"
+                                                onClick={() =>
+                                                    setIsPickerEdit(
+                                                        !isPickerEdit,
+                                                    )
+                                                }
+                                            />
+                                            <div
+                                                className={
+                                                    isPickerEdit
+                                                        ? 'd-block picker-wrap'
+                                                        : 'd-none picker-wrap'
+                                                }
+                                            >
+                                                <Picker
+                                                    className="picker"
+                                                    data={data}
+                                                    previewPosition="none"
+                                                    onEmojiSelect={(e) => {
+                                                        setInputValueEdit(
+                                                            inputValueEdit.concat(
+                                                                e.native,
+                                                            ),
+                                                        );
+                                                        setDone(true);
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
                 </div>
             ) : (
                 ''

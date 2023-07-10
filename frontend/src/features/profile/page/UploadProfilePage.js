@@ -103,7 +103,6 @@ function UploadProfilePage() {
 
     const {
         register,
-        control,
         handleSubmit,
         reset,
         formState: { errors },

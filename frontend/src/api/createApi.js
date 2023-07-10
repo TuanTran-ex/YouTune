@@ -11,6 +11,11 @@ class CreateApi {
         const url = `${config.apiRoutes.posts}/${id}`;
         return axiosClient.delete(url);
     };
+
+    updatePost = (params) => {
+        const url = `${config.apiRoutes.posts}/${params.id}`;
+        return axiosClient.patch(url, { content: params.content });
+    };
 }
 
 const createApi = new CreateApi();
