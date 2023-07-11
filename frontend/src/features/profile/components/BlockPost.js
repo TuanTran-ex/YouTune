@@ -1,18 +1,21 @@
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import { Modal } from '@mui/material';
+import { useAppSelector } from 'app/hooks';
 import Image from 'components/Image/Images';
-import { selectDeleteMode } from 'features/create/createPostSlice';
+import {
+    selectDeleteMode,
+    selectUpdateMode,
+} from 'features/create/createPostSlice';
 import { useEffect, useState } from 'react';
 import { BsPostcard } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 import './BlockPost.scss';
 import ModalPost from './ModalPost';
 
 function BlockPost({ infoUpload, avatar, username }) {
-    const isDeleteMode = useSelector(selectDeleteMode);
+    const isDeleteMode = useAppSelector(selectDeleteMode);
+    const isUpdateMode = useAppSelector(selectUpdateMode);
 
-    const [onMode, setOnMode] = useState(true);
     const [open, setOpen] = useState(
         localStorage.getItem('show_post') ? true : false,
     );
@@ -49,15 +52,15 @@ function BlockPost({ infoUpload, avatar, username }) {
     };
 
     useEffect(() => {
-        if (isDeleteMode) {
+        if (isDeleteMode || isUpdateMode) {
             handleClose();
         }
-    }, [isDeleteMode]);
+    }, [isDeleteMode, isUpdateMode]);
 
     return (
         <div className="post-container">
             <ul className="post__header-list ">
-                <li className={onMode ? 'block-post__active item' : 'item'}>
+                <li className={'block-post__active item'}>
                     <BsPostcard className="icon" />
                     Posts
                 </li>

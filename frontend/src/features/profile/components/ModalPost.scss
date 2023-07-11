@@ -123,14 +123,6 @@ textarea {
             }
         }
 
-        .d-none {
-            display: none;
-        }
-
-        .d-block {
-            display: block;
-        }
-
         .content__header {
             display: flex;
             align-items: center;
@@ -198,7 +190,7 @@ textarea {
                 }
 
                 .like-by {
-                    margin-left: 16px;
+                    margin-left: 6px;
                 }
                 span {
                     margin-left: 4px;
@@ -267,14 +259,23 @@ textarea {
                     cursor: pointer;
                 }
             }
-            .disabled {
-                opacity: 0.5;
-                &:hover {
-                    cursor: text;
-                }
-            }
         }
     }
+}
+
+.disabled {
+    opacity: 0.5;
+    &:hover {
+        cursor: text;
+    }
+}
+
+.d-none {
+    display: none;
+}
+
+.d-block {
+    display: block;
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
@@ -376,9 +377,6 @@ textarea {
                 width: 28px;
                 height: 28px;
             }
-            .username {
-                font-size: 1.4rem;
-            }
         }
     }
 
@@ -410,7 +408,7 @@ textarea {
     }
 }
 
-// Dialog block
+// DIALOG BLOCK
 
 .dialog__btn {
     width: 360px;
@@ -419,12 +417,13 @@ textarea {
         text-align: center;
         font-size: 1.4rem;
         color: #1976d2;
+        color: #10b981;
         border-top: 1px solid #f3f4f5;
         background-color: #fff;
         &:hover {
             cursor: pointer;
             background-color: #f6fafd;
-            color: #4d4d4d;
+            color: #ef3553;
         }
     }
 }
@@ -437,6 +436,116 @@ textarea {
     p {
         margin-top: 10px;
         font-size: 1.4rem;
+    }
+}
+
+// EDIT MODE
+
+.edit-block {
+    width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 10px;
+    outline: none;
+}
+
+.edit__header {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid #dbdbdb;
+
+    .canle {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .mode {
+        font-weight: 600;
+    }
+
+    .done {
+        color: #10b981;
+        font-weight: 600;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.edit__content {
+    display: flex;
+    width: 100%;
+
+    .left-content {
+        width: 56%;
+        overflow: hidden;
+        .image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-bottom-left-radius: 10px;
+        }
+    }
+    .right-content {
+        width: 44%;
+        padding: 10px;
+        .header-content {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 6px;
+            .avt-img {
+                width: 40px;
+                height: 40px;
+                border-radius: 999px;
+                object-fit: cover;
+                margin-right: 10px;
+            }
+            p {
+                font-size: 1.6rem;
+                font-weight: 600;
+            }
+        }
+        .body-content {
+            position: relative;
+            .edit__text-content {
+                width: 100%;
+                height: 300px;
+                padding: 10px;
+                line-height: 20px;
+                border: none;
+                font-size: 1.4rem;
+                font-family: sans-serif;
+            }
+        }
+    }
+}
+
+.emoji-wrap-ed {
+    .smile-icon {
+        font-size: 2.2rem;
+        margin-top: 10px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .picker-wrap {
+        position: absolute;
+        bottom: 16px;
+        left: 24px;
+        width: 300px;
+        height: 320px;
+        border: 1px solid #f3f3f3;
+        border-radius: 14px;
+        overflow-x: auto;
+        overflow-y: hidden;
     }
 }
 
@@ -480,6 +589,38 @@ textarea {
     }
     .delete__btn {
         width: 100%;
+    }
+
+    .edit-block {
+        width: 300px;
+    }
+
+    .edit__content {
+        width: 100%;
+        flex-direction: column;
+        .left-content {
+            width: 100%;
+            height: 240px;
+            order: 2;
+            border-bottom-right-radius: 10px;
+        }
+
+        .right-content {
+            width: 100%;
+            order: 1;
+            .body-content .edit__text-content {
+                height: 60px;
+                line-height: 20px;
+            }
+        }
+    }
+
+    .emoji-wrap-ed {
+        .picker-wrap {
+            top: 74%;
+            width: 264px;
+            height: 280px;
+        }
     }
 }
 
