@@ -17,9 +17,14 @@ class Upload extends Model
         'url',
         'uploadable_id',
         'uploadable_type',
+        'type',
     ];
 
     public const TYPES = ['image' => 0, 'music' => 1, 'video' => 2];
+    public const IMAGE_MIMES = ['jpg', 'png'];
+    public const VIDEO_MIMES = ['mp4'];
+    public const MUSIC_MIMES = ['mp3'];
+
     public function uploadable(): MorphTo
     {
         return $this->morphTo();

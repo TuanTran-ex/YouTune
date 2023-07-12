@@ -16,7 +16,7 @@ class PostResource extends JsonResource
     {
         return [
             ...parent::toArray($request),
-            'upload' => new FileUploadResource($this->upload),
+            'uploads' => new FileUploadCollection($this->uploads),
         ];
     }
 }

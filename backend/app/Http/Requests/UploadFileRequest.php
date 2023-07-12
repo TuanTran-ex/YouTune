@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Upload;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UploadFileRequest extends FormRequest
 {
@@ -28,7 +26,6 @@ class UploadFileRequest extends FormRequest
         return [
             'model' => 'required|string|max:50',
             'file' => 'required|mimes:jpg,png,,mp3,mp4|max:5000',
-            'type' => ['required', Rule::in(Upload::TYPES),],
             'id' => 'required|numeric',
             'name' => 'string|max:50',
         ];
