@@ -25,14 +25,17 @@ function BlockPost({ infoUpload, avatar, username }) {
     const handleOpen = (item) => {
         setOpen(true);
         localStorage.setItem('show_post', true);
-        localStorage.setItem('id_image', listPosts.indexOf(item));
-        setIdImage(listPosts.indexOf(item));
+        // localStorage.setItem('id_image', listPosts.indexOf(item));
+        // setIdImage(listPosts.indexOf(item));
+        localStorage.setItem('id_image', listImage.indexOf(item));
+        setIdImage(listImage.indexOf(item));
     };
 
     const handleClose = () => {
         setOpen(false);
         localStorage.removeItem('show_post');
         localStorage.removeItem('id_image');
+        localStorage.removeItem('change_post');
     };
 
     useEffect(() => {
@@ -43,11 +46,13 @@ function BlockPost({ infoUpload, avatar, username }) {
 
     const handleClickPrevPost = () => {
         localStorage.setItem('id_image', idImage - 1);
+        localStorage.setItem('change_post', true);
         setIdImage(idImage - 1);
     };
 
     const handleClickNextPost = () => {
         localStorage.setItem('id_image', idImage + 1);
+        localStorage.setItem('change_post', true);
         setIdImage(idImage + 1);
     };
 
@@ -56,6 +61,77 @@ function BlockPost({ infoUpload, avatar, username }) {
             handleClose();
         }
     }, [isDeleteMode, isUpdateMode]);
+
+    const listImage = [
+        {
+            id: 1,
+            array: [
+                {
+                    id: 2,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/anh-hoa-huong-duong-dep.jpeg',
+                },
+
+                {
+                    id: 3,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 4,
+                    src: 'https://kynguyenlamdep.com/wp-content/uploads/2019/12/hinh-anh-hoa-hong-dep-va-y-nghia.jpg',
+                },
+                {
+                    id: 5,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+
+                {
+                    id: 6,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 7,
+                    src: 'https://anhdep123.com/wp-content/uploads/2021/03/anh-hoa-tulip-dep.jpg',
+                },
+            ],
+        },
+        {
+            id: 2,
+            array: [
+                {
+                    id: 5,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+
+                {
+                    id: 6,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 7,
+                    src: 'https://anhdep123.com/wp-content/uploads/2021/03/anh-hoa-tulip-dep.jpg',
+                },
+            ],
+        },
+
+        {
+            id: 3,
+            array: [
+                {
+                    id: 8,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+            ],
+        },
+        {
+            id: 4,
+            array: [
+                {
+                    id: 9,
+                    src: 'https://thuthuatnhanh.com/wp-content/uploads/2022/06/Anh-chill-hoa.jpg',
+                },
+            ],
+        },
+    ];
 
     return (
         <div className="post-container">
@@ -75,7 +151,7 @@ function BlockPost({ infoUpload, avatar, username }) {
             </ul>
             <div className="post__content">
                 <ul className="post-list">
-                    {listPosts?.length > 0
+                    {/* {listPosts?.length > 0
                         ? listPosts.map((item) => (
                               <li
                                   key={item.id}
@@ -90,7 +166,22 @@ function BlockPost({ infoUpload, avatar, username }) {
                                   <p className="overlay"></p>
                               </li>
                           ))
-                        : ''}
+                        : ''} */}
+
+                    {listImage.map((item) => (
+                        <li
+                            key={item.id}
+                            className="post"
+                            onClick={() => handleOpen(item)}
+                        >
+                            <Image
+                                src={item.array[0].src}
+                                alt="post picture"
+                                className="image-post"
+                            />
+                            <p className="overlay"></p>
+                        </li>
+                    ))}
                 </ul>
             </div>
             {open ? (
@@ -114,11 +205,13 @@ function BlockPost({ infoUpload, avatar, username }) {
                                 id={listPosts?.[idImage]?.id}
                                 avatar={avatar}
                                 username={username}
-                                image={listPosts?.[idImage]?.upload?.url}
+                                // image={listPosts?.[idImage]?.upload?.url}
+                                image={listImage[idImage]}
                                 content={listPosts?.[idImage]?.content}
                                 time_posted={listPosts?.[idImage]?.created_at}
                             />
-                            {idImage < listPosts?.length - 1 ? (
+                            {/* idImage < listPosts?.length - 1 */}
+                            {idImage < listImage.length - 1 ? (
                                 <KeyboardArrowRightIcon
                                     className="item-icon arrow-right"
                                     onClick={handleClickNextPost}

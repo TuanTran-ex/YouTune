@@ -38,10 +38,12 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
     const [deleteMode, setDeleteMode] = useState(false);
     const [editMode, setEditMode] = useState(false);
     const [done, setDone] = useState(false);
+    const [idImage, setIdImage] = useState(0);
+
+    const isChangePost = localStorage.getItem('change_post');
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
-
         React.useEffect(() => {
             const handleWindowResize = () => setWidth(window.innerWidth);
             window.addEventListener('resize', handleWindowResize);
@@ -103,6 +105,22 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
         );
     };
 
+    const handleClickPrevImage = () => {
+        setIdImage(idImage - 1);
+        localStorage.removeItem('change_post');
+    };
+
+    const handleClickNextImage = () => {
+        setIdImage(idImage + 1);
+        localStorage.removeItem('change_post');
+    };
+
+    //HANDLE WHEN CLICK NEXT / PREV POST
+    useEffect(() => {
+        if (isChangePost) {
+            setIdImage(0);
+        }
+    }, [isChangePost]);
     return (
         <div className="modal-container">
             {viewPort.width <= isXM && (
@@ -131,14 +149,43 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                 onClick={() => setIsPickerVisible(false)}
             >
                 <div className="img-wrap">
-                    <p className="icon-wrap-left">
-                        <KeyboardArrowLeftIcon className="icon" />
-                    </p>
-                    <Image src={image} alt="picture" className="image" />
+                    {idImage > 0 ? (
+                        <p
+                            className="icon-wrap-left"
+                            onClick={handleClickPrevImage}
+                        >
+                            <KeyboardArrowLeftIcon className="icon" />
+                        </p>
+                    ) : (
+                        ''
+                    )}
 
-                    <p className="icon-wrap-right">
-                        <KeyboardArrowRightIcon className="icon" />
-                    </p>
+                    {/* <Image       
+                        src={image}
+                        alt="picture"
+                        className="image"
+                    /> */}
+
+                    <Image
+                        src={
+                            isChangePost
+                                ? image.array[0].src
+                                : image.array[idImage].src
+                        }
+                        alt="picture"
+                        className="image"
+                    />
+
+                    {idImage < image.array.length - 1 ? (
+                        <p
+                            className="icon-wrap-right"
+                            onClick={handleClickNextImage}
+                        >
+                            <KeyboardArrowRightIcon className="icon" />
+                        </p>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </div>
             <div className="modal__right">
@@ -258,7 +305,15 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                                 previewPosition="none"
                                 onEmojiSelect={(e) => {
                                     setShowBtnPost(true);
-                                    setInputValue(inputValue.concat(e.native));
+                                    if (inputValue)
+                                        setInputValue(
+                                            inputValue.concat(e.native),
+                                        );
+                                    else {
+                                        setInputValue(
+                                            e.native.concat(inputValue),
+                                        );
+                                    }
                                 }}
                             />
                         </div>
@@ -446,11 +501,19 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                                                     data={data}
                                                     previewPosition="none"
                                                     onEmojiSelect={(e) => {
-                                                        setInputValueEdit(
-                                                            inputValueEdit.concat(
-                                                                e.native,
-                                                            ),
-                                                        );
+                                                        if (inputValueEdit)
+                                                            setInputValueEdit(
+                                                                inputValueEdit.concat(
+                                                                    e.native,
+                                                                ),
+                                                            );
+                                                        else {
+                                                            setInputValueEdit(
+                                                                e.native.concat(
+                                                                    inputValueEdit,
+                                                                ),
+                                                            );
+                                                        }
                                                         setDone(true);
                                                     }}
                                                 />

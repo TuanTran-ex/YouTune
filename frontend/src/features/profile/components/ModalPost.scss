@@ -10,7 +10,7 @@
 
 .modal__left {
     width: 390px;
-    height: auto;
+    height: 600px;
     .img-wrap {
         position: relative;
         .image {
@@ -108,7 +108,7 @@ textarea {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: calc(100% - 55px);
+        // height: calc(100% - 55px);
         padding: 10px;
         position: relative;
         .picker-wrap {
@@ -416,7 +416,6 @@ textarea {
         padding: 14px 0;
         text-align: center;
         font-size: 1.4rem;
-        color: #1976d2;
         color: #10b981;
         border-top: 1px solid #f3f4f5;
         background-color: #fff;
