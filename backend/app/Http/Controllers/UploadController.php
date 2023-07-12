@@ -15,6 +15,7 @@ class UploadController extends ApiController
     {
         $this->uploadService = $uploadService;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -50,7 +51,6 @@ class UploadController extends ApiController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */

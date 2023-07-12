@@ -14,13 +14,15 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $data = [
             ...parent::toArray($request),
             'upload' => new FileUploadResource($this->upload),
             'posts' => array_key_exists(
-                'posts',
+                'posts_order_by_desc_created_time',
                 parent::toArray($request)
-            ) ? new PostCollection($this->posts) : [],
+            ) ? new PostCollection($this->postsOrderByDescCreatedTime) : [],
         ];
+        unset($data['posts_order_by_desc_created_time']);
+        return $data;
     }
 }

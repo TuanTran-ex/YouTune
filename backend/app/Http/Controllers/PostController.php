@@ -15,6 +15,7 @@ class PostController extends ApiController
     {
         $this->postService = $postService;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -29,7 +30,7 @@ class PostController extends ApiController
     {
         $newPost = $this->postService->create(
             $request->validated(),
-            $request->file('file')
+            $request->file('files')
         );
         return $this->resSuccess($newPost);
     }

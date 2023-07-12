@@ -20,6 +20,7 @@ class UserService
     public function create($data): User
     {
         $newUser = $this->users->create($data);
+
         return $newUser;
     }
 
@@ -27,13 +28,22 @@ class UserService
     {
         $user = auth()->user();
         $user = $user->with(['upload', 'address.ward.city'])->findOrFail($user->id);
+
         return new UserResource($user);
     }
+
     public function getProfileWithPosts()
     {
         $user = auth()->user();
-        $user = $user->with(['upload', 'address.ward.city', 'posts.upload', 'friends'])
-                    ->findOrFail($user->id);
+        $user = $user->with(
+            [
+                'upload', 'address.ward.city',
+                'postsOrderByDescCreatedTime.uploads',
+                'friends',
+            ],
+        )
+            ->findOrFail($user->id);
+
         return new UserResource($user);
     }
 
@@ -43,7 +53,7 @@ class UserService
             DB::beginTransaction();
             $user = auth()->user();
             $user->update($data);
-            if (!empty($data['address']) && !empty($data['m_ward_id'])) {
+            if (! empty($data['address']) && ! empty($data['m_ward_id'])) {
                 $addressData = [
                     'lat' => 0,
                     'long' => 0,
@@ -56,6 +66,7 @@ class UserService
                 );
             }
             DB::commit();
+
             return new UserResource(
                 $user->with(['upload', 'address.ward.city'])->findOrFail($user->id)
             );
@@ -65,16 +76,18 @@ class UserService
             throw $th;
         }
     }
+
     public function changePassword($data)
     {
         ['old_password' => $oldPassword, 'new_password' => $newPassword] = $data;
         try {
             $user = auth()->user();
-            if (!Hash::check($oldPassword, $user->getAuthPassword())) {
+            if (! Hash::check($oldPassword, $user->getAuthPassword())) {
                 throw new AuthenticationException();
             }
             $user->password = $newPassword;
             $user->save();
+
             return new UserResource($user);
         } catch (\Throwable $th) {
             logger($th);
