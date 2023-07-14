@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
 
     public const GENDER_TYPES = ['male' => 0, 'female' => 1, 'other' => 2];
 
-    public const USER_POST_TYPES = ['owner' => '0', 'liked' => '1', 'commentator'=> '2'];
+    public const USER_POST_TYPES = ['owner' => '0', 'liked' => '1', 'commentator' => '2'];
 
     /**
      * The attributes that are mass assignable.
@@ -60,8 +60,6 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
      */
     public function getJWTIdentifier(): mixed
     {
@@ -70,8 +68,6 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
      */
     public function getJWTCustomClaims(): array
     {
@@ -108,6 +104,11 @@ class User extends Authenticatable implements JWTSubject
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_users');
+    }
+
+    public function postsOrderByDescCreatedTime(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'post_users')->orderBy('created_at', 'desc');
     }
 
     public function messages(): HasMany
