@@ -83,7 +83,7 @@ function BlockPost({ infoUpload, avatar, username }) {
                                   onClick={() => handleOpen(item)}
                               >
                                   <Image
-                                      src={item?.upload?.url}
+                                      src={item?.uploads?.url}
                                       alt="post picture"
                                       className="image-post"
                                   />

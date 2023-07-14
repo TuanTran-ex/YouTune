@@ -1,0 +1,106 @@
+.suggest-wrapper {
+    padding: 40px 120px;
+}
+
+.suggest__text {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.list-suggest {
+    width: 100%;
+    .item-suggest {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+        .left-hand-sg {
+            display: flex;
+            align-items: center;
+            .avt-image {
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+                border-radius: 999px;
+                margin-right: 14px;
+            }
+            .name-reference {
+                font-size: 1.2rem;
+                .username {
+                    font-weight: 600;
+                    &:hover {
+                        cursor: pointer;
+                        text-decoration: underline;
+                    }
+                }
+
+                .reference {
+                    display: flex;
+                    p {
+                        margin: 0 4px;
+                        font-weight: 600;
+                        &:hover {
+                            cursor: pointer;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+        }
+
+        .right-hand-sg {
+            .follow {
+                padding: 8px 26px;
+                font-size: 1.4rem;
+                border-radius: 6px;
+                font-weight: 600;
+            }
+            .btn-follow {
+                background-color: var(--green-color);
+                color: #fff;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: var(--green-color-hover);
+                }
+            }
+            .un-followed {
+                background-color: #f3f4f5;
+                color: var(--green-color);
+                &:hover {
+                    background-color: #f3f4f5;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .suggest-wrapper {
+        padding: 40px 80px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .suggest-wrapper {
+        padding: 30px 20px;
+    }
+    .list-suggest .item-suggest .right-hand-sg {
+        .btn-follow,
+        .btn-followed {
+            font-size: 1.4rem;
+            padding: 8px 14px;
+        }
+    }
+}
+
+@media only screen and (max-width: 320px) {
+    .list-suggest .item-suggest .right-hand-sg {
+        .btn-follow,
+        .btn-followed {
+            font-size: 1.2rem;
+            padding: 6px 12px;
+        }
+    }
+}

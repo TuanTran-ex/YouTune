@@ -5,9 +5,8 @@ import RegisterPage from 'features/auth/page/RegisterPage';
 import { Route, Switch } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from 'routes';
 import config from './config';
-
-import HomePage from 'features/home/HomePage';
 import DefaultLayout from 'components/Layout/DefaultLayout';
+import HomePage from 'features/home/Page/HomePage';
 
 function App() {
     return (
