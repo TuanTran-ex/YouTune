@@ -22,7 +22,7 @@ import ShowMoreText from 'react-show-more-text';
 import { isXM } from 'utils/mediaResponse';
 import './ModalPost.scss';
 
-function ModalPost({ id, avatar, username, image, content, time_posted }) {
+function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
     const ref = useRef(null);
     const dispatch = useDispatch();
 
@@ -39,6 +39,7 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
     const [editMode, setEditMode] = useState(false);
     const [done, setDone] = useState(false);
     const [idImage, setIdImage] = useState(0);
+    const [idItemEd, setIdItemEd] = useState(0);
 
     const isChangePost = localStorage.getItem('change_post');
 
@@ -82,7 +83,7 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
     };
 
     useEffect(() => {
-        if (isDeleteMode === true || isUpdateMode) window.location.reload();
+        if (isDeleteMode || isUpdateMode) window.location.reload();
     }, [isDeleteMode, isUpdateMode]);
 
     useEffect(() => {
@@ -121,6 +122,7 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
             setIdImage(0);
         }
     }, [isChangePost]);
+
     return (
         <div className="modal-container">
             {viewPort.width <= isXM && (
@@ -160,23 +162,30 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                         ''
                     )}
 
-                    {/* <Image       
-                        src={image}
-                        alt="picture"
-                        className="image"
-                    /> */}
+                    {listUpload?.[0]?.url?.includes('image') ||
+                    listUpload?.[idImage]?.url.includes('image') ? (
+                        <Image
+                            src={
+                                isChangePost
+                                    ? listUpload?.[0].url
+                                    : listUpload?.[idImage].url
+                            }
+                            alt="picture"
+                            className="image"
+                        />
+                    ) : (
+                        <video
+                            className="videos-md"
+                            controls
+                            src={
+                                isChangePost
+                                    ? listUpload?.[0].url
+                                    : listUpload?.[idImage].url
+                            }
+                        ></video>
+                    )}
 
-                    <Image
-                        src={
-                            isChangePost
-                                ? image.array[0].src
-                                : image.array[idImage].src
-                        }
-                        alt="picture"
-                        className="image"
-                    />
-
-                    {idImage < image.array.length - 1 ? (
+                    {idImage < listUpload?.length - 1 ? (
                         <p
                             className="icon-wrap-right"
                             onClick={handleClickNextImage}
@@ -448,11 +457,46 @@ function ModalPost({ id, avatar, username, image, content, time_posted }) {
                                     className="left-content"
                                     onClick={() => setIsPickerEdit(false)}
                                 >
-                                    <Image
-                                        src={image}
-                                        className="image"
-                                        alt="picture"
-                                    />
+                                    {idItemEd > 0 ? (
+                                        <p
+                                            className="arrow-left-ed"
+                                            onClick={() => {
+                                                setIdItemEd(idItemEd - 1);
+                                            }}
+                                        >
+                                            <KeyboardArrowLeftIcon className="icon" />
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
+
+                                    {listUpload?.[idItemEd]?.url?.includes(
+                                        'image',
+                                    ) ? (
+                                        <Image
+                                            src={listUpload?.[idItemEd]?.url}
+                                            className="image"
+                                            alt="picture"
+                                        />
+                                    ) : (
+                                        <video
+                                            controls
+                                            className="video-edit-bl"
+                                            src={listUpload?.[idItemEd]?.url}
+                                        ></video>
+                                    )}
+                                    {idItemEd < listUpload?.length - 1 ? (
+                                        <p
+                                            className="arrow-right-ed"
+                                            onClick={() => {
+                                                setIdItemEd(idItemEd + 1);
+                                            }}
+                                        >
+                                            <KeyboardArrowRightIcon className="icon" />
+                                        </p>
+                                    ) : (
+                                        ''
+                                    )}
                                 </div>
                                 <div className="right-content">
                                     <div

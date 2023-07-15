@@ -25,10 +25,8 @@ function BlockPost({ infoUpload, avatar, username }) {
     const handleOpen = (item) => {
         setOpen(true);
         localStorage.setItem('show_post', true);
-        // localStorage.setItem('id_image', listPosts.indexOf(item));
-        // setIdImage(listPosts.indexOf(item));
-        localStorage.setItem('id_image', listImage.indexOf(item));
-        setIdImage(listImage.indexOf(item));
+        localStorage.setItem('id_image', listPosts.indexOf(item));
+        setIdImage(listPosts.indexOf(item));
     };
 
     const handleClose = () => {
@@ -40,7 +38,7 @@ function BlockPost({ infoUpload, avatar, username }) {
 
     useEffect(() => {
         if (infoUpload?.posts) {
-            setListPosts([...infoUpload?.posts].reverse());
+            setListPosts([...infoUpload?.posts]);
         }
     }, [infoUpload]);
 
@@ -151,37 +149,29 @@ function BlockPost({ infoUpload, avatar, username }) {
             </ul>
             <div className="post__content">
                 <ul className="post-list">
-                    {/* {listPosts?.length > 0
+                    {listPosts?.length > 0
                         ? listPosts.map((item) => (
                               <li
                                   key={item.id}
                                   className="post"
                                   onClick={() => handleOpen(item)}
                               >
-                                  <Image
-                                      src={item?.upload?.url}
-                                      alt="post picture"
-                                      className="image-post"
-                                  />
+                                  {item?.uploads[0]?.url?.includes('image') ? (
+                                      <Image
+                                          src={item?.uploads[0]?.url}
+                                          alt="post picture"
+                                          className="image-post"
+                                      />
+                                  ) : (
+                                      <video
+                                          className="videos-post"
+                                          src={item?.uploads[0]?.url}
+                                      ></video>
+                                  )}
                                   <p className="overlay"></p>
                               </li>
                           ))
-                        : ''} */}
-
-                    {listImage.map((item) => (
-                        <li
-                            key={item.id}
-                            className="post"
-                            onClick={() => handleOpen(item)}
-                        >
-                            <Image
-                                src={item.array[0].src}
-                                alt="post picture"
-                                className="image-post"
-                            />
-                            <p className="overlay"></p>
-                        </li>
-                    ))}
+                        : ''}
                 </ul>
             </div>
             {open ? (
@@ -205,13 +195,11 @@ function BlockPost({ infoUpload, avatar, username }) {
                                 id={listPosts?.[idImage]?.id}
                                 avatar={avatar}
                                 username={username}
-                                // image={listPosts?.[idImage]?.upload?.url}
-                                image={listImage[idImage]}
+                                listUpload={listPosts?.[idImage]?.uploads}
                                 content={listPosts?.[idImage]?.content}
                                 time_posted={listPosts?.[idImage]?.created_at}
                             />
-                            {/* idImage < listPosts?.length - 1 */}
-                            {idImage < listImage.length - 1 ? (
+                            {idImage < listPosts?.length - 1 ? (
                                 <KeyboardArrowRightIcon
                                     className="item-icon arrow-right"
                                     onClick={handleClickNextPost}

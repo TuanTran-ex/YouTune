@@ -81,13 +81,11 @@ function Create() {
     };
 
     const handleClickBtnShare = () => {
-        let type;
-        if (image?.type.includes('video')) type = 1;
-        else if (image?.type.includes('image')) type = 0;
         const content = inputValue;
         const formData = new FormData();
-        formData.append('type', type);
-        formData.append('file', image);
+        for (let i = 0; i < listUpload?.length; i++) {
+            formData.append(`files[${i}]`, listUpload[i]);
+        }
         formData.append('content', content);
 
         dispatch(createPostActions.createNewPost(formData));
