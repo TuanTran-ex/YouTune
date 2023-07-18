@@ -1,6 +1,5 @@
 .container {
     width: 100%;
-    background-color: antiquewhite;
 }
 
 .nav-hzt {
@@ -61,6 +60,9 @@
     .icon {
         padding-right: 14px;
         font-size: 3.8rem;
+        &:hover {
+            cursor: pointer;
+        }
     }
 
     p {
@@ -117,4 +119,97 @@
 .sidebar-wrapper .logout:hover {
     background-color: #f2f2f2;
     cursor: pointer;
+}
+
+//SEARCH BOX
+
+.sidebar-sm {
+    width: var(--sidebar-width);
+}
+
+.nav-list-sm {
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    width: inherit;
+    border: 1px solid #f2f2f2;
+
+    .logo-sm {
+        margin: 16px 0;
+        text-align: center;
+        padding: 10px;
+        .icon {
+            font-size: 2.6rem;
+        }
+    }
+    .nav-item-sm {
+        text-align: center;
+        padding: 10px;
+        margin: 20px 0;
+        .icon {
+            font-size: 2.6rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .nav-item-sm .profile {
+        background-color: transparent;
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            object-fit: cover;
+            &:hover {
+                background-color: transparent;
+            }
+        }
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.search-block {
+    position: absolute;
+    width: 370px;
+    height: 100%;
+    background-color: #fff;
+    z-index: 11;
+    top: 0;
+    left: -370px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px grey;
+    opacity: 0;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 26px;
+}
+
+.enter {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    opacity: 1;
+    left: var(--nav-width);
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .search-block {
+        width: 360px;
+        left: -360px;
+    }
+    .enter {
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        opacity: 1;
+        left: var(--nav-width);
+    }
 }

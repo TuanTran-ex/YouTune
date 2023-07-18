@@ -23,6 +23,7 @@ import { isM, isXM } from 'utils/mediaResponse';
 import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
 import '../navigation/Navigation.scss';
+import Search from '../search/Search';
 import './SideBar.scss';
 
 export function SideBar() {
@@ -68,8 +69,10 @@ export function SideBar() {
 
     const handleClickBtnSearch = () => {
         localStorage.removeItem('id_image');
-        setSearchMode(true);
+        setSearchMode(!searchMode);
     };
+
+    const hanldeSearchUnderXM = () => {};
 
     const handleClickBtnNotifi = () => {
         localStorage.removeItem('id_image');
@@ -134,7 +137,11 @@ export function SideBar() {
                             <li className="nav-item">
                                 <BsSearchHeart
                                     className="icon"
-                                    onClick={handleClickBtnSearch}
+                                    onClick={
+                                        viewPort.width <= isXM
+                                            ? hanldeSearchUnderXM
+                                            : handleClickBtnSearch
+                                    }
                                 />
                             </li>
                             <li className="nav-item">
@@ -180,7 +187,7 @@ export function SideBar() {
                         </ul>
                     </div>
                 </div>
-            ) : (
+            ) : !searchMode ? (
                 <div className="sidebar">
                     <div className="sidebar-wrapper">
                         <div className="main-ffc">
@@ -260,8 +267,72 @@ export function SideBar() {
                         </div>
                     </div>
                 </div>
-            )}
+            ) : (
+                <div className="sidebar-sm">
+                    <div className="nav-vtc">
+                        <div className="vertical">
+                            <ul className="nav-list-sm">
+                                <div className="logo-sm">
+                                    <FcMusic className="icon" />
+                                </div>
 
+                                <li className="nav-item-sm">
+                                    <IoHomeOutline
+                                        className="icon"
+                                        onClick={handleClickBtnHome}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <BsSearchHeart
+                                        className="icon"
+                                        onClick={handleClickBtnSearch}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <BiMessageRounded
+                                        className="icon"
+                                        onClick={handClickBtnMessage}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <IoIosNotificationsOutline
+                                        className="icon"
+                                        onClick={handleClickBtnNotifi}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <MdOutlineLibraryMusic
+                                        className="icon"
+                                        onClick={handClickBtnMusic}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <IoCreateOutline
+                                        className="icon"
+                                        onClick={handClickBtnCreate}
+                                    />
+                                </li>
+
+                                <li className="nav-item-sm">
+                                    <Link
+                                        to={config.routes.profile}
+                                        className="profile"
+                                        onClick={() => {
+                                            localStorage.removeItem('id_image');
+                                        }}
+                                    >
+                                        <Image
+                                            src={avtImage ?? thumbnail}
+                                            alt="avatar"
+                                            className="avatar"
+                                        />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            )}
             {open ? (
                 <div>
                     <Modal
@@ -278,6 +349,16 @@ export function SideBar() {
             ) : (
                 ''
             )}
+
+            <div
+                className={
+                    searchMode && viewPort.width > isXM
+                        ? 'search-block enter'
+                        : 'search-block '
+                }
+            >
+                <Search />
+            </div>
         </div>
     );
 }

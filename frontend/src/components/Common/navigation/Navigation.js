@@ -20,10 +20,13 @@ import { CiLogout } from 'react-icons/ci';
 import { authActions } from 'features/auth/authSlice';
 import { Modal } from '@mui/material';
 import Create from 'features/create/page/Create';
+import { isXM } from 'utils/mediaResponse';
+import Search from '../search/Search';
 
 export function Navigation() {
     const userProfile = useAppSelector(selectProfileData);
     const [avtImage, setAvtImage] = useState();
+    const [searchMode, setSearchMode] = useState(false);
     const [createMode, setCreateMode] = useState(
         localStorage.getItem('create_mode') ?? false,
     );
@@ -80,83 +83,104 @@ export function Navigation() {
         dispatch(authActions.logout());
     };
 
+    const handleClickBtnSearch = () => {
+        setSearchMode(!searchMode);
+    };
     return (
-        <ul className="nav-list">
-            {viewPort.width <= 768 ? (
-                ''
-            ) : (
-                <div className="logo">
-                    <FcMusic className="icon" />
-                </div>
-            )}
-
-            <li className="nav-item">
-                <IoHomeOutline className="icon" onClick={handClickBtnHome} />
-            </li>
-            <li className="nav-item">
-                <BsSearchHeart className="icon" onClick={handClickBtnSearch} />
-            </li>
-            <li className="nav-item">
-                <BiMessageRounded
-                    className="icon"
-                    onClick={handClickBtnMessage}
-                />
-            </li>
-            <li className="nav-item">
-                <IoIosNotificationsOutline
-                    className="icon"
-                    onClick={handClickBtnNotifi}
-                />
-            </li>
-            <li className="nav-item">
-                <MdOutlineLibraryMusic
-                    className="icon"
-                    onClick={handClickBtnMusic}
-                />
-            </li>
-            <li className="nav-item">
-                <IoCreateOutline
-                    className="icon"
-                    onClick={handClickBtnCreate}
-                />
-            </li>
-
-            <li className="nav-item">
-                <Link to={config.routes.profile} className="profile">
-                    <div className="wrap-avatar">
-                        <Image
-                            src={avtImage ?? thumbnail}
-                            alt="avatar"
-                            className="avatar"
-                        />
+        <>
+            <ul className="nav-list">
+                {viewPort.width <= isXM ? (
+                    ''
+                ) : (
+                    <div className="logo">
+                        <FcMusic className="icon" />
                     </div>
-                </Link>
-            </li>
+                )}
 
-            {createMode ? (
-                <div>
-                    <Modal
-                        open={createMode}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <div>
-                            <Create />
-                        </div>
-                    </Modal>
-                </div>
-            ) : (
-                ''
-            )}
-
-            {viewPort.width <= 768 ? (
-                ''
-            ) : (
                 <li className="nav-item">
-                    <CiLogout className="icon" onClick={handleLogout} />
+                    <IoHomeOutline
+                        className="icon"
+                        onClick={handClickBtnHome}
+                    />
                 </li>
-            )}
-        </ul>
+                <li className="nav-item">
+                    <BsSearchHeart
+                        className="icon"
+                        onClick={handleClickBtnSearch}
+                    />
+                </li>
+                <li className="nav-item">
+                    <BiMessageRounded
+                        className="icon"
+                        onClick={handClickBtnMessage}
+                    />
+                </li>
+                <li className="nav-item">
+                    <IoIosNotificationsOutline
+                        className="icon"
+                        onClick={handClickBtnNotifi}
+                    />
+                </li>
+                <li className="nav-item">
+                    <MdOutlineLibraryMusic
+                        className="icon"
+                        onClick={handClickBtnMusic}
+                    />
+                </li>
+                <li className="nav-item">
+                    <IoCreateOutline
+                        className="icon"
+                        onClick={handClickBtnCreate}
+                    />
+                </li>
+
+                <li className="nav-item">
+                    <Link to={config.routes.profile} className="profile">
+                        <div className="wrap-avatar">
+                            <Image
+                                src={avtImage ?? thumbnail}
+                                alt="avatar"
+                                className="avatar"
+                            />
+                        </div>
+                    </Link>
+                </li>
+
+                {createMode ? (
+                    <div>
+                        <Modal
+                            open={createMode}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <div>
+                                <Create />
+                            </div>
+                        </Modal>
+                    </div>
+                ) : (
+                    ''
+                )}
+
+                {viewPort.width <= 768 ? (
+                    ''
+                ) : (
+                    <li className="nav-item">
+                        <CiLogout className="icon" onClick={handleLogout} />
+                    </li>
+                )}
+            </ul>
+
+            <div
+                className={
+                    searchMode && viewPort.width > isXM
+                        ? 'search-block enter'
+                        : 'search-block '
+                }
+            >
+                <Search />
+            </div>
+        </>
     );
 }
