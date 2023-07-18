@@ -33,21 +33,24 @@ function BlockPost({ infoUpload, avatar, username }) {
         setOpen(false);
         localStorage.removeItem('show_post');
         localStorage.removeItem('id_image');
+        localStorage.removeItem('change_post');
     };
 
     useEffect(() => {
         if (infoUpload?.posts) {
-            setListPosts([...infoUpload?.posts].reverse());
+            setListPosts([...infoUpload?.posts]);
         }
     }, [infoUpload]);
 
     const handleClickPrevPost = () => {
         localStorage.setItem('id_image', idImage - 1);
+        localStorage.setItem('change_post', true);
         setIdImage(idImage - 1);
     };
 
     const handleClickNextPost = () => {
         localStorage.setItem('id_image', idImage + 1);
+        localStorage.setItem('change_post', true);
         setIdImage(idImage + 1);
     };
 
@@ -56,6 +59,77 @@ function BlockPost({ infoUpload, avatar, username }) {
             handleClose();
         }
     }, [isDeleteMode, isUpdateMode]);
+
+    const listImage = [
+        {
+            id: 1,
+            array: [
+                {
+                    id: 2,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/anh-hoa-huong-duong-dep.jpeg',
+                },
+
+                {
+                    id: 3,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 4,
+                    src: 'https://kynguyenlamdep.com/wp-content/uploads/2019/12/hinh-anh-hoa-hong-dep-va-y-nghia.jpg',
+                },
+                {
+                    id: 5,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+
+                {
+                    id: 6,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 7,
+                    src: 'https://anhdep123.com/wp-content/uploads/2021/03/anh-hoa-tulip-dep.jpg',
+                },
+            ],
+        },
+        {
+            id: 2,
+            array: [
+                {
+                    id: 5,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+
+                {
+                    id: 6,
+                    src: 'https://inkythuatso.com/uploads/thumbnails/800/2022/05/1-hinh-nen-hoa-cuc-hoa-mi-inkythuatso-11-11-04-05.jpg',
+                },
+                {
+                    id: 7,
+                    src: 'https://anhdep123.com/wp-content/uploads/2021/03/anh-hoa-tulip-dep.jpg',
+                },
+            ],
+        },
+
+        {
+            id: 3,
+            array: [
+                {
+                    id: 8,
+                    src: 'https://vapa.vn/wp-content/uploads/2022/12/hinh-nen-hoa-tulip-001.jpg',
+                },
+            ],
+        },
+        {
+            id: 4,
+            array: [
+                {
+                    id: 9,
+                    src: 'https://thuthuatnhanh.com/wp-content/uploads/2022/06/Anh-chill-hoa.jpg',
+                },
+            ],
+        },
+    ];
 
     return (
         <div className="post-container">
@@ -82,11 +156,18 @@ function BlockPost({ infoUpload, avatar, username }) {
                                   className="post"
                                   onClick={() => handleOpen(item)}
                               >
-                                  <Image
-                                      src={item?.upload?.url}
-                                      alt="post picture"
-                                      className="image-post"
-                                  />
+                                  {item?.uploads[0]?.url?.includes('image') ? (
+                                      <Image
+                                          src={item?.uploads[0]?.url}
+                                          alt="post picture"
+                                          className="image-post"
+                                      />
+                                  ) : (
+                                      <video
+                                          className="videos-post"
+                                          src={item?.uploads[0]?.url}
+                                      ></video>
+                                  )}
                                   <p className="overlay"></p>
                               </li>
                           ))
@@ -114,7 +195,7 @@ function BlockPost({ infoUpload, avatar, username }) {
                                 id={listPosts?.[idImage]?.id}
                                 avatar={avatar}
                                 username={username}
-                                image={listPosts?.[idImage]?.upload?.url}
+                                listUpload={listPosts?.[idImage]?.uploads}
                                 content={listPosts?.[idImage]?.content}
                                 time_posted={listPosts?.[idImage]?.created_at}
                             />
