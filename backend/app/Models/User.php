@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,7 +13,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -20,6 +24,7 @@ class User extends Authenticatable implements JWTSubject
     use HasFactory;
     use Notifiable;
     use SoftDeletes;
+    use Searchable;
 
     public const GENDER_TYPES = ['male' => 0, 'female' => 1, 'other' => 2];
 
@@ -119,5 +124,22 @@ class User extends Authenticatable implements JWTSubject
     public function participants(): HasMany
     {
         return $this->hasMany(Participant::class);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'users_full_name_fulltext';
+    }
+
+    #[SearchUsingPrefix(['email'])]
+    #[SearchUsingFullText(['full_name', 'username'])]
+    public function toSearchableArray()
+    {
+        $array = [
+            'full_name' => $this->full_name,
+            'username' => $this->username,
+            'email' => $this->email,
+        ];
+        return $array;
     }
 }

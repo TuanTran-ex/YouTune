@@ -94,4 +94,14 @@ class UserService
             throw $th;
         }
     }
+
+    public function getListUser($searchKey, $pageSize)
+    {
+        $users = $this->users;
+        if (!empty($searchKey)) {
+            $users = $users->search($searchKey);
+        }
+        $users = $users->paginate($pageSize)->load(['address.ward.city', 'upload']);
+        return $users;
+    }
 }
