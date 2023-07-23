@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\Resources\UserCollection;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Auth\AuthenticationException;
@@ -102,6 +103,6 @@ class UserService
             $users = $users->search($searchKey);
         }
         $users = $users->paginate($pageSize)->load(['address.ward.city', 'upload']);
-        return $users;
+        return new UserCollection($users);
     }
 }
