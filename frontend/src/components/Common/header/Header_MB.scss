@@ -1,0 +1,31 @@
+.header_mb-wrapper {
+    display: flex;
+    height: inherit;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #fafafa;
+    .header_mb-wrapper__logo {
+        font-size: 2.4rem;
+        margin: 0 20px;
+        color: #10b981;
+    }
+
+    .header_mb-wrapper__icon-wrap {
+        display: flex;
+        .search-icon {
+            font-size: 2.1rem;
+            margin-right: 20px;
+        }
+
+        .notifi-icon {
+            font-size: 2.4rem;
+            margin-right: 20px;
+        }
+    }
+}

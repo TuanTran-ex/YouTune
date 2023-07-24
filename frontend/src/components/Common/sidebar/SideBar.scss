@@ -213,3 +213,9 @@
         left: var(--nav-width);
     }
 }
+
+@media (max-width: 576px) {
+    .nav-hzt .horizontal {
+        height: 50px;
+    }
+}

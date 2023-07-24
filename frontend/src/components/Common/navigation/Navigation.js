@@ -1,4 +1,7 @@
+import { Modal } from '@mui/material';
 import { useAppSelector } from 'app/hooks';
+import { authActions } from 'features/auth/authSlice';
+import Create from 'features/create/page/Create';
 import {
     profileActions,
     selectProfileData,
@@ -6,22 +9,19 @@ import {
 import React, { useEffect, useState } from 'react';
 import { BiMessageRounded } from 'react-icons/bi';
 import { BsSearchHeart } from 'react-icons/bs';
+import { CiLogout } from 'react-icons/ci';
 import { FcMusic } from 'react-icons/fc';
 import { IoIosNotificationsOutline } from 'react-icons/io';
 import { IoCreateOutline, IoHomeOutline } from 'react-icons/io5';
 import { MdOutlineLibraryMusic } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import { isXM } from 'utils/mediaResponse';
+import config from '../../../config';
 import Image from '../../Image';
 import thumbnail from '../../Image/thumbnail.png';
+import { Search } from '../search/Search';
 import './Navigation.scss';
-import config from '../../../config';
-import { CiLogout } from 'react-icons/ci';
-import { authActions } from 'features/auth/authSlice';
-import { Modal } from '@mui/material';
-import Create from 'features/create/page/Create';
-import { isXM } from 'utils/mediaResponse';
-import Search from '../search/Search';
 
 export function Navigation() {
     const userProfile = useAppSelector(selectProfileData);
@@ -58,7 +58,6 @@ export function Navigation() {
     const handClickBtnHome = () => {
         history.push('/');
     };
-    const handClickBtnSearch = () => {};
 
     const handClickBtnMessage = () => {
         history.push(`${config.routes.message}`);
@@ -103,24 +102,33 @@ export function Navigation() {
                         onClick={handClickBtnHome}
                     />
                 </li>
-                <li className="nav-item">
-                    <BsSearchHeart
-                        className="icon"
-                        onClick={handleClickBtnSearch}
-                    />
-                </li>
+                {viewPort.width > isXM ? (
+                    <li className="nav-item">
+                        <BsSearchHeart
+                            className="icon"
+                            onClick={handleClickBtnSearch}
+                        />
+                    </li>
+                ) : (
+                    ''
+                )}
+
                 <li className="nav-item">
                     <BiMessageRounded
                         className="icon"
                         onClick={handClickBtnMessage}
                     />
                 </li>
-                <li className="nav-item">
-                    <IoIosNotificationsOutline
-                        className="icon"
-                        onClick={handClickBtnNotifi}
-                    />
-                </li>
+                {viewPort.width > isXM ? (
+                    <li
+                        className="nav-item"
+                        onClick={() => handClickBtnNotifi()}
+                    >
+                        <IoIosNotificationsOutline className="icon" />
+                    </li>
+                ) : (
+                    ''
+                )}
                 <li className="nav-item">
                     <MdOutlineLibraryMusic
                         className="icon"

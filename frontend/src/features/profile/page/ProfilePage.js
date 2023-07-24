@@ -24,6 +24,7 @@ function ProfilePage() {
     const userProfile = useAppSelector(selectProfileData);
     const loading = useAppSelector(selectLoading);
     const [avtImage, setAvtImage] = useState();
+    localStorage.setItem('show_header', false);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);

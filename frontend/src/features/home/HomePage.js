@@ -1,7 +1,7 @@
-import { Navigation, SideBar } from 'components/Common';
-import './HomePage.scss';
+import { Header, Header_MB, SideBar } from 'components/Common';
 import React from 'react';
-import { isM, isXM } from 'utils/mediaResponse';
+import { isXM, isXS } from 'utils/mediaResponse';
+import './HomePage.scss';
 
 function HomePage() {
     const useViewport = () => {
@@ -17,28 +17,30 @@ function HomePage() {
         return { width };
     };
     const viewPort = useViewport();
+    const x = window.location.pathname;
 
     return (
         <div className="root">
-            {viewPort.width <= isM ? (
-                viewPort.width <= isXM ? (
-                    <div className="nav-hzt">
-                        <div className="horizontal">
-                            <Navigation />
+            <div className="sidebar-wapper">
+                <SideBar />
+            </div>
+            <div className="children-wrapper">
+                {viewPort.width <= isXM && x.includes('profile') === false ? (
+                    viewPort.width > isXS ? (
+                        <div className="children-wrapper__header">
+                            <Header />
                         </div>
-                    </div>
+                    ) : x.includes('search') === false ? (
+                        <div className="chilren-wrapper__header-mb">
+                            <Header_MB />
+                        </div>
+                    ) : (
+                        ''
+                    )
                 ) : (
-                    <div className="nav-vtc">
-                        <div className="vertical">
-                            <Navigation />
-                        </div>
-                    </div>
-                )
-            ) : (
-                <div className="sidebar-wapper">
-                    <SideBar />
-                </div>
-            )}
+                    ''
+                )}
+            </div>
         </div>
     );
 }

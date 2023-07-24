@@ -24,6 +24,7 @@ import {
     selectProfileData,
 } from '../profileSlice';
 import './UploadProfilePage.scss';
+import { isXM } from 'utils/mediaResponse';
 
 const schema = yup
     .object({
@@ -252,7 +253,7 @@ function UploadProfilePage() {
             {loading && <LinearProgress className="loading" color="success" />}
             <div className="edit__main-block">
                 <div className="options">
-                    {viewPort.width <= 1300 ? (
+                    {viewPort.width <= isXM ? (
                         <Link to={config.routes.profile} className="back-icon">
                             <IoIosArrowBack className="icon" />
                         </Link>
