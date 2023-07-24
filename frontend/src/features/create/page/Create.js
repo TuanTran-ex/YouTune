@@ -1,3 +1,5 @@
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
@@ -9,6 +11,7 @@ import {
     selectProfileData,
 } from 'features/profile/profileSlice';
 import { useEffect, useState } from 'react';
+import { LuSmile } from 'react-icons/lu';
 import { useDispatch } from 'react-redux';
 import musicIcon from '../../../components/Image/musicIcon.png';
 import { createPostActions } from '../createPostSlice';
@@ -24,8 +27,8 @@ function Create() {
     const [showDialog, setShowDialog] = useState(false);
     const [listUpload, setListUpload] = useState([]);
     const [showBlockRightHand, setShowBlockRightHand] = useState(false);
-    const [hideText, setHideText] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const [isPickerVisible, setIsPickerVisible] = useState(false);
 
     useEffect(() => {
         dispatch(profileActions.fetchProfileData());
@@ -73,23 +76,16 @@ function Create() {
         setShowBlockRightHand(true);
     };
 
-    const handleHideText = (e) => {
-        if (e.target.value === '') {
-            setHideText(false);
-        } else {
-            setInputValue(e.target.value);
-            setHideText(true);
-        }
+    const handleWriteCaption = (e) => {
+        setInputValue(e.target.value);
     };
 
     const handleClickBtnShare = () => {
-        let type;
-        if (image?.type.includes('video')) type = 1;
-        else if (image?.type.includes('image')) type = 0;
         const content = inputValue;
         const formData = new FormData();
-        formData.append('type', type);
-        formData.append('file', image);
+        for (let i = 0; i < listUpload?.length; i++) {
+            formData.append(`files[${i}]`, listUpload[i]);
+        }
         formData.append('content', content);
 
         dispatch(createPostActions.createNewPost(formData));
@@ -103,6 +99,7 @@ function Create() {
                         ? 'create__header'
                         : 'create__header create__header-fix'
                 }
+                onClick={() => setIsPickerVisible(false)}
             >
                 {image ? (
                     <div>
@@ -168,7 +165,9 @@ function Create() {
             <div
                 className={
                     !showBlockRightHand
-                        ? 'create__content'
+                        ? image?.type?.includes('audio')
+                            ? 'audio-wrap'
+                            : 'create__content'
                         : 'create__content create__full-content'
                 }
             >
@@ -179,6 +178,7 @@ function Create() {
                                 ? 'img-wrap'
                                 : 'img-wrap img-fix'
                         }
+                        onClick={() => setIsPickerVisible(false)}
                     >
                         {indexImage < 1 ? (
                             ''
@@ -252,7 +252,10 @@ function Create() {
                 )}
                 {showBlockRightHand ? (
                     <div className="right-content">
-                        <div className="right__header">
+                        <div
+                            className="right__header"
+                            onClick={() => setIsPickerVisible(false)}
+                        >
                             <Image
                                 src={avtImage}
                                 alt="avatar picture"
@@ -261,17 +264,48 @@ function Create() {
                             <p className="username">{userProfile?.username}</p>
                         </div>
                         <div className="right__caption">
-                            {hideText ? (
-                                ''
-                            ) : (
-                                <p className="text">Write your caption...</p>
-                            )}
-
                             <textarea
+                                value={inputValue}
                                 autoFocus
+                                type="text"
                                 className="input-caption"
-                                onChange={(e) => handleHideText(e)}
+                                onClick={() => setIsPickerVisible(false)}
+                                onChange={(e) => handleWriteCaption(e)}
+                                placeholder="Write your caption"
                             ></textarea>
+
+                            <div className="emoji-wrap-ed">
+                                <LuSmile
+                                    className="smile-icon"
+                                    onClick={() =>
+                                        setIsPickerVisible(!isPickerVisible)
+                                    }
+                                />
+                                <div
+                                    className={
+                                        isPickerVisible
+                                            ? 'd-block picker-wrap'
+                                            : 'd-none picker-wrap'
+                                    }
+                                >
+                                    <Picker
+                                        className="picker"
+                                        data={data}
+                                        previewPosition="none"
+                                        onEmojiSelect={(e) => {
+                                            if (inputValue)
+                                                setInputValue(
+                                                    inputValue.concat(e.native),
+                                                );
+                                            else {
+                                                setInputValue(
+                                                    e.native.concat(inputValue),
+                                                );
+                                            }
+                                        }}
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ) : (
