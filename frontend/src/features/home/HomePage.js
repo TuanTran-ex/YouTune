@@ -1,9 +1,9 @@
 import { Header, Header_MB, SideBar } from 'components/Common';
 import React from 'react';
 import { isXM, isXS } from 'utils/mediaResponse';
-import './DefaultLayout.scss';
+import './HomePage.scss';
 
-function DefaultLayout({ children }) {
+function HomePage() {
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
 
@@ -16,13 +16,11 @@ function DefaultLayout({ children }) {
 
         return { width };
     };
-    // Media responsive
     const viewPort = useViewport();
-
     const x = window.location.pathname;
 
     return (
-        <div className="wrapper-layout">
+        <div className="root">
             <div className="sidebar-wapper">
                 <SideBar />
             </div>
@@ -42,10 +40,9 @@ function DefaultLayout({ children }) {
                 ) : (
                     ''
                 )}
-                {children}
             </div>
         </div>
     );
 }
 
-export default DefaultLayout;
+export default HomePage;

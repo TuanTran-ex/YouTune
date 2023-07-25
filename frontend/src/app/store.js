@@ -7,6 +7,7 @@ import authReducer from '../features/auth/authSlice';
 import rootSaga from './rootSaga';
 import cityReducer from 'features/city/citySlice';
 import createPostReducer from 'features/create/createPostSlice';
+import searchReducer from 'features/search/searchSlice';
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     profile: profileReducer,
     city: cityReducer,
     createPost: createPostReducer,
+    search: searchReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

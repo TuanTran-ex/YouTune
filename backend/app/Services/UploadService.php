@@ -59,9 +59,7 @@ class UploadService
                 default:
                     throw new NotFoundHttpException('file type not found');
             }
-            $fileUploaded = ($model instanceof Post)
-                ? $model->uploads()->create($dataUpload)
-                : $model->upload()->create($dataUpload);
+            $fileUploaded = $this->getUpload($model)->create($dataUpload);
 
             return new FileUploadResource($fileUploaded);
         } catch (\Exception $e) {
@@ -70,7 +68,7 @@ class UploadService
         }
     }
 
-    private function getType($file)
+    private function getType($file): int
     {
         $mime= $file->extension();
         if (in_array($mime, Upload::IMAGE_MIMES)) {
@@ -86,12 +84,19 @@ class UploadService
 
     public function deleteDumpFile($model): void
     {
-        $listFiles = $model->upload()->get();
+        $listFiles = $this->getUpload($model)->get();
         foreach ($listFiles as $file) {
             if (Storage::disk()->exists($file->url)) {
                 Storage::disk()->delete($file->url);
             }
             $file->delete();
         }
+    }
+
+    private function getUpload($model)
+    {
+        return ($model instanceof Post)
+            ? $model->uploads()
+            : $model->upload();
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -52,4 +53,11 @@ Route::controller(CityController::class)
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{id}', 'show');
+    });
+
+Route::controller(UserController::class)
+    ->prefix('users')
+    ->middleware('auth:api')
+    ->group(function () {
+        Route::get('/', 'index');
     });
