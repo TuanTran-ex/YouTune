@@ -22,9 +22,9 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { isM, isXM } from 'utils/mediaResponse';
 import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
-import '../navigation/Navigation.scss';
 import { Search } from '../search/Search';
 import './SideBar.scss';
+import './SideBar_MB.scss';
 
 export function SideBar() {
     const dispatch = useDispatch();
