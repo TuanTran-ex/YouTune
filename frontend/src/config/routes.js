@@ -7,6 +7,7 @@ export const routes = {
     uploadProfile: '/profile/upload',
     changePassword: '/profile/change-password',
     message: '/message',
+    search: '/search',
     listMusic: '/list-music',
 };
 
@@ -21,5 +22,6 @@ export const apiRoutes = {
     message: 'auth/message',
     posts: '/posts',
     refreshToken: '/auth/refresh',
+    users: 'users',
 };
 export default routes;

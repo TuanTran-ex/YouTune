@@ -1,7 +1,10 @@
 :root {
     --sidebar-width: 245px;
+    --sidebar-width-sm: 60px;
     --nav-height: 60px;
     --nav-width: 60px;
+    --header-default-height: 58px;
+    --header-default-height_mb: 48px;
 
     --loading-color: linear-gradient(
         to right,
@@ -38,10 +41,12 @@ body {
 html *::-webkit-scrollbar {
     border-radius: 0;
     width: 10px;
+    overflow: hidden;
 }
 
 html *::-webkit-scrollbar-thumb {
     border-radius: 5px;
+    overflow: hidden;
     background-color: #ccc;
 }
 
@@ -58,7 +63,7 @@ ul {
 a {
     display: block;
     text-decoration: none;
-    color: #fff;
+    color: #000;
 }
 
 ul,

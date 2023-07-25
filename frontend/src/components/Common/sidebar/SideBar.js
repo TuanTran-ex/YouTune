@@ -8,7 +8,7 @@ import {
     profileActions,
     selectProfileData,
 } from 'features/profile/profileSlice';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiMessageRounded } from 'react-icons/bi';
 import { BsSearchHeart } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci';
@@ -22,21 +22,39 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { isM, isXM } from 'utils/mediaResponse';
 import thumbnail from '../../../components/Image/thumbnail.png';
 import config from '../../../config';
-import '../navigation/Navigation.scss';
+import { Search } from '../search/Search';
 import './SideBar.scss';
+import './SideBar_MB.scss';
 
 export function SideBar() {
     const dispatch = useDispatch();
     const history = useHistory();
+    const wrapperRef = useRef(null);
 
     const userProfile = useAppSelector(selectProfileData);
     const createMode = useAppSelector(selectCreateMode);
     const [avtImage, setAvtImage] = useState();
     const [searchMode, setSearchMode] = useState(false);
-    const [notifiMode, setNotifiMode] = useState(false);
+
     const [open, setOpen] = useState(
         localStorage.getItem('create_mode') ? true : false,
     );
+
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setSearchMode(false);
+                }
+            }
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideAlerter(wrapperRef);
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -68,12 +86,13 @@ export function SideBar() {
 
     const handleClickBtnSearch = () => {
         localStorage.removeItem('id_image');
-        setSearchMode(true);
+        setSearchMode(!searchMode);
     };
+
+    const hanldeSearchUnderXM = () => {};
 
     const handleClickBtnNotifi = () => {
         localStorage.removeItem('id_image');
-        setNotifiMode(true);
     };
 
     const handClickBtnCreate = () => {
@@ -131,24 +150,38 @@ export function SideBar() {
                                     onClick={handleClickBtnHome}
                                 />
                             </li>
-                            <li className="nav-item">
-                                <BsSearchHeart
-                                    className="icon"
-                                    onClick={handleClickBtnSearch}
-                                />
-                            </li>
+                            {viewPort.width > isXM ? (
+                                <li className="nav-item">
+                                    <BsSearchHeart
+                                        className="icon"
+                                        onClick={
+                                            viewPort.width <= isXM
+                                                ? hanldeSearchUnderXM
+                                                : handleClickBtnSearch
+                                        }
+                                    />
+                                </li>
+                            ) : (
+                                ''
+                            )}
+
                             <li className="nav-item">
                                 <BiMessageRounded
                                     className="icon"
                                     onClick={handClickBtnMessage}
                                 />
                             </li>
-                            <li className="nav-item">
-                                <IoIosNotificationsOutline
-                                    className="icon"
-                                    onClick={handleClickBtnNotifi}
-                                />
-                            </li>
+                            {viewPort.width > isXM ? (
+                                <li className="nav-item">
+                                    <IoIosNotificationsOutline
+                                        className="icon"
+                                        onClick={handleClickBtnNotifi}
+                                    />
+                                </li>
+                            ) : (
+                                ''
+                            )}
+
                             <li className="nav-item">
                                 <MdOutlineLibraryMusic
                                     className="icon"
@@ -180,7 +213,7 @@ export function SideBar() {
                         </ul>
                     </div>
                 </div>
-            ) : (
+            ) : !searchMode ? (
                 <div className="sidebar">
                     <div className="sidebar-wrapper">
                         <div className="main-ffc">
@@ -260,8 +293,72 @@ export function SideBar() {
                         </div>
                     </div>
                 </div>
-            )}
+            ) : (
+                <div className="sidebar-sm">
+                    <div className="nav-vtc">
+                        <div className="vertical">
+                            <ul className="nav-list-sm">
+                                <div className="logo-sm">
+                                    <FcMusic className="icon" />
+                                </div>
 
+                                <li className="nav-item-sm">
+                                    <IoHomeOutline
+                                        className="icon"
+                                        onClick={handleClickBtnHome}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <BsSearchHeart
+                                        className="icon"
+                                        onClick={handleClickBtnSearch}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <BiMessageRounded
+                                        className="icon"
+                                        onClick={handClickBtnMessage}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <IoIosNotificationsOutline
+                                        className="icon"
+                                        onClick={handleClickBtnNotifi}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <MdOutlineLibraryMusic
+                                        className="icon"
+                                        onClick={handClickBtnMusic}
+                                    />
+                                </li>
+                                <li className="nav-item-sm">
+                                    <IoCreateOutline
+                                        className="icon"
+                                        onClick={handClickBtnCreate}
+                                    />
+                                </li>
+
+                                <li className="nav-item-sm">
+                                    <Link
+                                        to={config.routes.profile}
+                                        className="profile"
+                                        onClick={() => {
+                                            localStorage.removeItem('id_image');
+                                        }}
+                                    >
+                                        <Image
+                                            src={avtImage ?? thumbnail}
+                                            alt="avatar"
+                                            className="avatar"
+                                        />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            )}
             {open ? (
                 <div>
                     <Modal
@@ -274,6 +371,20 @@ export function SideBar() {
                             <Create />
                         </div>
                     </Modal>
+                </div>
+            ) : (
+                ''
+            )}
+            {viewPort.width > isXM ? (
+                <div
+                    ref={wrapperRef}
+                    className={
+                        searchMode && viewPort.width > isXM
+                            ? 'search-block enter'
+                            : 'search-block '
+                    }
+                >
+                    <Search />
                 </div>
             ) : (
                 ''

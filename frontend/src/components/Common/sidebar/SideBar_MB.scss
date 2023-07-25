@@ -7,7 +7,7 @@
     align-items: center;
     margin: 0;
     height: inherit;
-    border: 1px solid #f2f2f2;
+    border: 1px solid #ccc;
     border-right: none;
     background-color: #fff;
     .logo {
@@ -49,12 +49,12 @@
 
 @media (max-width: 576px) {
     .nav-list {
-        height: 54px;
+        height: 50px;
         .nav-item {
             margin: 0 6px;
             padding: 6px;
             .icon {
-                font-size: 2rem;
+                font-size: 2.4rem;
             }
         }
     }
@@ -73,7 +73,7 @@
         border: 1px solid #f2f2f2;
 
         .logo {
-            margin: 40px 0;
+            margin: 40px 0 20px 0;
             text-align: center;
             padding: 10px;
             .icon {
@@ -83,7 +83,7 @@
         .nav-item {
             text-align: center;
             padding: 10px;
-            margin: 20px 0;
+            margin: 14px 0;
             .icon {
                 font-size: 2.6rem;
                 &:hover {
