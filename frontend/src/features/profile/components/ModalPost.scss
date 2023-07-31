@@ -116,7 +116,6 @@ textarea {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        // height: calc(100% - 55px);
         padding: 10px;
         position: relative;
         .picker-wrap {
@@ -287,7 +286,6 @@ textarea {
 }
 
 // DIALOG BLOCK
-
 .dialog__btn {
     width: 360px;
     .btn-dialog {
@@ -317,7 +315,6 @@ textarea {
 }
 
 // EDIT MODE
-
 .edit-block {
     width: 600px;
     position: absolute;

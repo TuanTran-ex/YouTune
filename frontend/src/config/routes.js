@@ -9,6 +9,7 @@ export const routes = {
     message: '/message',
     search: '/search',
     listMusic: '/list-music',
+    notification: '/notification',
 };
 
 export const apiRoutes = {
