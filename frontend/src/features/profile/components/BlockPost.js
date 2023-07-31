@@ -142,7 +142,7 @@ function BlockPost({ infoUpload, avatar, username }) {
             ) : (
                 ''
             )}
-            <footer className="footer">@Made by Uyen Tran & Tuan Tran</footer>
+            <footer className="footer">@Made by Uyen Tran</footer>
         </div>
     );
 }
