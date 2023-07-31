@@ -11,14 +11,17 @@
     border: 1px solid #fafafa;
     display: flex;
     padding: 0 10px;
+
     .header__input {
         position: relative;
         width: 100%;
+        text-align: center;
         border-radius: 6px;
         padding: 6px 10px;
         border: 1px solid #10b981;
         outline: none;
     }
+
     .header__clear {
         position: absolute;
         right: 20px;

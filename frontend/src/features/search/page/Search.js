@@ -19,6 +19,7 @@ function Search() {
     const loading = useAppSelector(selectLoading);
     const [listResult, setListResult] = useState(listSearchResult);
     const [inputValue, setInputValue] = useState('');
+
     useEffect(() => {
         setListResult(listSearchResult);
     }, [listSearchResult]);

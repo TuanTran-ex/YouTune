@@ -162,14 +162,9 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                         ''
                     )}
 
-                    {listUpload?.[0]?.url?.includes('image') ||
-                    listUpload?.[idImage]?.url.includes('image') ? (
+                    {listUpload?.[idImage]?.type === '0' ? (
                         <Image
-                            src={
-                                isChangePost
-                                    ? listUpload?.[0].url
-                                    : listUpload?.[idImage].url
-                            }
+                            src={listUpload?.[idImage]?.url}
                             alt="picture"
                             className="image"
                         />
@@ -177,14 +172,9 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                         <video
                             className="videos-md"
                             controls
-                            src={
-                                isChangePost
-                                    ? listUpload?.[0].url
-                                    : listUpload?.[idImage].url
-                            }
+                            src={listUpload?.[idImage]?.url}
                         ></video>
                     )}
-
                     {idImage < listUpload?.length - 1 ? (
                         <p
                             className="icon-wrap-right"
