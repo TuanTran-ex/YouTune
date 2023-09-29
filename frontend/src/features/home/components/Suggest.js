@@ -52,6 +52,7 @@ function Suggest() {
         temp[index].isActive = !temp[index].isActive;
         setArrayBtn(temp);
     };
+
     return (
         <div className="suggest-wrapper">
             <p className="suggest__text">Suggest for you</p>

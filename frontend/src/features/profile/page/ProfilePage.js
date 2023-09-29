@@ -59,97 +59,99 @@ function ProfilePage() {
     };
 
     return (
-        <div className="prof-wrapper">
+        <div>
             {loading && <LinearProgress className="loading" />}
-            <div className="prof__main-block">
-                {viewPort.width <= isS ? (
-                    <p className="user-name">{userProfile?.username}</p>
-                ) : (
-                    ''
-                )}
-                <div className="header-prof">
-                    <div className="avatar-wrap">
-                        <Image
-                            src={avtImage ?? thumbnail}
-                            alt="avatar"
-                            className="avatar"
-                        />
-                    </div>
+            <div className="prof-wrapper">
+                <div className="prof__main-block">
+                    {viewPort.width <= isS ? (
+                        <p className="user-name">{userProfile?.username}</p>
+                    ) : (
+                        ''
+                    )}
+                    <div className="header-prof">
+                        <div className="avatar-wrap">
+                            <Image
+                                src={avtImage ?? thumbnail}
+                                alt="avatar"
+                                className="avatar"
+                            />
+                        </div>
 
-                    <div className="info">
-                        {viewPort.width > isS ? (
-                            <div className="row-1">
-                                <p className="user-name">
-                                    {userProfile?.username}
-                                </p>
-                                <button
-                                    className="btn-edit"
-                                    onClick={handleClickBtnEdit}
-                                >
-                                    Edit profile
-                                </button>
+                        <div className="info">
+                            {viewPort.width > isS ? (
+                                <div className="row-1">
+                                    <p className="user-name">
+                                        {userProfile?.username}
+                                    </p>
+                                    <button
+                                        className="btn-edit"
+                                        onClick={handleClickBtnEdit}
+                                    >
+                                        Edit profile
+                                    </button>
 
-                                <button
-                                    to="/logout"
-                                    className="btn-logout"
-                                    onClick={handleClickBtnLogout}
-                                >
-                                    Logout
-                                </button>
-                            </div>
-                        ) : (
-                            ''
-                        )}
+                                    <button
+                                        to="/logout"
+                                        className="btn-logout"
+                                        onClick={handleClickBtnLogout}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                            ) : (
+                                ''
+                            )}
 
-                        <div className="row-2">
-                            <div className="post">
-                                <p className="quantity">28</p>
-                                posts
-                            </div>
+                            <div className="row-2">
+                                <div className="post">
+                                    <p className="quantity">28</p>
+                                    posts
+                                </div>
 
-                            <div className="followers">
-                                <p className="quantity">149</p>
-                                <Link to="#">followers</Link>
-                            </div>
-                            <div className="following">
-                                <p className="quantity">320</p>
-                                <Link to="#">following</Link>
+                                <div className="followers">
+                                    <p className="quantity">149</p>
+                                    <Link to="#">followers</Link>
+                                </div>
+                                <div className="following">
+                                    <p className="quantity">320</p>
+                                    <Link to="#">following</Link>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {viewPort.width <= isS ? (
-                    <div className="btn-wrap">
-                        <button
-                            className="btn-edit"
-                            onClick={handleClickBtnEdit}
-                        >
-                            <p>Edit profile</p>
-                        </button>
-                        <button
-                            className="btn-setting"
-                            onClick={handleClickBtnLogout}
-                        >
-                            <p>Logout</p>
-                        </button>
-                    </div>
-                ) : (
-                    ''
-                )}
-            </div>
-            <div className="create-post">
-                <p className="icon-wrap">
-                    <BsPlusLg className="plus-icon" />
-                </p>
-                <p className="text">New post</p>
-            </div>
-            <div className="posts">
-                <BlockPost
-                    infoUpload={userProfile}
-                    avatar={avtImage}
-                    username={userProfile?.username}
-                />
+                    {viewPort.width <= isS ? (
+                        <div className="btn-wrap">
+                            <button
+                                className="btn-edit"
+                                onClick={handleClickBtnEdit}
+                            >
+                                <p>Edit profile</p>
+                            </button>
+                            <button
+                                className="btn-setting"
+                                onClick={handleClickBtnLogout}
+                            >
+                                <p>Logout</p>
+                            </button>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                </div>
+                <div className="create-post">
+                    <p className="icon-wrap">
+                        <BsPlusLg className="plus-icon" />
+                    </p>
+                    <p className="text">New post</p>
+                </div>
+                <div className="posts">
+                    <BlockPost
+                        infoUpload={userProfile}
+                        avatar={avtImage}
+                        username={userProfile?.username}
+                    />
+                </div>
             </div>
         </div>
     );

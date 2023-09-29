@@ -1,5 +1,6 @@
 .prof-wrapper {
     width: 100%;
+    padding: 30px 60px;
 }
 
 .prof__main-block {
@@ -130,6 +131,9 @@
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
+    .prof-wrapper {
+        padding: 30px;
+    }
     .prof__main-block {
         width: 100%;
         padding: 30px 60px;

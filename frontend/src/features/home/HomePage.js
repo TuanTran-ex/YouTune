@@ -1,7 +1,8 @@
-import { Header, Header_MB, SideBar } from 'components/Common';
+import { Header, Header_MB, Posts, SideBar } from 'components/Common';
 import React from 'react';
 import { isXM, isXS } from 'utils/mediaResponse';
 import './HomePage.scss';
+import Suggest from './components/Suggest';
 
 function HomePage() {
     const useViewport = () => {
@@ -16,6 +17,7 @@ function HomePage() {
 
         return { width };
     };
+
     const viewPort = useViewport();
     const x = window.location.pathname;
 
@@ -40,6 +42,14 @@ function HomePage() {
                 ) : (
                     ''
                 )}
+                <div className="home-body">
+                    <div className="posts-children">
+                        <Posts />
+                    </div>
+                    <div className="suggesst-children">
+                        <Suggest />
+                    </div>
+                </div>
             </div>
         </div>
     );
