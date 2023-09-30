@@ -1,21 +1,21 @@
 .root {
     display: flex;
-    height: 2000px;
 }
 
 .search-block {
-    position: absolute;
+    position: fixed;
     width: 370px;
     height: 100%;
     background-color: #fff;
     z-index: 11;
     top: 0;
+    bottom: 0;
     left: -370px;
     overflow: hidden;
     box-shadow: 2px 2px 10px grey;
     opacity: 0;
-    transition: all 0.4s;
-    -webkit-transition: all 0.4s;
+    transition: all 0.7s;
+    -webkit-transition: all 0.7s;
     border-top-right-radius: 14px;
     border-bottom-right-radius: 26px;
 }
@@ -28,7 +28,70 @@
     left: var(--nav-width);
 }
 
+.children-wrapper {
+    width: calc(100% - var(--sidebar-width));
+    // padding: 30px 60px;
+    overflow: hidden;
+}
+
+//Home body
+.home-body {
+    display: flex;
+    padding: 30px 60px;
+    justify-content: space-evenly;
+}
+
+.posts-children {
+    width: 56%;
+}
+
+.suggesst-children {
+    width: 35%;
+}
+
+.suggest-block-hzt {
+    width: 100%;
+}
+
+.nav-vtc {
+    text-align: center;
+}
+
+.sidebar-wapper {
+    text-align: center;
+}
+
+.footer {
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+@media (max-width: 1300px) {
+    .children-wrapper {
+        width: calc(100% - var(--nav-width));
+    }
+    .posts-children {
+        width: 70%;
+    }
+
+    .suggesst-children {
+        width: 30%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .suggesst-children {
+        display: none;
+    }
+    .posts-children {
+        width: 100%;
+    }
+}
+
 @media (min-width: 769px) and (max-width: 1200px) {
+    .home-body {
+        padding: 0;
+    }
     .search-block {
         width: 360px;
         left: -360px;
@@ -39,5 +102,42 @@
         top: 0;
         opacity: 1;
         left: var(--nav-width);
+    }
+}
+
+@media (max-width: 768px) {
+    .children-wrapper {
+        width: 100%;
+    }
+    .home-body {
+        padding: 0;
+    }
+    .posts-children {
+        width: 100%;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 576px) {
+    .children-wrapper {
+        width: 100%;
+    }
+    .home-body {
+        padding: 0;
+    }
+    .posts-children {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts-children {
+        width: 100%;
+    }
+    .children-wrapper {
+        width: 100%;
+        padding: 0 0 20px;
+    }
+    .home-body {
+        padding: 0;
     }
 }

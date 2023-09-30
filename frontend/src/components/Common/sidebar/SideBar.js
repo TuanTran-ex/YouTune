@@ -89,7 +89,10 @@ export function SideBar() {
         setSearchMode(!searchMode);
     };
 
-    const hanldeSearchUnderXM = () => {};
+    // screen 1024px
+    const hanldeSearchAboveXM = () => {
+        setSearchMode(!searchMode);
+    };
 
     const handleClickBtnNotifi = () => {
         localStorage.removeItem('id_image');
@@ -151,15 +154,11 @@ export function SideBar() {
                                 />
                             </li>
                             {viewPort.width > isXM ? (
-                                <li className="nav-item">
-                                    <BsSearchHeart
-                                        className="icon"
-                                        onClick={
-                                            viewPort.width <= isXM
-                                                ? hanldeSearchUnderXM
-                                                : handleClickBtnSearch
-                                        }
-                                    />
+                                <li
+                                    className="nav-item"
+                                    onClick={() => hanldeSearchAboveXM()}
+                                >
+                                    <BsSearchHeart className="icon" />
                                 </li>
                             ) : (
                                 ''
@@ -375,20 +374,17 @@ export function SideBar() {
             ) : (
                 ''
             )}
-            {viewPort.width > isXM ? (
-                <div
-                    ref={wrapperRef}
-                    className={
-                        searchMode && viewPort.width > isXM
-                            ? 'search-block enter'
-                            : 'search-block '
-                    }
-                >
-                    <Search />
-                </div>
-            ) : (
-                ''
-            )}
+
+            <div
+                ref={wrapperRef}
+                className={
+                    searchMode && viewPort.width > isXM
+                        ? 'search-block enter'
+                        : 'search-block '
+                }
+            >
+                <Search />
+            </div>
         </div>
     );
 }

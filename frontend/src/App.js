@@ -5,6 +5,7 @@ import RegisterPage from 'features/auth/page/RegisterPage';
 import HomePage from 'features/home/HomePage';
 import { Route, Switch } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from 'routes';
+import './App.css';
 import config from './config';
 
 function App() {
@@ -55,6 +56,9 @@ function App() {
                     </Route>
                 </Switch>
             </>
+            <footer className="footer-default">
+                {/* @Front end made by Thu Uyen */}
+            </footer>
         </div>
     );
 }
