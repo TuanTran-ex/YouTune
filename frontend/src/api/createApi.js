@@ -19,4 +19,4 @@ class CreateApi {
 }
 
 const createApi = new CreateApi();
-export default createApi;
+export default createApi; 
