@@ -78,32 +78,3 @@
         }
     }
 }
-
-@media only screen and (max-width: 768px) {
-    .suggest-wrapper {
-        padding: 40px 80px;
-    }
-}
-
-@media only screen and (max-width: 576px) {
-    .suggest-wrapper {
-        padding: 30px 20px;
-    }
-    .list-suggest .item-suggest .right-hand-sg {
-        .btn-follow,
-        .btn-followed {
-            font-size: 1.4rem;
-            padding: 8px 14px;
-        }
-    }
-}
-
-@media only screen and (max-width: 320px) {
-    .list-suggest .item-suggest .right-hand-sg {
-        .btn-follow,
-        .btn-followed {
-            font-size: 1.2rem;
-            padding: 6px 12px;
-        }
-    }
-}
