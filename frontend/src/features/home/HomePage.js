@@ -3,6 +3,7 @@ import React from 'react';
 import { isXM, isXS } from 'utils/mediaResponse';
 import './HomePage.scss';
 import Suggest from './components/Suggest';
+import AddFriend from './components/AddFriend';
 
 function HomePage() {
     const useViewport = () => {
@@ -48,6 +49,7 @@ function HomePage() {
                     </div>
                     <div className="suggesst-children">
                         <Suggest />
+                        <AddFriend />
                     </div>
                 </div>
             </div>
