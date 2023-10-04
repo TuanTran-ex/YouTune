@@ -273,7 +273,7 @@ textarea {
 .disabled {
     opacity: 0.5;
     &:hover {
-        cursor: text;
+        cursor: text !important;
     }
 }
 

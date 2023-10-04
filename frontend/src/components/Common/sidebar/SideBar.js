@@ -37,7 +37,7 @@ export function SideBar() {
     const [searchMode, setSearchMode] = useState(false);
 
     const [open, setOpen] = useState(
-        localStorage.getItem('create_mode') ? true : false,
+        sessionStorage.getItem('create_mode') ? true : false,
     );
 
     function useOutsideAlerter(ref) {
@@ -101,12 +101,12 @@ export function SideBar() {
     const handClickBtnCreate = () => {
         setOpen(true);
         localStorage.removeItem('id_image');
-        localStorage.setItem('create_mode', true);
+        sessionStorage.setItem('create_mode', true);
     };
 
     const handleClose = () => {
         setOpen(false);
-        localStorage.removeItem('create_mode');
+        sessionStorage.removeItem('create_mode');
     };
 
     //For nav

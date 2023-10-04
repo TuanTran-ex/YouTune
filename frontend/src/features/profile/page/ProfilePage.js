@@ -39,7 +39,7 @@ function ProfilePage() {
         return { width };
     };
 
-    // Media responsive
+    // Media responsive 
     const viewPort = useViewport();
 
     useEffect(() => {

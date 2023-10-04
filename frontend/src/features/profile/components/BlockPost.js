@@ -17,21 +17,21 @@ function BlockPost({ infoUpload, avatar, username }) {
     const isUpdateMode = useAppSelector(selectUpdateMode);
 
     const [open, setOpen] = useState(
-        localStorage.getItem('show_post') ? true : false,
+        sessionStorage.getItem('show_post') ? true : false,
     );
     const [idImage, setIdImage] = useState(0);
     const [listPosts, setListPosts] = useState([]);
 
     const handleOpen = (item) => {
         setOpen(true);
-        localStorage.setItem('show_post', true);
+        sessionStorage.setItem('show_post', true);
         localStorage.setItem('id_image', listPosts.indexOf(item));
         setIdImage(listPosts.indexOf(item));
     };
 
     const handleClose = () => {
         setOpen(false);
-        localStorage.removeItem('show_post');
+        sessionStorage.removeItem('show_post');
         localStorage.removeItem('id_image');
         localStorage.removeItem('change_post');
     };
@@ -113,10 +113,12 @@ function BlockPost({ infoUpload, avatar, username }) {
                     >
                         <div>
                             {idImage > 0 ? (
-                                <KeyboardArrowLeftIcon
-                                    className="item-icon arrow-left"
+                                <p
+                                    className="item-icon item-icon--left"
                                     onClick={handleClickPrevPost}
-                                />
+                                >
+                                    <KeyboardArrowLeftIcon className=" arrow-left" />
+                                </p>
                             ) : (
                                 ''
                             )}
@@ -129,10 +131,12 @@ function BlockPost({ infoUpload, avatar, username }) {
                                 time_posted={listPosts?.[idImage]?.created_at}
                             />
                             {idImage < listPosts?.length - 1 ? (
-                                <KeyboardArrowRightIcon
-                                    className="item-icon arrow-right"
+                                <p
+                                    className="item-icon item-icon--right"
                                     onClick={handleClickNextPost}
-                                />
+                                >
+                                    <KeyboardArrowRightIcon className="arrow-right" />
+                                </p>
                             ) : (
                                 ''
                             )}

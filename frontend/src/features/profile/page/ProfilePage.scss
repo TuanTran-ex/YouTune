@@ -160,6 +160,9 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .prof-wrapper {
+        padding: 0;
+    }
     .prof__main-block {
         width: 100%;
         padding: 20px 60px;
