@@ -24,6 +24,8 @@ import './ModalPost.scss';
 
 function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
     const ref = useRef(null);
+    const wrapperRef = useRef(null);
+    const wrapperRef2 = useRef(null);
     const dispatch = useDispatch();
 
     const isDeleteMode = useAppSelector(selectDeleteMode);
@@ -42,6 +44,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
     const [idItemEd, setIdItemEd] = useState(0);
 
     const isChangePost = localStorage.getItem('change_post');
+    const idPost = localStorage.getItem('id_image');
 
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
@@ -56,6 +59,38 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
     };
     // Media responsive
     const viewPort = useViewport();
+
+    function useOutsideAlerter(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setIsPickerEdit(false);
+                }
+            }
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideAlerter(wrapperRef);
+
+    function useOutsideAlerter2(ref) {
+        useEffect(() => {
+            function handleClickOutside(event) {
+                if (ref.current && !ref.current.contains(event.target)) {
+                    setIsPickerVisible(false);
+                }
+            }
+
+            document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
+        }, [ref]);
+    }
+    useOutsideAlerter2(wrapperRef2);
 
     const handleClickLike = () => {
         setLikeState(true);
@@ -87,7 +122,8 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
     }, [isDeleteMode, isUpdateMode]);
 
     useEffect(() => {
-        if (content !== undefined) setInputValueEdit(content);
+        if (content != null || content != undefined) setInputValueEdit(content);
+        else setInputValueEdit('');
     }, [content]);
 
     //EDIT POST
@@ -123,13 +159,14 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
         }
     }, [isChangePost]);
 
+    useEffect(() => {
+        setInputValue('');
+    }, [idPost]);
+
     return (
         <div className="modal-container">
             {viewPort.width <= isXM && (
-                <div
-                    className="header"
-                    onClick={() => setIsPickerVisible(false)}
-                >
+                <div className="header">
                     <div className="header__left">
                         <Image
                             src={avatar}
@@ -146,10 +183,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                     </div>
                 </div>
             )}
-            <div
-                className="modal__left"
-                onClick={() => setIsPickerVisible(false)}
-            >
+            <div className="modal__left">
                 <div className="img-wrap">
                     {idImage > 0 ? (
                         <p
@@ -207,10 +241,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                     </div>
                 )}
                 <div className="content">
-                    <div
-                        className="content__row-1"
-                        onClick={() => setIsPickerVisible(false)}
-                    >
+                    <div className="content__row-1">
                         {viewPort.width > isXM && (
                             <div className="content__header">
                                 <Image
@@ -235,10 +266,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                         </ShowMoreText>
                     </div>
 
-                    <div
-                        className="content__interact"
-                        onClick={() => setIsPickerVisible(false)}
-                    >
+                    <div className="content__interact">
                         <div className="icon-wrap">
                             {likeState ? (
                                 <FavoriteOutlinedIcon
@@ -286,7 +314,8 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                             <p className="day">{time_posted?.slice(0, 10)}</p>
                         </div>
                     </div>
-                    <div className="comment">
+
+                    <div className="comment" ref={wrapperRef2}>
                         <LuSmile
                             className="smile-icon"
                             onClick={() => setIsPickerVisible(!isPickerVisible)}
@@ -323,16 +352,10 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                             onKeyDown={(e) => handleKeyDown(e)}
                             className="input-cmt"
                             placeholder="Comment"
-                            onClick={() => setIsPickerVisible(false)}
                             onChange={(e) => handleInputChange(e)}
                         />
                         {showBtnPost ? (
-                            <p
-                                className="post-cmt"
-                                onClick={() => setIsPickerVisible(false)}
-                            >
-                                Post
-                            </p>
+                            <p className="post-cmt">Post</p>
                         ) : (
                             <p className="post-cmt disabled">Post</p>
                         )}
@@ -367,7 +390,10 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                                 Edit
                             </button>
                             <button
-                                onClick={() => setShowDialog(false)}
+                                onClick={() => {
+                                    setShowDialog(false);
+                                    setInputValueEdit('');
+                                }}
                                 className="btn-dialog"
                                 autoFocus
                             >
@@ -421,7 +447,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                         aria-labelledby="modal-modal-title"
                         aria-describedby="modal-modal-description"
                     >
-                        <div className="edit-block">
+                        <div className="edit-block" ref={wrapperRef}>
                             <div
                                 className="edit__header"
                                 onClick={() => setIsPickerEdit(false)}
@@ -435,12 +461,17 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                                     Cancel
                                 </p>
                                 <p className="mode">Edit Mode</p>
-                                <p
-                                    className={done ? 'done' : 'done disabled'}
-                                    onClick={handleEditPost}
-                                >
-                                    Done
-                                </p>
+
+                                {done ? (
+                                    <p
+                                        className="done"
+                                        onClick={handleEditPost}
+                                    >
+                                        Done
+                                    </p>
+                                ) : (
+                                    <p className="done disabled">Done</p>
+                                )}
                             </div>
                             <div className="edit__content">
                                 <div
@@ -502,7 +533,11 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                                     </div>
                                     <div className="body-content">
                                         <textarea
-                                            value={inputValueEdit}
+                                            value={
+                                                inputValueEdit
+                                                    ? inputValueEdit
+                                                    : ''
+                                            }
                                             className="edit__text-content"
                                             type="text"
                                             placeholder="Your caption"
@@ -535,7 +570,10 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                                                     data={data}
                                                     previewPosition="none"
                                                     onEmojiSelect={(e) => {
-                                                        if (inputValueEdit)
+                                                        if (
+                                                            inputValueEdit !=
+                                                            undefined
+                                                        )
                                                             setInputValueEdit(
                                                                 inputValueEdit.concat(
                                                                     e.native,
