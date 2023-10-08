@@ -10,6 +10,7 @@ export const routes = {
     search: '/search',
     listMusic: '/list-music',
     notification: '/notification',
+    personPage: '/personPage',
 };
 
 export const apiRoutes = {

@@ -1,0 +1,111 @@
+.person-page {
+    width: 100%;
+    padding: 30px 60px;
+
+    .person-page__infomation {
+        padding: 30px 88px;
+        margin: 0 60px;
+        display: flex;
+    }
+
+    .person-page__posts {
+        padding: 30px 88px;
+    }
+}
+
+.person-page__infomation {
+    .infomation__wrapper--left {
+        margin-right: 60px;
+        .left__avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    }
+}
+
+.person-page__infomation .infomation__wrapper--right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .infomation__wrapper--row1 {
+        display: flex;
+        align-items: center;
+        .row1__left {
+            display: flex;
+            align-items: baseline;
+
+            .row1__left--username {
+                font-size: 2rem;
+                margin-right: 10px;
+            }
+            .row1__left--follow,
+            .row1__left--add {
+                font-size: 1.6rem;
+                padding: 4px;
+                background-color: transparent;
+                margin: 0 4px;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .row1__left--follow {
+                color: var(--green-color);
+                &:hover {
+                    color: var(--green-color-hover);
+                }
+            }
+
+            .row1__left--add {
+                color: #1ea1f7;
+                &:hover {
+                    color: #186ccc;
+                }
+            }
+        }
+
+        .row1__options {
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-left: 6px;
+            &:hover {
+                cursor: pointer;
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+            .row1__options--icon {
+                font-size: 2.4rem;
+                &:hover {
+                    // color: #fff;
+                }
+            }
+        }
+    }
+    .infomation__wrapper--row2 {
+        display: flex;
+        .row2__posts {
+        }
+        .row2__friends {
+        }
+        .row2__followers {
+        }
+        .row2__following {
+        }
+    }
+    .infomation__wrapper--row3 {
+        .row3__fullname {
+        }
+    }
+    .infomation__wrapper--row4 {
+        .row4__listfollowed {
+            .listfollowed__item {
+            }
+        }
+    }
+}

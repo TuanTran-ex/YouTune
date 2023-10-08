@@ -37,6 +37,9 @@
                 margin-right: 14px;
                 border-radius: 999px;
                 object-fit: cover;
+                &:hover {
+                    cursor: pointer;
+                }
             }
 
             .left__username {
