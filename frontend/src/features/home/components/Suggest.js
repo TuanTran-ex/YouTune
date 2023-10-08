@@ -1,5 +1,6 @@
 import Image from 'components/Image/Images';
 import { useEffect, useState } from 'react';
+import userApi from 'api/userApi';
 import './Suggest.scss';
 
 function Suggest() {
@@ -45,6 +46,7 @@ function Suggest() {
             });
         }
         setArrayBtn(tam);
+        userApi.getUsers();
     }, []);
 
     const handleClickBtnFollow = (index) => {
