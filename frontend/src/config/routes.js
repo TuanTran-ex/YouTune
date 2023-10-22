@@ -25,4 +25,9 @@ export const apiRoutes = {
     refreshToken: '/auth/refresh',
     users: 'users',
 };
+
+export const fireStorePath = {
+    users: 'users',
+}
+
 export default routes;
