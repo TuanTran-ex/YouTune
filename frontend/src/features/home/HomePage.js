@@ -3,9 +3,12 @@ import React from 'react';
 import { isXM, isXS } from 'utils/mediaResponse';
 import './HomePage.scss';
 import Suggest from './components/Suggest';
-import AddFriend from './components/AddFriend';
+import { useAppSelector } from 'app/hooks';
+import { selectArraySuggestFollow } from './homeSlice';
 
 function HomePage() {
+    const arrayListSuggest = useAppSelector(selectArraySuggestFollow);
+
     const useViewport = () => {
         const [width, setWidth] = React.useState(window.innerWidth);
 
@@ -48,8 +51,14 @@ function HomePage() {
                         <Posts />
                     </div>
                     <div className="suggesst-children">
-                        <Suggest />
-                        <AddFriend />
+                        <Suggest
+                            title="Suggest for you"
+                            listSuggest={arrayListSuggest}
+                        />
+                        <Suggest
+                            title="Friend suggestion"
+                            listSuggest={arrayListSuggest}
+                        />
                     </div>
                 </div>
             </div>
