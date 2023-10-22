@@ -19,6 +19,7 @@
     "connected-react-router": "^6.9.3",
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.4.9",
+    "firebase": "^10.4.0",
     "formik": "^2.1.4",
     "history": "^4.10.1",
     "joi": "^17.9.1",

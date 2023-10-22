@@ -1,11 +1,12 @@
 .suggest-wrapper {
     width: 100%;
+    margin-top: 16px;
 }
 
 .suggest__text {
     font-size: 1.6rem;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .list-suggest {
@@ -18,7 +19,7 @@
         .left-hand-sg {
             display: flex;
             align-items: center;
-            width: 70%;
+            width: 71%;
             .avt-image {
                 width: 40px;
                 height: 40px;
@@ -38,12 +39,19 @@
 
                 .reference {
                     display: flex;
-                    p {
-                        margin: 0 4px;
+                    flex-wrap: wrap;
+                    .reference--followed {
                         font-weight: 600;
                         &:hover {
                             cursor: pointer;
                             text-decoration: underline;
+                        }
+                    }
+
+                    .reference--more {
+                        &:hover {
+                            cursor: pointer;
+                            color: #186ccc;
                         }
                     }
                 }
@@ -62,7 +70,6 @@
                 font-weight: 600;
                 &:hover {
                     cursor: pointer;
-                    color: var(--green-color-hover);
                     color: #297342;
                 }
             }
@@ -75,6 +82,115 @@
                     color: #297342;
                 }
             }
+
+            .add {
+                font-size: 1.2rem;
+                border-radius: 6px;
+                margin: auto;
+                padding: 6px 12px;
+            }
+
+            .cancel-request {
+                background-color: transparent;
+                font-weight: 600;
+                color: #1ea1f7;
+                &:hover {
+                    cursor: pointer;
+                    color: #186ccc;
+                }
+            }
+
+            .btn-add {
+                background-color: transparent;
+                color: #1ea1f7;
+                font-weight: 600;
+                &:hover {
+                    cursor: pointer;
+                    color: #186ccc;
+                }
+            }
         }
     }
+}
+.see-more {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+.modal-box {
+    height: auto !important;
+    padding: 0 !important;
+    border-radius: 6px;
+    outline: none;
+    .modal-box__title {
+        font-size: 1.6rem;
+        text-align: center;
+        line-height: 40px;
+        border-bottom: 1px solid #dbdbdb;
+    }
+    .modal-box__list {
+        padding: 10px 20px !important;
+        margin-top: 10px;
+        .modal-box__item {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            div {
+                display: flex;
+                align-items: center;
+                .modal-box__item--avt {
+                    height: 40px;
+                    width: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-right: 6px;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                span {
+                    display: flex;
+                    flex-direction: column;
+                    .modal-box__item--username {
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        &:hover {
+                            cursor: pointer;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+            }
+            .modal-box__item--btn,
+            .modal-box__item--btn-add {
+                background-color: transparent;
+                font-size: 1.2rem;
+                font-weight: 600;
+                color: var(--green-color);
+                &:hover {
+                    cursor: pointer;
+                    color: #297342;
+                }
+            }
+
+            .modal-box__item--btn-add {
+                color: #1ea1f7;
+
+                &:hover {
+                    cursor: pointer;
+                    color: #186ccc;
+                }
+            }
+        }
+    }
+}
+
+.disabled {
+    opacity: 0.6;
 }
