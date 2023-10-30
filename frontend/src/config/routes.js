@@ -29,6 +29,6 @@ export const apiRoutes = {
 
 export const fireStorePath = {
     users: 'users',
-}
+};
 
 export default routes;

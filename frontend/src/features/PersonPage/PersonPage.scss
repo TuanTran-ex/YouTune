@@ -1,3 +1,14 @@
+.mr-8 {
+    margin-right: 8px;
+}
+
+.css-cursor {
+    margin-right: 4px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
 .person-page {
     width: 100%;
     padding: 30px 60px;
@@ -36,7 +47,6 @@
         .row1__left {
             display: flex;
             align-items: baseline;
-
             .row1__left--username {
                 font-size: 2rem;
                 margin-right: 10px;
@@ -74,37 +84,160 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            margin-left: 6px;
+            margin-left: 20px;
             &:hover {
                 cursor: pointer;
                 background-color: rgba(0, 0, 0, 0.1);
             }
             .row1__options--icon {
                 font-size: 2.4rem;
-                &:hover {
-                    // color: #fff;
-                }
             }
         }
     }
     .infomation__wrapper--row2 {
         display: flex;
-        .row2__posts {
-        }
-        .row2__friends {
-        }
-        .row2__followers {
-        }
-        .row2__following {
-        }
+        font-size: 1.4rem;
     }
     .infomation__wrapper--row3 {
+        margin: 4px 0;
         .row3__fullname {
+            font-size: 1.4rem;
         }
     }
     .infomation__wrapper--row4 {
+        font-size: 1.4rem;
+        display: flex;
         .row4__listfollowed {
+            margin-left: 6px;
+            font-weight: 600;
             .listfollowed__item {
+                &:hover {
+                    cursor: pointer;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .person-page {
+        padding: 30px;
+        .person-page__infomation,
+        .person-page__posts {
+            width: 100%;
+            padding: 0;
+        }
+        .person-page__infomation {
+            margin: 0;
+            padding: 30px 60px;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .person-page {
+        padding: 0;
+        .person-page__infomation {
+            width: 100%;
+            padding: 20px 60px;
+            margin: 0;
+        }
+        .person-page__posts {
+            padding: 0;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .person-page {
+        .person-page__infomation {
+            padding: 20px;
+            position: relative;
+            .infomation__wrapper--left {
+                margin-right: 20px;
+                .left__avatar {
+                    width: 80px;
+                    height: 80px;
+                }
+            }
+            .infomation__wrapper--right {
+                .infomation__wrapper--row1 {
+                    align-items: normal;
+                    .row1__left {
+                        flex-wrap: wrap;
+
+                        .row1__left--username {
+                            flex-basis: 100%;
+                        }
+
+                        .row1__left--follow {
+                            padding-left: 0;
+                            padding-bottom: 0;
+                            margin-left: 0;
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                        }
+
+                        .row1__left--add {
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                            padding-bottom: 0;
+                        }
+                    }
+                }
+
+                .infomation__wrapper--row2 {
+                    flex-wrap: wrap;
+                    order: 3;
+                    position: absolute;
+                    left: 20px;
+                    bottom: 0;
+                }
+
+                .infomation__wrapper--row4 {
+                    order: 2;
+                    margin-bottom: 6px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 320px) {
+    .person-page {
+        .person-page__infomation {
+            .infomation__wrapper--left {
+                .left__avatar {
+                    width: 60px;
+                    height: 60px;
+                }
+            }
+            .infomation__wrapper--right {
+                .infomation__wrapper--row1 {
+                    .row1__left {
+                        .row1__left--username {
+                            font-size: 1.6rem;
+                            .additional {
+                                font-size: 1.4rem !important;
+                            }
+                        }
+
+                        .row1__left--follow {
+                            padding-left: 0;
+                            padding-bottom: 0;
+                            margin-left: 0;
+                            font-size: 1.3rem;
+                            font-weight: 600;
+                        }
+
+                        .row1__left--add {
+                            font-size: 1.3rem;
+                            font-weight: 600;
+                            padding-bottom: 0;
+                        }
+                    }
+                }
             }
         }
     }

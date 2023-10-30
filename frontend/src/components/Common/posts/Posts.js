@@ -213,7 +213,7 @@ export function Posts() {
                             onClick={() => handleClickPicker(item.id, false)}
                         >
                             <div className="item-left__header">
-                                <Link to={config.routes.personPage}>
+                                <Link to={`${config.routes.personPage}/007`}>
                                     <Image
                                         src={item.avatar}
                                         alt="avatar"
@@ -221,7 +221,7 @@ export function Posts() {
                                     />
                                 </Link>
                                 <Link
-                                    to={config.routes.personPage}
+                                    to={`${config.routes.personPage}/007`}
                                     className="left__username"
                                 >
                                     {item.username}

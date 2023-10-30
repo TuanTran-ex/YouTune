@@ -8,7 +8,7 @@ import {
     getDoc,
 } from 'firebase/firestore';
 
-const userCollectionRef = collection(db, config.fireStorePath.users); //users: bang tao
+const userCollectionRef = collection(db, config.fireStorePath.users);
 
 class UserApi {
     getUsers = async () => {
@@ -24,6 +24,17 @@ class UserApi {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    //Call a person
+    getUser = async (id) => {
+        const docRef = doc(db, 'users', id);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const response = docSnap.data();
+            return response;
+        } else return null;
     };
 
     // when click btn follow / add friend
