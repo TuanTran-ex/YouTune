@@ -5,6 +5,7 @@ import citySaga from 'features/city/citySaga';
 import createPostSaga from 'features/create/createPostSaga';
 import searchSaga from 'features/search/searchSaga';
 import homeSaga from 'features/home/homeSaga';
+import personSaga from 'features/personpage/personSaga';
 
 export default function* rootSaga() {
     yield all([
@@ -14,5 +15,6 @@ export default function* rootSaga() {
         createPostSaga(),
         searchSaga(),
         homeSaga(),
+        personSaga(),
     ]);
 }

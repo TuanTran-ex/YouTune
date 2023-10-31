@@ -16,6 +16,7 @@ function BlockPost({ infoUpload, avatar, username }) {
     const isDeleteMode = useAppSelector(selectDeleteMode);
     const isUpdateMode = useAppSelector(selectUpdateMode);
 
+
     const [open, setOpen] = useState(
         sessionStorage.getItem('show_post') ? true : false,
     );
@@ -85,7 +86,7 @@ function BlockPost({ infoUpload, avatar, username }) {
                                   className="post"
                                   onClick={() => handleOpen(item)}
                               >
-                                  {item?.uploads[0]?.url?.includes('image') ? (
+                                  {item?.uploads[0]?.type == 0 ? (
                                       <Image
                                           src={item?.uploads[0]?.url}
                                           alt="post picture"

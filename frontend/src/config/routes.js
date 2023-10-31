@@ -10,6 +10,7 @@ export const routes = {
     search: '/search',
     listMusic: '/list-music',
     notification: '/notification',
+    personPage: '/personPage',
 };
 
 export const apiRoutes = {
@@ -28,6 +29,6 @@ export const apiRoutes = {
 
 export const fireStorePath = {
     users: 'users',
-}
+};
 
 export default routes;

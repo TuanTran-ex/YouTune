@@ -1,46 +1,35 @@
-# Getting Started with Create React App and Redux
+# Social YouTune
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+Một dự án mạng xã hội trực tuyến với mục đích chia sẻ các nội dung về hình ảnh và âm thanh yêu thích.
 
-## Available Scripts
+### Mục đích thực hiện:
 
-In the project directory, you can run:
+-   Dự án được thực hiện nhằm mục đích củng cố và nâng cao kiến thức, kỹ năng về các ngôn ngữ đã học, vận dụng những kiến thức đã có vào thực tế một cách hiệu quả.
 
-### `npm start`
+### Người thực hiện:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-   Back-end: Trần Quốc Tuấn - Github: https://github.com/TuanTran-ex
+-   Front-end Trương Thị Thu Uyên - Github: https://github.com/Lego-UyenTran
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Thời gian thực hiện:
 
-### `npm test`
+-   Bắt đầu: 06/2023
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Công nghệ sử dụng:
 
-### `npm run build`
+-   Back-end: PHP, framework Laravel.
+-   Front-end: HTML, SCSS, Javascript, Library ReactJS, Redux Saga, Redux Toolkit.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Các chức năng đã hoàn thành:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+-   Đăng ký, đăng nhập, đăng xuất.
+-   Trang chủ.
+-   Trang cá nhân(xem bài đăng, cập nhật, xoá bài đăng).
+-   Cập nhật thông tin cá nhân, đổi mật khẩu.
+-   Tạo bài đăng.
+-   Tìm kiếm tài khoản.
+-   Gợi ý tài khoản bạn bè.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+###
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   Dự án chỉ mang tính chất học tập, hoan nghênh các góp ý để hoàn thiện hơn.

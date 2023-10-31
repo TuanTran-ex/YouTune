@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import ShowMoreText from 'react-show-more-text';
 import { isXS } from 'utils/mediaResponse';
 import './Posts.scss';
+import config from 'config';
 
 export function Posts() {
     const ref = useRef([]);
@@ -212,12 +213,17 @@ export function Posts() {
                             onClick={() => handleClickPicker(item.id, false)}
                         >
                             <div className="item-left__header">
-                                <Image
-                                    src={item.avatar}
-                                    alt="avatar"
-                                    className="left__avt"
-                                />
-                                <Link to="#" className="left__username">
+                                <Link to={`${config.routes.personPage}/007`}>
+                                    <Image
+                                        src={item.avatar}
+                                        alt="avatar"
+                                        className="left__avt"
+                                    />
+                                </Link>
+                                <Link
+                                    to={`${config.routes.personPage}/007`}
+                                    className="left__username"
+                                >
                                     {item.username}
                                 </Link>
                                 <p className="left__date">{item.date}</p>

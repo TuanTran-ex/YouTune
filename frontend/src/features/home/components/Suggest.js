@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { homeActions } from '../homeSlice';
 import './Suggest.scss';
+import config from 'config';
 
 function Suggest({ title, listSuggest }) {
     const userProfile = useAppSelector(selectProfileData);
@@ -187,6 +188,8 @@ function Suggest({ title, listSuggest }) {
         setListUser(cloneListUser);
     };
 
+    const moveToPersonPage = () => {};
+
     return (
         <div className="suggest-wrapper">
             <p className="suggest__text">{title}</p>
@@ -201,7 +204,8 @@ function Suggest({ title, listSuggest }) {
                             />
                             <div className="name-reference">
                                 <Link
-                                    to={`/profile/${item.id}`}
+                                    to={`${config.routes.personPage}/${item.id}`}
+                                    onClick={() => moveToPersonPage()}
                                     className="username"
                                 >
                                     {item?.username}
@@ -216,7 +220,7 @@ function Suggest({ title, listSuggest }) {
                                     ) : (
                                         <span className="reference">
                                             <Link
-                                                to={`/profile/${item?.followers[0]?.id}`}
+                                                to={`${config.routes.personPage}/${item?.followers[0]?.id}`}
                                                 className="reference--followed"
                                             >
                                                 {item?.followers[0]?.username}
@@ -232,7 +236,7 @@ function Suggest({ title, listSuggest }) {
                                             )}
                                             {item?.followers?.length >= 2 ? (
                                                 <Link
-                                                    to={`/profile/${item?.followers[1]?.id}`}
+                                                    to={`${config.routes.personPage}/${item?.followers[1]?.id}`}
                                                     className="reference--followed"
                                                     style={{
                                                         display: 'inline',
@@ -275,7 +279,7 @@ function Suggest({ title, listSuggest }) {
                                         Friend of
                                         <Link
                                             style={{ marginLeft: '3px' }}
-                                            to="#"
+                                            to={`${config.routes.personPage}/${item?.followers[0]?.id}`}
                                             className="reference--followed"
                                         >
                                             {item?.friends[0]?.username}
@@ -283,7 +287,7 @@ function Suggest({ title, listSuggest }) {
                                         {item?.friends?.length > 1 && ', '}
                                         {item?.friends?.length >= 2 ? (
                                             <Link
-                                                to="#"
+                                                to={`${config.routes.personPage}/${item?.followers[1]?.id}`}
                                                 className="reference--followed"
                                                 style={{
                                                     display: 'inline',
@@ -382,7 +386,7 @@ function Suggest({ title, listSuggest }) {
                                     />
                                     <span>
                                         <Link
-                                            to={`/profile/${item.id}`}
+                                            to={`${config.routes.personPage}/${item.id}`}
                                             className="modal-box__item--username"
                                         >
                                             {item.username}
@@ -408,7 +412,7 @@ function Suggest({ title, listSuggest }) {
                 </Box>
             </Modal>
 
-            {/* Modal to show list suggest friend */}
+            {/* Modal */}
             <Modal
                 open={openModal2}
                 onClose={handleClose2}
@@ -437,7 +441,6 @@ function Suggest({ title, listSuggest }) {
                                 </div>
                                 {!listBtnUnFriend?.[index]?.isActive ? (
                                     <button
-                                        //
                                         className="modal-box__item--btn-add"
                                         onClick={() =>
                                             hanleClickBtnUnfriend(item.username)

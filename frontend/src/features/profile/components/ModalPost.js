@@ -196,7 +196,7 @@ function ModalPost({ id, avatar, username, listUpload, content, time_posted }) {
                         ''
                     )}
 
-                    {listUpload?.[idImage]?.type === '0' ? (
+                    {listUpload?.[idImage]?.type == 0 ? (
                         <Image
                             src={listUpload?.[idImage]?.url}
                             alt="picture"
