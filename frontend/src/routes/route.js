@@ -3,7 +3,7 @@ import ProfilePage from 'features/profile/page/ProfilePage';
 import UploadProfilePage from 'features/profile/page/UploadProfilePage';
 import Search from 'features/search/page/Search';
 import config from '../config';
-import PersonPage from 'features/personpage/Personpage';
+import PersonPage from 'features/personPage/Personpage';
 
 const publicRoutes = [];
 
