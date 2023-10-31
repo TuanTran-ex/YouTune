@@ -9,7 +9,7 @@ import cityReducer from 'features/city/citySlice';
 import createPostReducer from 'features/create/createPostSlice';
 import searchReducer from 'features/search/searchSlice';
 import homeReducer from 'features/home/homeSlice';
-import personReducer from 'features/personpage/personSlice';
+import personReducer from 'features/personPage/personSlice';
 
 const rootReducer = combineReducers({
     router: connectRouter(history),
