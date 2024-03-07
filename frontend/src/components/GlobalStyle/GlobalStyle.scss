@@ -1,0 +1,90 @@
+:root {
+    --sidebar-width: 245px;
+    --sidebar-width-sm: 60px;
+    --nav-height: 60px;
+    --nav-width: 60px;
+    --header-default-height: 58px;
+    --header-default-height_mb: 48px;
+
+    --green-color: #10b981;
+    --green-color-hover: #2d9d78;
+    --loading-color: linear-gradient(
+        to right,
+        #ef5350,
+        #f48fb1,
+        #7e57c2,
+        #2196f3,
+        #26c6da,
+        #43a047,
+        #eeff41,
+        #f9a825,
+        #ff5722
+    );
+}
+
+.loading {
+    background: var(--loading-color);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+//Scrollbar css;
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 10px;
+    overflow: hidden;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #ccc;
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    background-color: #fff;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: #000;
+}
+
+ul,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    outline: none;
+    border: none;
+}
+
+@media (max-width: 576px) {
+    .toast_message {
+        width: 200px;
+        max-height: 54px;
+        min-height: 54px;
+        font-size: 1.2rem;
+        position: fixed;
+        right: 0;
+        top: 10px;
+        border-radius: 4px;
+    }
+}

@@ -1,0 +1,223 @@
+.container {
+    width: 100%;
+}
+
+.nav-hzt {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    .horizontal {
+        height: var(--nav-height);
+        width: 100%;
+    }
+}
+
+.nav-vtc {
+    height: 100%;
+    z-index: 10;
+    .vertical {
+        width: var(--nav-width);
+        height: 100%;
+    }
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    .sidebar-wrapper {
+        color: #000;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: inherit;
+        justify-content: space-between;
+        border-right: 1px solid #dbdbdb;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}
+.main-ffc .logo {
+    font-size: 3rem;
+    padding: 20px 0;
+    margin-bottom: 20px;
+}
+
+.sidebar__row,
+.logout {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 4px 16px;
+    margin-bottom: 10px;
+    color: #424242;
+    background-color: transparent;
+    width: 100%;
+    .icon {
+        padding-right: 14px;
+        font-size: 3.8rem;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    p {
+        font-size: 1.6rem;
+    }
+}
+
+.sidebar__row:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.sidebar-wrapper .profile {
+    display: flex;
+    color: #424242;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1.6rem;
+
+    .wrap-avatar {
+        padding-right: 10px;
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            object-fit: cover;
+        }
+    }
+}
+.profile:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.sidebar-wrapper .logout {
+    margin-bottom: 20px;
+
+    .logout-icon {
+        padding-right: 14px;
+        font-size: 3.8rem;
+    }
+    .btn-logout {
+        color: #424242;
+        width: 100%;
+        font-size: 1.6rem;
+        background-color: transparent;
+        text-align: start;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.sidebar-wrapper .logout:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+//SEARCH BOX
+
+.sidebar-sm {
+    width: var(--sidebar-width);
+}
+
+.nav-list-sm {
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    width: inherit;
+    border: 1px solid #f2f2f2;
+
+    .logo-sm {
+        margin: 16px 0;
+        text-align: center;
+        padding: 10px;
+        .icon {
+            font-size: 2.6rem;
+        }
+    }
+    .nav-item-sm {
+        text-align: center;
+        padding: 10px;
+        margin: 20px 0;
+        .icon {
+            font-size: 2.6rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .nav-item-sm .profile {
+        background-color: transparent;
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            object-fit: cover;
+            &:hover {
+                background-color: transparent;
+            }
+        }
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.search-block {
+    position: fixed;
+    width: 370px;
+    height: 100%;
+    background-color: #fff;
+    z-index: 11;
+    top: 0;
+    bottom: 0;
+    left: -370px;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px grey;
+    opacity: 0;
+    transition: all 0.7s;
+    -webkit-transition: all 0.7s;
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 26px;
+}
+
+.enter {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    opacity: 1;
+    left: var(--nav-width);
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .search-block {
+        width: 360px;
+        left: -360px;
+    }
+
+    .enter {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        opacity: 1;
+        left: var(--nav-width);
+    }
+}
+
+@media (max-width: 576px) {
+    .nav-hzt .horizontal {
+        height: 50px;
+    }
+}

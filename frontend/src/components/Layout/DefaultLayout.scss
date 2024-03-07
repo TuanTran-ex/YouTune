@@ -1,0 +1,29 @@
+.wrapper-layout {
+    display: flex;
+}
+
+.children-wrapper {
+    width: 100%;
+    margin-bottom: 40px;
+}
+.children-wrapper__header {
+    width: 100%;
+    height: var(--header-default-height);
+}
+
+.chilren-wrapper__header-mb {
+    width: 100%;
+    height: var(--header-default-height_mb);
+}
+
+@media screen and (max-width: 480px) {
+    .children-wrapper__header {
+        height: 54px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .children-wrapper {
+        width: calc(100% - var(--nav-width));
+    }
+}

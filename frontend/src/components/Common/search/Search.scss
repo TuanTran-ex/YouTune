@@ -1,0 +1,129 @@
+.search-wrap {
+    padding-top: 30px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.search__title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 40px;
+}
+
+.search-bar {
+    position: relative;
+    padding: 10px 20px;
+    .search-bar__input {
+        width: 100%;
+        padding: 10px 12px;
+        font-size: 1.4rem;
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .search-bar__icon {
+        width: 20px;
+        height: 20px;
+        background-color: #f2f3f5;
+        border-radius: 999px;
+        position: absolute;
+        right: 24px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .search-bar__clear-icon {
+            font-size: 1.4rem;
+        }
+        &:hover {
+            cursor: pointer;
+            opacity: 0.8;
+            background-color: #ccc;
+        }
+    }
+}
+
+.search-result {
+    margin-top: 30px;
+    border-top: 1px solid #ccc;
+    padding: 14px 0 0 0;
+    .search-result__clear-all {
+        padding: 0 20px;
+        font-size: 1.6rem;
+        color: #10b981;
+        font-weight: 600;
+        text-align: end;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.list-result {
+    height: 456px;
+    margin-top: 10px;
+    overflow: scroll;
+}
+
+.item-result a {
+    display: flex;
+    width: 100%;
+    padding: 8px 20px;
+    align-items: center;
+
+    &:hover {
+        cursor: pointer;
+        background-color: #fafafa;
+    }
+
+    .item-result__image {
+        width: 46px;
+        height: 46px;
+        border-radius: 999px;
+        object-fit: cover;
+        margin-right: 14px;
+    }
+
+    .item-result__un {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        .item-result__un-username {
+            font-size: 1.4rem;
+            font-weight: 600;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .item-result__un-fullname {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 1.4rem;
+            color: #4d4d4d;
+        }
+    }
+    .item-result__clear-icon {
+        height: 40px;
+        float: right;
+        margin-left: auto;
+        font-size: 2rem;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
+    }
+}
+
+.no-result {
+    padding: 10px 20px;
+    font-size: 1.4rem;
+}

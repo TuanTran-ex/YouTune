@@ -1,0 +1,159 @@
+.wrapper .block-register {
+    margin: 20px auto;
+    width: 340px;
+}
+
+.block-register .bl-on {
+    border: 1px solid #b8b2b2;
+    border-radius: 4px;
+    padding: 30px 40px;
+    font-size: 1.4rem;
+    width: 100%;
+    .logo {
+        font-size: 4rem;
+        text-align: center;
+        color: #fca311;
+    }
+
+    .reminder {
+        font-weight: 600;
+        margin: 20px 0;
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 1.6rem;
+    }
+
+    .lg-w-fb {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px 16px;
+        background-color: #0095f6;
+        color: #fff;
+        border-radius: 10px;
+        i {
+            margin-right: 4px;
+            .icon-fb {
+                font-size: 2.2rem;
+            }
+        }
+
+        .text {
+            font-size: 1.3rem;
+            font-weight: 550;
+            color: #fff;
+        }
+    }
+    .lg-w-fb:hover {
+        cursor: pointer;
+        background-color: #0e85d4;
+    }
+
+    .or {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 20px 0;
+        .line {
+            width: 100%;
+            height: 0.9px;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 0 18px;
+        }
+    }
+
+    .form-field-register {
+        .input-field {
+            display: flex;
+            flex: 1;
+            width: 100%;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 1px solid rgba(22, 33, 11, 0.3);
+            border-radius: 2px;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border: 1px solid #297373ff;
+        }
+
+        .error-msg {
+            padding: 0;
+            margin: 4px 0 8px 0;
+            font-size: 1rem;
+            color: red;
+        }
+
+        .your-contact,
+        .agree-rules {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            text-align: center;
+            color: rgba(0, 0, 0, 0.8);
+            a {
+                color: #055e9a;
+                font-weight: 500;
+            }
+            :hover {
+                text-decoration: underline;
+            }
+        }
+
+        .agree-rules {
+            display: flex;
+            a {
+                margin: 0 4px;
+            }
+        }
+
+        .btn-Sign-up {
+            margin-top: 20px;
+            button {
+                width: 100%;
+                height: 36px;
+                border-radius: 12px;
+                color: #fff;
+                background-color: #10b981;
+                font-weight: 550;
+            }
+            :hover {
+                cursor: pointer;
+                background-color: #2d9d78;
+            }
+        }
+
+        .disabled {
+            background-color: #1ebb87;
+            opacity: 0.7;
+            &:hover {
+                cursor: text;
+                background-color: #1ebb87;
+            }
+        }
+    }
+}
+
+.block-register .bl-under {
+    margin-top: 10px;
+    border: 1px solid #b8b2b2;
+    border-radius: 4px;
+    .wrap {
+        padding: 30px 40px;
+        display: flex;
+        justify-content: center;
+        font-size: 1.4rem;
+        .high-line {
+            color: #10b981;
+            padding: 0 6px;
+            font-weight: 500;
+        }
+        :hover {
+            color: #2d9d78;
+        }
+    }
+}
