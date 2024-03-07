@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { profileActions } from '../profileSlice';
 import './ChangePassword.scss';
+import { isXM } from 'utils/mediaResponse';
 
 const schema = yup
     .object({
@@ -69,9 +70,8 @@ function ChangePassword() {
         },
         resolver: yupResolver(schema),
     });
-    const handleFormSubmit = () => {};
 
-    const handleClickBtnChangePassword = () => {
+    const onSubmit = () => {
         if (
             oldPassword === '' ||
             newPassword === '' ||
@@ -103,7 +103,7 @@ function ChangePassword() {
         <div className="prof__change-password">
             <div className="change-password">
                 <div className="options">
-                    {viewPort.width <= 1300 ? (
+                    {viewPort.width <= isXM ? (
                         <Link to={config.routes.profile} className="back-icon">
                             <IoIosArrowBack className="icon" />
                         </Link>
@@ -133,21 +133,22 @@ function ChangePassword() {
                     </ul>
                 </div>
                 <div className="edit-prof">
-                    <form onSubmit={handleSubmit(handleFormSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="edit-prof__row usename-row">
                             <div className="left-column">
                                 <p className="title">Old Password</p>
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('oldPassword')}
-                                    value={oldPassword ? oldPassword : ''}
+                                    {...register('oldPassword', {
+                                        onChange(e) {
+                                            setOldPassword(e.target.value);
+                                        },
+                                    })}
+                                    value={oldPassword}
                                     type="password"
                                     className="prof-input"
                                     placeholder="Old Password"
-                                    onChange={(e) =>
-                                        setOldPassword(e.target.value)
-                                    }
                                 />
                                 <p className="error-active">
                                     {errors.oldPassword?.message}
@@ -160,14 +161,15 @@ function ChangePassword() {
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('newPassword')}
-                                    value={newPassword ? newPassword : ''}
+                                    {...register('newPassword', {
+                                        onChange(e) {
+                                            setNewPassword(e.target.value);
+                                        },
+                                    })}
+                                    value={newPassword}
                                     type="password"
                                     className="prof-input"
                                     placeholder="New Password"
-                                    onChange={(e) =>
-                                        setNewPassword(e.target.value)
-                                    }
                                 />
                                 <p className="error-active">
                                     {errors.newPassword?.message}
@@ -180,19 +182,18 @@ function ChangePassword() {
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('comfirmPassword')}
-                                    value={
-                                        confirmPassword ? confirmPassword : ''
-                                    }
+                                    {...register('confirmPassword', {
+                                        onChange(e) {
+                                            setConfirmPassword(e.target.value);
+                                        },
+                                    })}
+                                    value={confirmPassword}
                                     type="password"
                                     className="prof-input"
                                     placeholder="Confirm Password"
-                                    onChange={(e) =>
-                                        setConfirmPassword(e.target.value)
-                                    }
                                 />
                                 <p className="error-active">
-                                    {errors.oldPassword?.message}
+                                    {errors.confirmPassword?.message}
                                 </p>
                             </div>
                         </div>
@@ -201,11 +202,7 @@ function ChangePassword() {
                             <div className="left-column"></div>
                             <div className="right-column edit__btn-wrap">
                                 <div className="btn-save">
-                                    <button
-                                        type="submit"
-                                        className="button"
-                                        onClick={handleClickBtnChangePassword}
-                                    >
+                                    <button type="submit" className="button">
                                         Save
                                     </button>
                                 </div>

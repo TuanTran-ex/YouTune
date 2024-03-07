@@ -4,8 +4,20 @@ import UploadProfilePage from 'features/profile/page/UploadProfilePage';
 import Search from 'features/search/page/Search';
 import config from '../config';
 import PersonPage from 'features/personPage/Personpage';
+import LoginPage from 'features/auth/page/LoginPage';
+import RegisterPage from 'features/auth/page/RegisterPage';
 
-const publicRoutes = [];
+const publicRoutes = [
+    {
+        path: config.routes.login,
+        component: LoginPage,
+    },
+
+    {
+        path: config.routes.register,
+        component: RegisterPage,
+    },
+];
 
 const privateRoutes = [
     {

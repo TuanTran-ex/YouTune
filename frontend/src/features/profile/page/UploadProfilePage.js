@@ -24,7 +24,7 @@ import {
     selectProfileData,
 } from '../profileSlice';
 import './UploadProfilePage.scss';
-import { isXM } from 'utils/mediaResponse';
+import { isXM, isXS } from 'utils/mediaResponse';
 
 const schema = yup
     .object({
@@ -211,7 +211,7 @@ function UploadProfilePage() {
         setWard(ward);
     };
 
-    const handleClickBtnEditProf = () => {
+    const onSubmit = () => {
         if (
             userName === '' ||
             fullName === '' ||
@@ -306,21 +306,22 @@ function UploadProfilePage() {
                             </Button>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit(handleFormLoginSubmit)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="edit-prof__row usename-row">
                             <div className="left-column">
                                 <p className="title">Username</p>
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('username')}
+                                    {...register('username', {
+                                        onChange(e) {
+                                            setUserName(e.target.value);
+                                        },
+                                    })}
                                     value={userName ? userName : ''}
                                     type="text"
                                     className="prof-input"
                                     placeholder="Username"
-                                    onChange={(e) =>
-                                        setUserName(e.target.value)
-                                    }
                                 />
                                 <p className="error-active">
                                     {errors.username?.message}
@@ -334,15 +335,19 @@ function UploadProfilePage() {
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('full_name')}
-                                    value={fullName ? fullName : ''}
+                                    {...register('full_name', {
+                                        onChange(e) {
+                                            setFullName(e.target.value);
+                                        },
+                                    })}
+                                    value={fullName}
                                     type="text"
                                     className="prof-input"
                                     placeholder="Full name"
-                                    onChange={(e) =>
-                                        setFullName(e.target.value)
-                                    }
                                 />
+                                <p className="error-active">
+                                    {errors.full_name?.message}
+                                </p>
                             </div>
                         </div>
 
@@ -361,7 +366,7 @@ function UploadProfilePage() {
                                     placeholder="Gender"
                                 />
 
-                                {gender ? (
+                                {gender !== '' ? (
                                     ''
                                 ) : (
                                     <p className="error-active">
@@ -431,7 +436,7 @@ function UploadProfilePage() {
                                     placeholder="City"
                                 />
 
-                                {city ? (
+                                {city !== '' ? (
                                     ''
                                 ) : (
                                     <p className="error-active">
@@ -456,7 +461,7 @@ function UploadProfilePage() {
                                     placeholder="Ward"
                                 />
 
-                                {ward ? (
+                                {ward !== '' ? (
                                     ''
                                 ) : (
                                     <p className="error-active">
@@ -472,12 +477,15 @@ function UploadProfilePage() {
                             </div>
                             <div className="right-column">
                                 <input
-                                    {...register('address')}
+                                    {...register('address', {
+                                        onChange(e) {
+                                            setAddress(e.target.value);
+                                        },
+                                    })}
                                     value={address ? address : ''}
                                     type="text"
                                     className="prof-input"
                                     placeholder="Address"
-                                    onChange={(e) => setAddress(e.target.value)}
                                 />
                                 <p className="error-active">
                                     {errors.address?.message}
@@ -487,11 +495,7 @@ function UploadProfilePage() {
                         <div className="edit-prof__row">
                             <div className="left-column"></div>
                             <div className="right-column">
-                                <button
-                                    type="submit"
-                                    className="btn-submit"
-                                    onClick={handleClickBtnEditProf}
-                                >
+                                <button type="submit" className="btn-submit">
                                     Save
                                 </button>
                             </div>

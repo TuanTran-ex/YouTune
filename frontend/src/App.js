@@ -1,7 +1,5 @@
 import { NotFound, PrivateRoute } from 'components/Common';
 import DefaultLayout from 'components/Layout/DefaultLayout';
-import LoginPage from 'features/auth/page/LoginPage';
-import RegisterPage from 'features/auth/page/RegisterPage';
 import HomePage from 'features/home/HomePage';
 import { Route, Switch } from 'react-router-dom';
 import { privateRoutes, publicRoutes } from 'routes';
@@ -13,14 +11,6 @@ function App() {
         <div className="App">
             <>
                 <Switch>
-                    <Route path={config.routes.login}>
-                        <LoginPage />
-                    </Route>
-
-                    <Route path={config.routes.register}>
-                        <RegisterPage />
-                    </Route>
-
                     <PrivateRoute exact path={config.routes.home}>
                         <HomePage />
                     </PrivateRoute>
@@ -56,9 +46,7 @@ function App() {
                     </Route>
                 </Switch>
             </>
-            <footer className="footer-default">
-                {/* @Front end made by Thu Uyen */}
-            </footer>
+            <footer className="footer-default"></footer>
         </div>
     );
 }

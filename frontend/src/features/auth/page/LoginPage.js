@@ -50,9 +50,7 @@ function LoginPage() {
         resolver: yupResolver(schema),
     });
 
-    const handleFormLoginSubmit = () => {};
-
-    const handleLoginClick = () => {
+    const onSubmit = () => {
         dispatch(
             authActions.login({
                 email: email,
@@ -76,25 +74,31 @@ function LoginPage() {
                         <span>YouTune</span>
                     </div>
                     <div className="form-field-login">
-                        <form onSubmit={handleSubmit(handleFormLoginSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <input
-                                {...register('email')}
+                                {...register('email', {
+                                    onChange(e) {
+                                        setEmail(e.target.value);
+                                    },
+                                })}
                                 value={email}
                                 type="text"
                                 className="input-field"
                                 placeholder="Email"
-                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <p className="error-msg">{errors.email?.message}</p>
 
                             <input
-                                {...register('password')}
+                                {...register('password', {
+                                    onChange(e) {
+                                        setPassword(e.target.value);
+                                    },
+                                })}
                                 value={password}
                                 name="password"
                                 type="password"
                                 className="input-field"
                                 placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <p className="error-msg">
                                 {errors.password?.message}
@@ -111,11 +115,7 @@ function LoginPage() {
                                         Log in
                                     </button>
                                 ) : (
-                                    <button
-                                        type="submit"
-                                        variant="contained"
-                                        onClick={handleLoginClick}
-                                    >
+                                    <button type="submit" variant="contained">
                                         Log in
                                     </button>
                                 )}

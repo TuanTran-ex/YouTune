@@ -65,13 +65,11 @@ function RegisterPage() {
         resolver: yupResolver(schema),
     });
 
-    const handleFormRegisterSubmit = () => {};
-
     const handleLoginWFB = () => {
         history.push('#');
     };
 
-    const handleRegisterClick = () => {
+    const onSubmit = () => {
         dispatch(
             authActions.register({
                 email: email,
@@ -116,49 +114,61 @@ function RegisterPage() {
                     </div>
 
                     <div className="form-field-register">
-                        <form onSubmit={handleSubmit(handleFormRegisterSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                             <input
-                                {...register('email')}
+                                {...register('email', {
+                                    onChange(e) {
+                                        setEmail(e.target.value);
+                                    },
+                                })}
                                 value={email}
                                 type="text"
                                 className="input-field"
                                 placeholder="Email"
-                                onChange={(e) => setEmail(e.target.value)}
                             />
                             <p className="error-msg">{errors.email?.message}</p>
 
                             <input
-                                {...register('fullName')}
+                                {...register('fullName', {
+                                    onChange(e) {
+                                        setFullName(e.target.value);
+                                    },
+                                })}
                                 value={fullName}
                                 type="text"
                                 className="input-field"
                                 placeholder="Full Name"
-                                onChange={(e) => setFullName(e.target.value)}
                             />
                             <p className="error-msg">
                                 {errors.fullName?.message}
                             </p>
 
                             <input
-                                {...register('userName')}
+                                {...register('userName', {
+                                    onChange(e) {
+                                        setUserName(e.target.value);
+                                    },
+                                })}
                                 value={userName}
                                 type="text"
                                 className="input-field"
                                 placeholder="UserName"
-                                onChange={(e) => setUserName(e.target.value)}
                             />
                             <p className="error-msg">
                                 {errors.userName?.message}
                             </p>
 
                             <input
-                                {...register('password')}
+                                {...register('password', {
+                                    onChange(e) {
+                                        setPassword(e.target.value);
+                                    },
+                                })}
                                 value={password}
                                 name="password"
                                 type="password"
                                 className="input-field"
                                 placeholder="Password"
-                                onChange={(e) => setPassword(e.target.value)}
                             />
                             <p className="error-msg">
                                 {errors.password?.message}
@@ -189,11 +199,7 @@ function RegisterPage() {
                                         Sign up
                                     </button>
                                 ) : (
-                                    <button
-                                        type="submit"
-                                        variant="contained"
-                                        onClick={handleRegisterClick}
-                                    >
+                                    <button type="submit" variant="contained">
                                         Sign up
                                     </button>
                                 )}
